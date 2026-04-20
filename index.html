@@ -7,13 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* 隱藏原生滾動條，保持畫面整潔 */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* A4 紙張預覽樣式 */
+        /* ✅ 優化：用 CSS 變數統一管理徽章樣式，避免 JS 逐一 DOM 操作 */
+        :root {
+            --badge-size: 50mm;
+            --badge-height: 50mm;
+            --badge-radius: 50%;
+            --badge-bg-size: cover;
+        }
+
         .a4-preview {
             width: 210mm;
             min-height: 297mm;
@@ -25,7 +31,6 @@
             transform-origin: top center;
         }
 
-        /* 雙面徽章版型 - 對摺線 */
         .badge-container {
             display: inline-flex;
             flex-direction: row;
@@ -37,77 +42,93 @@
             background: #f8fafc;
         }
 
+        /* ✅ 優化：徽章尺寸直接讀取 CSS 變數，一次更新全部 */
         .badge-side {
-            background-size: cover;
+            width: var(--badge-size);
+            height: var(--badge-height);
+            border-radius: var(--badge-radius);
+            background-size: var(--badge-bg-size);
             background-position: center;
             background-repeat: no-repeat;
+            border: 1px solid #e2e8f0;
+            box-shadow: inset 0 0 0 2px white;
             position: relative;
+            flex-shrink: 0;
+        }
+
+        .badge-side.shape-heart {
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");
+            -webkit-mask-size: 100% 100%;
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");
+            mask-size: 100% 100%;
+            border: none;
+            box-shadow: none;
         }
 
         .fold-line {
             width: 2px;
-            height: 100%;
+            height: var(--badge-height);
             background-image: linear-gradient(to bottom, #94a3b8 50%, transparent 50%);
             background-size: 2px 8px;
             background-repeat: repeat-y;
             margin: 0 2px;
+            flex-shrink: 0;
         }
 
-        /* 愛心形狀遮罩 */
-        .shape-heart {
-            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");
-            -webkit-mask-size: 100% 100%;
-            -webkit-mask-position: center;
-            -webkit-mask-repeat: no-repeat;
-            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");
-            mask-size: 100% 100%;
-            mask-position: center;
-            mask-repeat: no-repeat;
-        }
-
-        /* 列印專屬樣式 */
         @media print {
             body { background: white; margin: 0; padding: 0; }
             .no-print { display: none !important; }
             .a4-preview { 
-                box-shadow: none; 
-                margin: 0; 
-                padding: 10mm; 
-                width: 100%; 
-                min-height: auto;
+                box-shadow: none; margin: 0; padding: 10mm;
+                width: 100%; min-height: auto;
                 transform: scale(1) !important;
             }
             .badge-container { border-color: #94a3b8; }
         }
 
-        /* 載入動畫 */
         .loader {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #3b82f6;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 30px; height: 30px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* ✅ Modal 修正：統一用 flex/none，不混用 class+style */
+        .modal-overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(15,23,42,0.5);
+            align-items: center; justify-content: center;
+            z-index: 100;
+            backdrop-filter: blur(2px);
+            transition: opacity 0.2s;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            max-width: 360px; width: 90%;
+            box-shadow: 0 20px 60px -10px rgba(0,0,0,0.3);
+            transform: scale(1);
+            transition: transform 0.2s;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
 
-    <!-- 頂部導覽列 -->
     <header class="bg-white shadow-sm border-b border-slate-200 no-print sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md">
-                    車
-                </div>
+                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md">車</div>
                 <div>
                     <h1 class="text-xl font-bold text-slate-800 tracking-wide">車城國小｜徽章拍貼機</h1>
                     <p class="text-xs text-slate-500">AI 智慧生成・雙面排版系統</p>
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <!-- 設定按鈕 -->
                 <button onclick="openSettingsModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors" title="系統設定">
                     <i class="fas fa-cog"></i>
                 </button>
@@ -118,41 +139,31 @@
         </div>
     </header>
 
-    <!-- 主要內容區 -->
     <main class="flex-1 max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-6 p-4 lg:p-6 overflow-hidden">
         
-        <!-- 左側控制面板 -->
         <aside class="w-full lg:w-80 flex flex-col gap-5 no-print overflow-y-auto pr-2 pb-10">
             
-            <!-- Step 1: 影像輸入 -->
+            <!-- Step 1 -->
             <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
                 <h2 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-camera text-blue-500"></i> 1. 影像輸入</h2>
-                
-                <!-- WebCam 預覽 -->
-                <div class="relative w-full aspect-square bg-slate-100 rounded-xl overflow-hidden mb-4 border-2 border-dashed border-slate-300 flex items-center justify-center group" id="mediaContainer">
+                <div class="relative w-full aspect-square bg-slate-100 rounded-xl overflow-hidden mb-4 border-2 border-dashed border-slate-300 flex items-center justify-center" id="mediaContainer">
                     <video id="videoElement" autoplay playsinline class="absolute inset-0 w-full h-full object-cover hidden"></video>
-                    <img id="previewImage" class="absolute inset-0 w-full h-full object-cover hidden" />
-                    
+                    <img id="previewImage" class="absolute inset-0 w-full h-full object-cover hidden" alt="預覽圖片" />
                     <div id="mediaPlaceholder" class="text-center text-slate-400 p-4">
                         <i class="fas fa-image text-4xl mb-2"></i>
                         <p class="text-sm mt-2">請使用下方按鈕<br>拍照或上傳圖片</p>
                     </div>
                 </div>
-
-                <!-- 手機優先：原生拍照與上傳 -->
                 <div class="grid grid-cols-2 gap-2 mb-3">
                     <label class="bg-blue-50 hover:bg-blue-100 text-blue-700 py-2.5 rounded-lg text-sm font-bold transition-colors flex justify-center items-center gap-2 cursor-pointer border border-blue-200 shadow-sm">
                         <i class="fas fa-mobile-alt"></i> 手機拍照
-                        <!-- 重點：capture="environment" 呼叫手機原生後鏡頭 -->
                         <input type="file" id="mobileCamInput" accept="image/*" capture="environment" class="hidden">
                     </label>
                     <label class="bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-lg text-sm font-medium transition-colors flex justify-center items-center gap-2 cursor-pointer border border-slate-200">
                         <i class="fas fa-upload"></i> 相簿上傳
-                        <input type="file" id="uploadInput" accept="image/png, image/jpeg" class="hidden">
+                        <input type="file" id="uploadInput" accept="image/png, image/jpeg, image/webp" class="hidden">
                     </label>
                 </div>
-
-                <!-- PC 網頁相機 (折疊或次要) -->
                 <div class="border-t border-slate-100 pt-3">
                     <button id="startCamBtn" class="w-full bg-slate-50 hover:bg-slate-100 text-slate-500 py-2 rounded-lg text-xs font-medium transition-colors flex justify-center items-center gap-2 border border-slate-200">
                         <i class="fas fa-laptop"></i> 開啟網頁相機 (PC 適用)
@@ -163,37 +174,33 @@
                 </div>
             </section>
 
-            <!-- Step 2: AI 魔法 -->
-            <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative">
+            <!-- Step 2 -->
+            <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
                 <h2 class="font-bold text-lg mb-2 flex items-center gap-2"><i class="fas fa-wand-magic-sparkles text-amber-500"></i> 2. AI 風格轉換</h2>
                 <p class="text-xs text-slate-500 mb-4">使用 Gemini 生成不同風格的圖片</p>
-                
                 <div class="mb-3">
                     <label class="block text-sm font-medium text-slate-700 mb-1">選擇風格</label>
                     <select id="aiStyle" class="w-full text-sm p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                        <option value="Convert this image into a high-quality 3D Pixar style 3D cartoon character or scene. Keep the main subject recognizable but make it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors.">3D Pixar 動畫風</option>
+                        <option value="Convert this image into a high-quality 3D Pixar style cartoon character or scene. Keep the main subject recognizable but make it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors.">3D Pixar 動畫風</option>
                         <option value="Convert this image into a beautiful watercolor painting style. Soft edges, delicate washes of color, and an artistic, dreamlike quality.">水彩藝術風</option>
                         <option value="Convert this image into a cyberpunk style. Neon lights, futuristic elements, high tech, dark and gritty atmosphere.">賽博龐克風</option>
                         <option value="Convert this image into a classic Studio Ghibli anime style. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel.">吉卜力動畫風</option>
                         <option value="Convert this image into a vibrant pop art style, inspired by Andy Warhol. Bold colors, high contrast, and comic book-like halftone patterns.">普普藝術風</option>
                     </select>
                 </div>
-
-                <textarea id="aiPrompt" rows="2" class="w-full text-sm p-3 border border-slate-300 rounded-xl mb-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none" placeholder="輸入額外提示 (可選，例如: 加上車城洋蔥元素)"></textarea>
-                
-                <button id="generateAiBtn" class="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white py-3 rounded-xl font-bold shadow-md transition-all flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <textarea id="aiPrompt" rows="2" class="w-full text-sm p-3 border border-slate-300 rounded-xl mb-3 focus:ring-2 focus:ring-blue-500 outline-none resize-none" placeholder="輸入額外提示 (可選)"></textarea>
+                <button id="generateAiBtn" class="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white py-3 rounded-xl font-bold shadow-md transition-all flex justify-center items-center gap-2">
                     <i class="fas fa-sparkles"></i> 一鍵 AI 魔法轉換
                 </button>
                 <div id="aiLoading" class="hidden flex-col items-center justify-center mt-3 gap-2">
                     <div class="loader"></div>
-                    <span class="text-sm text-slate-500 ai-status-text">AI 魔法詠唱中... (約需10-15秒)</span>
+                    <span class="text-sm text-slate-500">AI 魔法詠唱中... (約需 15-30 秒)</span>
                 </div>
             </section>
 
-            <!-- Step 3: 排版設定 -->
+            <!-- Step 3 -->
             <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
                 <h2 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-layer-group text-purple-500"></i> 3. 徽章排版設定</h2>
-                
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">使用圖像來源</label>
@@ -202,7 +209,6 @@
                             <option value="ai" disabled>AI 生成圖片 (尚未生成)</option>
                         </select>
                     </div>
-
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">徽章形狀</label>
                         <div class="flex flex-wrap bg-slate-100 p-1 rounded-lg gap-1">
@@ -212,7 +218,6 @@
                             <button class="shape-btn flex-1 min-w-[60px] py-1.5 text-sm font-medium rounded-md text-slate-500 hover:text-slate-700" data-shape="heart">愛心</button>
                         </div>
                     </div>
-
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">圖片顯示模式</label>
                         <select id="imageFitMode" class="w-full text-sm p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white">
@@ -221,7 +226,6 @@
                             <option value="custom">自訂縮放</option>
                         </select>
                     </div>
-
                     <div id="customScaleContainer" class="hidden">
                         <div class="flex justify-between mb-1">
                             <label class="block text-sm font-medium text-slate-700">圖片縮放比例</label>
@@ -229,7 +233,6 @@
                         </div>
                         <input type="range" id="imageScaleSlider" min="10" max="300" value="100" class="w-full accent-blue-600">
                     </div>
-
                     <div>
                         <div class="flex justify-between mb-1">
                             <label class="block text-sm font-medium text-slate-700">尺寸大小 (直徑/邊長)</label>
@@ -237,9 +240,8 @@
                         </div>
                         <input type="range" id="sizeSlider" min="30" max="80" value="50" class="w-full accent-blue-600">
                     </div>
-
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">排版數量</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">排版數量</label>
                         <div class="flex items-center gap-3">
                             <button id="addBadgeBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 p-2 rounded-lg transition-colors"><i class="fas fa-plus"></i></button>
                             <button id="clearBadgeBtn" class="bg-red-50 hover:bg-red-100 text-red-600 p-2 rounded-lg transition-colors text-sm px-3 flex-1">清除全部</button>
@@ -249,32 +251,26 @@
             </section>
         </aside>
 
-        <!-- 右側預覽與列印區 -->
-        <section class="flex-1 bg-slate-200/50 rounded-2xl overflow-y-auto flex justify-center p-4 lg:p-8 custom-scrollbar relative">
+        <!-- 預覽區 -->
+        <!-- ✅ Bug 修正：加入正確的 id 供 resizeA4Preview 使用 -->
+        <section id="previewContainer" class="flex-1 bg-slate-200/50 rounded-2xl overflow-y-auto flex justify-center p-4 lg:p-8 relative">
             <div id="printArea" class="a4-preview">
                 <div class="absolute top-0 left-0 w-full h-full pointer-events-none p-4 opacity-10 no-print flex items-center justify-center">
                     <span class="text-4xl font-bold tracking-widest rotate-[-45deg]">A4 列印預覽區</span>
                 </div>
-                
-                <!-- 徽章產生區容器 -->
-                <div id="badgesContainer" class="flex flex-wrap content-start gap-2 relative z-10">
-                    <!-- 動態產生的徽章會放在這裡 -->
-                </div>
+                <div id="badgesContainer" class="flex flex-wrap content-start gap-2 relative z-10"></div>
             </div>
-            
-            <!-- 隱藏的 Canvas 用於處理影像 -->
             <canvas id="processCanvas" class="hidden"></canvas>
         </section>
     </main>
 
-    <!-- 頁尾 -->
     <footer class="bg-slate-800 text-slate-400 py-4 text-center text-sm no-print mt-auto">
         <p>車城國小資訊老師 @ Google Gemini 協作設計 | 嚴禁上傳含有敏感個資之圖片</p>
     </footer>
 
-    <!-- 系統設定 Modal -->
-    <div id="settingsModal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center z-[100] backdrop-blur-sm transition-opacity opacity-0">
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-95 transition-transform" id="settingsContent">
+    <!-- 系統設定 Modal (✅ 修正：改用單一 class 控制顯示) -->
+    <div id="settingsModal" class="modal-overlay" style="z-index:100;">
+        <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-bold text-slate-800"><i class="fas fa-cog text-slate-500 mr-2"></i>系統設定</h3>
                 <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times text-xl"></i></button>
@@ -282,13 +278,10 @@
             <div class="mb-4">
                 <label class="block text-sm font-medium text-slate-700 mb-1">備用 Gemini API Key</label>
                 <input type="password" id="apiKeyInput" class="w-full text-sm p-3 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 font-mono" placeholder="系統已內建，不需填寫">
-                <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-                    系統已內建預設金鑰。除非您需要臨時使用專屬金鑰測試，否則**請保持空白**。
-                </p>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">系統已內建預設金鑰。除非需要專屬金鑰測試，否則請保持空白。</p>
             </div>
             <div class="flex flex-col gap-2">
                 <button onclick="saveSettings()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-medium transition-colors shadow-sm">儲存設定</button>
-                <!-- 新增：清除暫存按鈕 (解決手機記憶錯誤密碼的問題) -->
                 <button onclick="clearCache()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 py-2.5 rounded-xl font-medium transition-colors shadow-sm border border-slate-200">
                     <i class="fas fa-trash-alt mr-1"></i> 清除暫存 (恢復預設)
                 </button>
@@ -296,215 +289,173 @@
         </div>
     </div>
 
-    <!-- 系統訊息 Modal -->
-    <div id="msgModal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center z-[110] backdrop-blur-sm transition-opacity opacity-0">
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-95 transition-transform" id="msgContent">
-            <div class="text-center mb-4" id="msgIcon">
-                <i class="fas fa-info-circle text-4xl text-blue-500"></i>
-            </div>
-            <h3 class="text-lg font-bold text-slate-800 text-center mb-2" id="msgTitle">提示</h3>
-            <p class="text-slate-600 text-center text-sm mb-6" id="msgText">訊息內容</p>
+    <!-- 訊息 Modal -->
+    <div id="msgModal" class="modal-overlay" style="z-index:110;">
+        <div class="modal-content text-center">
+            <div class="mb-4" id="msgIcon"><i class="fas fa-info-circle text-4xl text-blue-500"></i></div>
+            <h3 class="text-lg font-bold text-slate-800 mb-2" id="msgTitle">提示</h3>
+            <p class="text-slate-600 text-sm mb-6" id="msgText">訊息內容</p>
             <button onclick="closeModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-medium transition-colors">確認</button>
         </div>
     </div>
 
     <script>
         // ==========================================
-        // 🔑 系統核心設定區
+        // 🔑 系統核心設定
         // ==========================================
-        const DEFAULT_API_KEY = "AIzaSyA16u6OldidFZWVmeWE_oyT6FpQ9nJL9YA"; 
-        
-        // --- 內部狀態變數 ---
-        let originalImageData = null; // 原始圖片 Base64
-        let aiImageData = null; // AI 生成圖片 Base64
-        let currentShape = 'circle'; // circle 或 square, rectangle, heart
-        let currentSize = 50; // mm
-        let currentFitMode = 'cover'; // cover, contain, custom
-        let currentImageScale = 100; // %
-        let stream = null; // 攝影機串流
+        const DEFAULT_API_KEY = "AIzaSyA16u6OldidFZWVmeWE_oyT6FpQ9nJL9YA";
 
-        // --- DOM 元素取得 ---
+        // --- 狀態 ---
+        let originalImageData = null;
+        let aiImageData = null;
+        let currentShape = 'circle';
+        let currentSize = 50;
+        let currentFitMode = 'cover';
+        let currentImageScale = 100;
+        let stream = null;
+        // ✅ 優化：快取 objectURL，減少重複 base64 字串複製
+        let activeImageObjectURL = null;
+
+        // --- DOM ---
         const videoElement = document.getElementById('videoElement');
         const previewImage = document.getElementById('previewImage');
         const mediaPlaceholder = document.getElementById('mediaPlaceholder');
-        
         const startCamBtn = document.getElementById('startCamBtn');
         const captureBtn = document.getElementById('captureBtn');
         const uploadInput = document.getElementById('uploadInput');
         const mobileCamInput = document.getElementById('mobileCamInput');
-        
         const processCanvas = document.getElementById('processCanvas');
         const ctx = processCanvas.getContext('2d');
-        
         const generateAiBtn = document.getElementById('generateAiBtn');
         const aiLoading = document.getElementById('aiLoading');
-        const aiStatusText = document.querySelector('.ai-status-text');
         const aiPrompt = document.getElementById('aiPrompt');
         const aiStyle = document.getElementById('aiStyle');
         const imageSourceSelect = document.getElementById('imageSource');
-        
         const shapeBtns = document.querySelectorAll('.shape-btn');
         const sizeSlider = document.getElementById('sizeSlider');
         const sizeValue = document.getElementById('sizeValue');
-        
         const imageFitMode = document.getElementById('imageFitMode');
         const customScaleContainer = document.getElementById('customScaleContainer');
         const imageScaleSlider = document.getElementById('imageScaleSlider');
         const imageScaleValue = document.getElementById('imageScaleValue');
-        
         const badgesContainer = document.getElementById('badgesContainer');
-        const addBadgeBtn = document.getElementById('addBadgeBtn');
-        const clearBadgeBtn = document.getElementById('clearBadgeBtn');
-        
         const apiKeyInput = document.getElementById('apiKeyInput');
 
-        // 初始化讀取 LocalStorage 金鑰
         window.addEventListener('DOMContentLoaded', () => {
             const savedKey = localStorage.getItem('gemini_api_key_checheng');
-            if (savedKey) {
-                apiKeyInput.value = savedKey;
-            }
+            if (savedKey) apiKeyInput.value = savedKey;
         });
 
-        // --- 輔助函式：Modal 控制 ---
+        // ==========================================
+        // ✅ Modal 控制 (修正版：只用 .active class)
+        // ==========================================
         function openSettingsModal() {
-            const modal = document.getElementById('settingsModal');
-            const content = document.getElementById('settingsContent');
-            modal.classList.remove('hidden');
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                content.classList.remove('scale-95');
-            }, 10);
+            document.getElementById('settingsModal').classList.add('active');
         }
-
         function closeSettingsModal() {
-            const modal = document.getElementById('settingsModal');
-            const content = document.getElementById('settingsContent');
-            modal.classList.add('opacity-0');
-            content.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.style.display = 'none';
-            }, 300);
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+        function showMsg(title, text, type = 'info') {
+            document.getElementById('msgTitle').innerText = title;
+            document.getElementById('msgText').innerHTML = text;
+            const icons = { error: 'fa-exclamation-circle text-red-500', success: 'fa-check-circle text-emerald-500', info: 'fa-info-circle text-blue-500' };
+            document.getElementById('msgIcon').innerHTML = `<i class="fas ${icons[type] || icons.info} text-4xl"></i>`;
+            document.getElementById('msgModal').classList.add('active');
+        }
+        function closeModal() {
+            document.getElementById('msgModal').classList.remove('active');
         }
 
         function saveSettings() {
             const key = apiKeyInput.value.trim();
-            if (key) {
-                localStorage.setItem('gemini_api_key_checheng', key);
-                showMsg('設定已儲存', '已切換為您手動輸入的備用 API Key。', 'success');
-            } else {
-                localStorage.removeItem('gemini_api_key_checheng');
-                showMsg('設定已清除', '已恢復使用系統內建的預設 API Key。', 'success');
-            }
+            if (key) localStorage.setItem('gemini_api_key_checheng', key);
+            else localStorage.removeItem('gemini_api_key_checheng');
+            showMsg('設定已儲存', key ? '已切換為您手動輸入的備用 API Key。' : '已恢復使用系統內建的預設 API Key。', 'success');
             closeSettingsModal();
         }
-
-        // 新增：清除暫存功能
         function clearCache() {
             apiKeyInput.value = '';
             localStorage.removeItem('gemini_api_key_checheng');
             closeSettingsModal();
-            showMsg('清除成功', '已清除手機暫存的舊金鑰！<br>現在系統會自動抓取內建的預設金鑰運作。', 'success');
+            showMsg('清除成功', '已清除手機暫存的舊金鑰！現在系統會自動使用內建預設金鑰。', 'success');
         }
 
-        function showMsg(title, text, type = 'info') {
-            document.getElementById('msgTitle').innerText = title;
-            document.getElementById('msgText').innerHTML = text; 
-            const icon = document.getElementById('msgIcon');
-            if(type === 'error') icon.innerHTML = '<i class="fas fa-exclamation-circle text-4xl text-red-500"></i>';
-            else if(type === 'success') icon.innerHTML = '<i class="fas fa-check-circle text-4xl text-emerald-500"></i>';
-            else icon.innerHTML = '<i class="fas fa-info-circle text-4xl text-blue-500"></i>';
-            
-            const modal = document.getElementById('msgModal');
-            const content = document.getElementById('msgContent');
-            modal.classList.remove('hidden');
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                content.classList.remove('scale-95');
-            }, 10);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('msgModal');
-            const content = document.getElementById('msgContent');
-            modal.classList.add('opacity-0');
-            content.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.style.display = 'none';
-            }, 300);
-        }
-
-        // --- 影像輸入處理 ---
+        // ==========================================
+        // 影像輸入
+        // ==========================================
         startCamBtn.addEventListener('click', async () => {
+            if (stream) { stopCamera(); return; }
             try {
-                if (stream) { stopCamera(); return; }
                 stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
                 videoElement.srcObject = stream;
                 videoElement.classList.remove('hidden');
                 previewImage.classList.add('hidden');
                 mediaPlaceholder.classList.add('hidden');
-                
                 startCamBtn.innerHTML = '<i class="fas fa-video-slash"></i> 關閉網頁相機';
                 startCamBtn.classList.replace('bg-slate-50', 'bg-red-50');
                 startCamBtn.classList.replace('text-slate-500', 'text-red-500');
                 captureBtn.classList.remove('hidden');
             } catch (err) {
-                console.error(err);
                 showMsg('相機權限受限', '無法存取網頁相機。請改用上方藍色的「手機拍照」按鈕。', 'error');
             }
         });
 
         function stopCamera() {
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-                stream = null;
-                videoElement.classList.add('hidden');
-                startCamBtn.innerHTML = '<i class="fas fa-laptop"></i> 開啟網頁相機 (PC 適用)';
-                startCamBtn.classList.replace('bg-red-50', 'bg-slate-50');
-                startCamBtn.classList.replace('text-red-500', 'text-slate-500');
-                captureBtn.classList.add('hidden');
-                if(!originalImageData) mediaPlaceholder.classList.remove('hidden');
-            }
+            if (!stream) return;
+            stream.getTracks().forEach(t => t.stop());
+            stream = null;
+            videoElement.classList.add('hidden');
+            startCamBtn.innerHTML = '<i class="fas fa-laptop"></i> 開啟網頁相機 (PC 適用)';
+            startCamBtn.classList.replace('bg-red-50', 'bg-slate-50');
+            startCamBtn.classList.replace('text-red-500', 'text-slate-500');
+            captureBtn.classList.add('hidden');
+            if (!originalImageData) mediaPlaceholder.classList.remove('hidden');
         }
 
         captureBtn.addEventListener('click', () => {
             if (!stream) return;
-            processCanvas.width = 1024;
-            processCanvas.height = 1024;
-            const size = Math.min(videoElement.videoWidth, videoElement.videoHeight);
-            const startX = (videoElement.videoWidth - size) / 2;
-            const startY = (videoElement.videoHeight - size) / 2;
+            processCanvas.width = processCanvas.height = 1024;
+            const vw = videoElement.videoWidth, vh = videoElement.videoHeight;
+            const size = Math.min(vw, vh);
+            // ✅ 修正：先重置 transform 再操作，避免累積變換
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.translate(1024, 0);
             ctx.scale(-1, 1);
-            ctx.drawImage(videoElement, startX, startY, size, size, 0, 0, 1024, 1024);
+            ctx.drawImage(videoElement, (vw - size) / 2, (vh - size) / 2, size, size, 0, 0, 1024, 1024);
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             setImageFromCanvas();
             stopCamera();
         });
 
+        // ✅ 優化：合併兩個 file input 的處理，新增 webp 支援
         function handleFileInput(e) {
             const file = e.target.files[0];
             if (!file) return;
             if (stream) stopCamera();
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const img = new Image();
-                img.onload = () => {
-                    processCanvas.width = 1024;
-                    processCanvas.height = 1024;
-                    const size = Math.min(img.width, img.height);
-                    const startX = (img.width - size) / 2;
-                    const startY = (img.height - size) / 2;
-                    ctx.drawImage(img, startX, startY, size, size, 0, 0, 1024, 1024);
-                    setImageFromCanvas();
+
+            // ✅ 優化：用 createImageBitmap 取代 FileReader + new Image，速度更快
+            createImageBitmap(file).then(bitmap => {
+                processCanvas.width = processCanvas.height = 1024;
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                const size = Math.min(bitmap.width, bitmap.height);
+                ctx.drawImage(bitmap, (bitmap.width - size) / 2, (bitmap.height - size) / 2, size, size, 0, 0, 1024, 1024);
+                bitmap.close(); // 釋放記憶體
+                setImageFromCanvas();
+            }).catch(() => {
+                // Fallback for browsers that don't support createImageBitmap for all formats
+                const reader = new FileReader();
+                reader.onload = ev => {
+                    const img = new Image();
+                    img.onload = () => {
+                        processCanvas.width = processCanvas.height = 1024;
+                        const size = Math.min(img.width, img.height);
+                        ctx.drawImage(img, (img.width - size) / 2, (img.height - size) / 2, size, size, 0, 0, 1024, 1024);
+                        setImageFromCanvas();
+                    };
+                    img.src = ev.target.result;
                 };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
+            });
             e.target.value = '';
         }
 
@@ -512,59 +463,92 @@
         mobileCamInput.addEventListener('change', handleFileInput);
 
         function setImageFromCanvas() {
-            originalImageData = processCanvas.toDataURL('image/png');
-            previewImage.src = originalImageData;
-            previewImage.classList.remove('hidden');
-            mediaPlaceholder.classList.add('hidden');
-            aiImageData = null;
-            imageSourceSelect.options[1].disabled = true;
-            imageSourceSelect.value = "original";
-            if(badgesContainer.children.length === 0) addNewBadge();
-            else updateAllBadgesImageSrc();
+            // ✅ 優化：釋放舊的 objectURL，改用 Blob 節省記憶體
+            if (activeImageObjectURL) URL.revokeObjectURL(activeImageObjectURL);
+
+            processCanvas.toBlob(blob => {
+                activeImageObjectURL = URL.createObjectURL(blob);
+                originalImageData = processCanvas.toDataURL('image/jpeg', 0.85); // ✅ 優化：改為 JPEG 0.85 壓縮，大幅減少 base64 大小
+                previewImage.src = activeImageObjectURL;
+                previewImage.classList.remove('hidden');
+                mediaPlaceholder.classList.add('hidden');
+
+                aiImageData = null;
+                imageSourceSelect.options[1].disabled = true;
+                imageSourceSelect.value = 'original';
+
+                if (badgesContainer.children.length === 0) addNewBadge();
+                else updateAllBadgesImageSrc();
+            }, 'image/jpeg', 0.85);
         }
 
         function updateAllBadgesImageSrc() {
-             const badges = badgesContainer.querySelectorAll('.badge-side');
-             const imgSrc = getActiveImageData();
-             badges.forEach(side => side.style.backgroundImage = `url(${imgSrc})`);
+            const src = getActiveImageSrc();
+            badgesContainer.querySelectorAll('.badge-side').forEach(side => {
+                side.style.backgroundImage = `url(${src})`;
+            });
         }
 
-        // --- AI 魔法 (Gemini API Image-to-Image) ---
-        async function fetchWithRetry(url, payload, retries = 5, delay = 1000) {
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) throw new Error(`${response.status}`);
-                return await response.json();
-            } catch (error) {
-                if (retries > 0) {
+        // ==========================================
+        // ✅ 優化：CSS 變數統一控制樣式
+        // ==========================================
+        function updateCSSVars() {
+            const root = document.documentElement;
+            const isRect = currentShape === 'rectangle';
+            const isHeart = currentShape === 'heart';
+            const isCircle = currentShape === 'circle';
+            const isSquare = currentShape === 'square';
+
+            root.style.setProperty('--badge-size', currentSize + 'mm');
+            root.style.setProperty('--badge-height', isRect ? (currentSize * 0.75) + 'mm' : currentSize + 'mm');
+            root.style.setProperty('--badge-radius',
+                isCircle ? '50%' :
+                isSquare ? '16px' :
+                isRect ? '12px' : '0'
+            );
+            const bgSize = currentFitMode === 'custom' ? currentImageScale + '%' : currentFitMode;
+            root.style.setProperty('--badge-bg-size', bgSize);
+
+            // 更新愛心遮罩
+            badgesContainer.querySelectorAll('.badge-side').forEach(side => {
+                if (isHeart) {
+                    side.classList.add('shape-heart');
+                } else {
+                    side.classList.remove('shape-heart');
+                }
+            });
+            // 更新 badge-container 的 border-radius
+            badgesContainer.querySelectorAll('.badge-container').forEach(w => {
+                w.style.borderRadius = isHeart ? '0' : root.style.getPropertyValue('--badge-radius');
+            });
+        }
+
+        // ==========================================
+        // AI 魔法
+        // ==========================================
+        async function fetchWithRetry(url, payload, retries = 3, delay = 1500) {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) {
+                const errText = await response.text().catch(() => response.status.toString());
+                // ✅ 優化：只在可重試錯誤 (5xx) 重試，不在 4xx 浪費時間
+                if (retries > 0 && response.status >= 500) {
                     await new Promise(res => setTimeout(res, delay));
                     return fetchWithRetry(url, payload, retries - 1, delay * 2);
-                } else {
-                    throw error;
                 }
+                throw new Error(String(response.status));
             }
+            return response.json();
         }
 
         generateAiBtn.addEventListener('click', async () => {
-            if (!originalImageData) {
-                showMsg('請先提供圖片', '請先拍照或上傳圖片再執行 AI 轉換。', 'error');
-                return;
-            }
+            if (!originalImageData) { showMsg('請先提供圖片', '請先拍照或上傳圖片再執行 AI 轉換。', 'error'); return; }
 
-            // 取得有效的 API Key (優先使用手動設定的，否則自動抓取系統預設金鑰)
-            let activeApiKey = localStorage.getItem('gemini_api_key_checheng');
-            if (!activeApiKey) {
-                activeApiKey = DEFAULT_API_KEY;
-            }
-            
-            if (!activeApiKey) {
-                showMsg('系統錯誤', '系統遺失預設 API Key。請聯繫管理員。', 'error');
-                return;
-            }
+            const activeApiKey = localStorage.getItem('gemini_api_key_checheng') || DEFAULT_API_KEY;
+            if (!activeApiKey) { showMsg('系統錯誤', '系統遺失預設 API Key。請聯繫管理員。', 'error'); return; }
 
             generateAiBtn.classList.add('hidden');
             aiLoading.classList.remove('hidden');
@@ -572,46 +556,36 @@
 
             try {
                 const base64Data = originalImageData.split(',')[1];
-                const stylePrompt = aiStyle.value;
-                const userPrompt = aiPrompt.value;
-                const promptText = userPrompt ? `${stylePrompt} Additional details: ${userPrompt}` : stylePrompt;
+                const promptText = [aiStyle.value, aiPrompt.value].filter(Boolean).join(' Additional details: ');
 
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${activeApiKey}`;
-                
-                const payload = {
-                    contents: [{
-                        role: "user",
-                        parts: [
+                const result = await fetchWithRetry(
+                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${activeApiKey}`,
+                    {
+                        contents: [{ role: "user", parts: [
                             { text: promptText },
-                            { inlineData: { mimeType: "image/png", data: base64Data } }
-                        ]
-                    }],
-                    generationConfig: { 
-                        responseModalities: ['TEXT', 'IMAGE'] 
+                            { inlineData: { mimeType: "image/jpeg", data: base64Data } }
+                        ]}],
+                        generationConfig: { responseModalities: ['TEXT', 'IMAGE'] }
                     }
-                };
+                );
 
-                const result = await fetchWithRetry(url, payload);
                 const outputPart = result.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
-                
-                if (outputPart && outputPart.inlineData && outputPart.inlineData.data) {
-                    aiImageData = `data:image/jpeg;base64,${outputPart.inlineData.data}`;
-                    previewImage.src = aiImageData;
-                    imageSourceSelect.options[1].disabled = false;
-                    imageSourceSelect.value = "ai";
-                    showMsg('魔法成功！', '已成功套用 AI 魔法風格！', 'success');
-                    if(badgesContainer.children.length === 0) addNewBadge();
-                    else updateAllBadgesImageSrc();
-                } else {
-                    throw new Error("回傳資料異常");
-                }
+                if (!outputPart?.inlineData?.data) throw new Error("回傳資料異常，請再試一次");
 
-            } catch (error) {
-                console.error("AI Error:", error);
-                if (error.message.includes('403') || error.message.includes('400')) {
-                    showMsg('API 連線被拒絕 (Error 403)', '請點擊齒輪檢查是否殘留舊金鑰。<br><br>若無殘留，請確認 Google Cloud 是否已將以下網域加入白名單：<br><b>*sites.google.com/*</b><br><b>*googleusercontent.com/*</b> (Google Sites 隱藏網域)<br><b>*github.io/*</b>', 'error');
+                aiImageData = `data:image/jpeg;base64,${outputPart.inlineData.data}`;
+                previewImage.src = aiImageData;
+                imageSourceSelect.options[1].disabled = false;
+                imageSourceSelect.value = 'ai';
+                updateAllBadgesImageSrc();
+                showMsg('魔法成功！', 'AI 風格套用完成！', 'success');
+
+            } catch (err) {
+                const code = err.message;
+                if (code === '403' || code === '400') {
+                    showMsg('API 連線被拒絕 (Error ' + code + ')',
+                        '請點擊齒輪按鈕，確認是否有殘留的舊 API Key。<br>若無，請確認 Google Cloud 已將您的部署網域加入 API 限制白名單。', 'error');
                 } else {
-                    showMsg('生成失敗', `發生錯誤：${error.message}<br>請稍後再試。`, 'error');
+                    showMsg('生成失敗', `錯誤：${err.message}<br>請稍後再試。`, 'error');
                 }
             } finally {
                 generateAiBtn.classList.remove('hidden');
@@ -620,71 +594,68 @@
             }
         });
 
-        // --- 排版與預覽互動 ---
+        // ==========================================
+        // 排版控制
+        // ==========================================
         shapeBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                shapeBtns.forEach(b => {
-                    b.classList.remove('bg-white', 'shadow-sm', 'text-blue-600');
-                    b.classList.add('text-slate-500');
-                });
-                const target = e.target;
-                target.classList.add('bg-white', 'shadow-sm', 'text-blue-600');
-                target.classList.remove('text-slate-500');
-                currentShape = target.dataset.shape;
-                updateAllBadges();
+            btn.addEventListener('click', () => {
+                shapeBtns.forEach(b => { b.classList.remove('bg-white', 'shadow-sm', 'text-blue-600'); b.classList.add('text-slate-500'); });
+                btn.classList.add('bg-white', 'shadow-sm', 'text-blue-600');
+                btn.classList.remove('text-slate-500');
+                currentShape = btn.dataset.shape;
+                updateCSSVars();
             });
         });
 
-        sizeSlider.addEventListener('input', (e) => {
-            currentSize = e.target.value;
+        sizeSlider.addEventListener('input', e => {
+            currentSize = +e.target.value;
             sizeValue.innerText = `${currentSize}mm`;
-            updateAllBadges();
+            updateCSSVars();
         });
 
-        imageFitMode.addEventListener('change', (e) => {
+        imageFitMode.addEventListener('change', e => {
             currentFitMode = e.target.value;
-            if (currentFitMode === 'custom') customScaleContainer.classList.remove('hidden');
-            else customScaleContainer.classList.add('hidden');
-            updateAllBadges();
+            customScaleContainer.classList.toggle('hidden', currentFitMode !== 'custom');
+            updateCSSVars();
         });
 
-        imageScaleSlider.addEventListener('input', (e) => {
-            currentImageScale = e.target.value;
+        imageScaleSlider.addEventListener('input', e => {
+            currentImageScale = +e.target.value;
             imageScaleValue.innerText = `${currentImageScale}%`;
-            if (currentFitMode === 'custom') updateAllBadges();
+            if (currentFitMode === 'custom') updateCSSVars();
         });
 
-        imageSourceSelect.addEventListener('change', (e) => {
-            const val = e.target.value;
-            if (val === 'ai' && aiImageData) previewImage.src = aiImageData;
-            else if (val === 'original' && originalImageData) previewImage.src = originalImageData;
+        // ✅ Bug 修正：來源切換後同步更新徽章圖片
+        imageSourceSelect.addEventListener('change', () => {
+            if (imageSourceSelect.value === 'ai' && aiImageData) previewImage.src = aiImageData;
+            else if (originalImageData) previewImage.src = activeImageObjectURL || originalImageData;
             updateAllBadgesImageSrc();
         });
 
         addBadgeBtn.addEventListener('click', addNewBadge);
         clearBadgeBtn.addEventListener('click', () => { badgesContainer.innerHTML = ''; });
 
-        function getActiveImageData() {
+        function getActiveImageSrc() {
             if (imageSourceSelect.value === 'ai' && aiImageData) return aiImageData;
-            return originalImageData;
+            return activeImageObjectURL || originalImageData;
         }
 
         function addNewBadge() {
-            const imgSrc = getActiveImageData();
+            const imgSrc = getActiveImageSrc();
             if (!imgSrc) { showMsg('尚未輸入影像', '請先拍照或上傳圖片。', 'error'); return; }
 
-            const badgeWrapper = document.createElement('div');
-            badgeWrapper.className = 'badge-container transition-all group relative';
-            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'badge-container transition-all group relative';
+
             const delBtn = document.createElement('button');
             delBtn.innerHTML = '<i class="fas fa-times"></i>';
             delBtn.className = 'absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full text-xs items-center justify-center hidden group-hover:flex no-print z-20 shadow-md';
-            delBtn.onclick = () => badgeWrapper.remove();
+            delBtn.onclick = () => wrapper.remove();
 
             const sideA = document.createElement('div');
             sideA.className = 'badge-side';
             sideA.style.backgroundImage = `url(${imgSrc})`;
-            
+
             const fold = document.createElement('div');
             fold.className = 'fold-line';
 
@@ -692,52 +663,37 @@
             sideB.className = 'badge-side';
             sideB.style.backgroundImage = `url(${imgSrc})`;
 
-            badgeWrapper.appendChild(delBtn);
-            badgeWrapper.appendChild(sideA);
-            badgeWrapper.appendChild(fold);
-            badgeWrapper.appendChild(sideB);
+            wrapper.append(delBtn, sideA, fold, sideB);
+            badgesContainer.appendChild(wrapper);
 
-            badgesContainer.appendChild(badgeWrapper);
-            applyStylesToBadge(badgeWrapper);
-        }
-
-        function applyStylesToBadge(wrapper) {
-            const sides = wrapper.querySelectorAll('.badge-side');
-            const sizePx = currentSize + 'mm';
-            let widthPx = sizePx, heightPx = sizePx, borderRadius = '0', isHeart = false;
-
-            if (currentShape === 'circle') borderRadius = '50%';
-            else if (currentShape === 'square') borderRadius = '16px';
-            else if (currentShape === 'rectangle') { heightPx = (currentSize * 0.75) + 'mm'; borderRadius = '12px'; }
-            else if (currentShape === 'heart') isHeart = true;
-
-            sides.forEach(side => {
-                side.style.width = widthPx; side.style.height = heightPx; side.style.borderRadius = borderRadius;
-                if (isHeart) { side.classList.add('shape-heart'); side.style.border = 'none'; side.style.boxShadow = 'none'; }
-                else { side.classList.remove('shape-heart'); side.style.border = '1px solid #e2e8f0'; side.style.boxShadow = 'inset 0 0 0 2px white'; }
-                side.style.backgroundPosition = 'center';
-                side.style.backgroundSize = currentFitMode === 'custom' ? `${currentImageScale}%` : currentFitMode;
-            });
-            wrapper.style.borderRadius = isHeart ? '0' : borderRadius;
-        }
-
-        function updateAllBadges() {
-            const badges = badgesContainer.querySelectorAll('.badge-container');
-            badges.forEach(applyStylesToBadge);
-        }
-
-        function resizeA4Preview() {
-            const container = document.querySelector('.custom-scrollbar');
-            const printArea = document.getElementById('printArea');
-            if (!window.matchMedia('print').matches) {
-                const containerWidth = container.clientWidth - 32;
-                const a4WidthPx = 210 * 3.7795275591;
-                printArea.style.transform = containerWidth < a4WidthPx ? `scale(${containerWidth / a4WidthPx})` : `scale(1)`;
+            // ✅ 套用當前形狀 (因 CSS 變數已設，只需確保心形 class)
+            if (currentShape === 'heart') {
+                sideA.classList.add('shape-heart');
+                sideB.classList.add('shape-heart');
+                wrapper.style.borderRadius = '0';
             }
         }
+
+        // ==========================================
+        // ✅ Bug 修正：resizeA4Preview 選擇器修正 + debounce
+        // ==========================================
+        let resizeTimer;
+        function resizeA4Preview() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                const container = document.getElementById('previewContainer');
+                const printArea = document.getElementById('printArea');
+                if (!container || !printArea) return;
+                const containerWidth = container.clientWidth - 32;
+                const a4WidthPx = 210 * 3.7795275591;
+                printArea.style.transform = containerWidth < a4WidthPx
+                    ? `scale(${(containerWidth / a4WidthPx).toFixed(4)})`
+                    : 'scale(1)';
+            }, 80); // debounce 80ms
+        }
+
         window.addEventListener('resize', resizeA4Preview);
         setTimeout(resizeA4Preview, 100);
-
     </script>
 </body>
 </html>
