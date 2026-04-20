@@ -106,9 +106,15 @@
                     <p class="text-xs text-slate-500">AI 智慧生成・雙面排版系統</p>
                 </div>
             </div>
-            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full font-medium transition-colors shadow-sm flex items-center gap-2">
-                <i class="fas fa-print"></i> 列印 / 存為 PDF
-            </button>
+            <div class="flex items-center gap-2">
+                <!-- 設定按鈕 -->
+                <button onclick="openSettingsModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full font-medium transition-colors shadow-sm flex items-center gap-2">
+                    <i class="fas fa-print hidden sm:inline"></i> 列印
+                </button>
+            </div>
         </div>
     </header>
 
@@ -129,7 +135,7 @@
                     
                     <div id="mediaPlaceholder" class="text-center text-slate-400 p-4">
                         <i class="fas fa-image text-4xl mb-2"></i>
-                        <p class="text-sm">請拍照或上傳圖片</p>
+                        <p class="text-sm mt-2">請使用下方按鈕<br>拍照或上傳圖片</p>
                     </div>
                 </div>
 
@@ -158,13 +164,13 @@
             </section>
 
             <!-- Step 2: AI 魔法 -->
-            <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 relative">
                 <h2 class="font-bold text-lg mb-2 flex items-center gap-2"><i class="fas fa-wand-magic-sparkles text-amber-500"></i> 2. AI 風格轉換</h2>
                 <p class="text-xs text-slate-500 mb-4">使用 Gemini 生成不同風格的圖片</p>
                 
                 <div class="mb-3">
                     <label class="block text-sm font-medium text-slate-700 mb-1">選擇風格</label>
-                    <select id="aiStyle" class="w-full text-sm p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
+                    <select id="aiStyle" class="w-full text-sm p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                         <option value="Convert this image into a high-quality 3D Pixar style 3D cartoon character or scene. Keep the main subject recognizable but make it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors.">3D Pixar 動畫風</option>
                         <option value="Convert this image into a beautiful watercolor painting style. Soft edges, delicate washes of color, and an artistic, dreamlike quality.">水彩藝術風</option>
                         <option value="Convert this image into a cyberpunk style. Neon lights, futuristic elements, high tech, dark and gritty atmosphere.">賽博龐克風</option>
@@ -191,7 +197,7 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">使用圖像來源</label>
-                        <select id="imageSource" class="w-full text-sm p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
+                        <select id="imageSource" class="w-full text-sm p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                             <option value="original">原始圖片</option>
                             <option value="ai" disabled>AI 生成圖片 (尚未生成)</option>
                         </select>
@@ -209,7 +215,7 @@
 
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1">圖片顯示模式</label>
-                        <select id="imageFitMode" class="w-full text-sm p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
+                        <select id="imageFitMode" class="w-full text-sm p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                             <option value="cover">裁切填滿 (自動置中)</option>
                             <option value="contain">完整顯示 (保持原比例)</option>
                             <option value="custom">自訂縮放</option>
@@ -266,21 +272,47 @@
         <p>車城國小資訊老師 @ Google Gemini 協作設計 | 嚴禁上傳含有敏感個資之圖片</p>
     </footer>
 
+    <!-- 系統設定 Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center z-[100] backdrop-blur-sm transition-opacity opacity-0">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-95 transition-transform" id="settingsContent">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-slate-800"><i class="fas fa-cog text-slate-500 mr-2"></i>系統設定</h3>
+                <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-slate-700 mb-1">設定您的 Gemini API Key</label>
+                <input type="password" id="apiKeyInput" class="w-full text-sm p-3 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 font-mono" placeholder="AIzaSy...">
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+                    部署至 Google Sites 時，必須填入您專屬的 API Key 才能執行 AI 魔法。<br>
+                    <span class="text-amber-600"><i class="fas fa-shield-alt"></i> 此金鑰僅會保存在您當前的瀏覽器中 (LocalStorage)，不會上傳至其他伺服器。</span>
+                </p>
+            </div>
+            <button onclick="saveSettings()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-medium transition-colors shadow-sm">儲存並關閉</button>
+        </div>
+    </div>
+
     <!-- 系統訊息 Modal -->
-    <div id="msgModal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center z-[100] backdrop-blur-sm transition-opacity opacity-0">
+    <div id="msgModal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center z-[110] backdrop-blur-sm transition-opacity opacity-0">
         <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-95 transition-transform" id="msgContent">
             <div class="text-center mb-4" id="msgIcon">
                 <i class="fas fa-info-circle text-4xl text-blue-500"></i>
             </div>
             <h3 class="text-lg font-bold text-slate-800 text-center mb-2" id="msgTitle">提示</h3>
             <p class="text-slate-600 text-center text-sm mb-6" id="msgText">訊息內容</p>
-            <button onclick="closeModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-colors">確認</button>
+            <button onclick="closeModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-medium transition-colors">確認</button>
         </div>
     </div>
 
     <script>
-        // --- 核心變數設定 ---
-        const apiKey = ""; // 執行環境動態注入
+        // ==========================================
+        // 🔑 系統核心設定區
+        // ==========================================
+        // 已經為您填入從 Google AI Studio 申請到的金鑰！
+        // 只要您在 Google Cloud 控制台設定好這把金鑰的「網站限制 (HTTP Referrers)」，
+        // 手機或學生端就完全不需要手動輸入了！
+        const DEFAULT_API_KEY = "AIzaSyA16u6OldidFZWVmeWE_oyT6FpQ9nJL9YA"; 
+        
+        // --- 內部狀態變數 ---
         let originalImageData = null; // 原始圖片 Base64
         let aiImageData = null; // AI 生成圖片 Base64
         let currentShape = 'circle'; // circle 或 square, rectangle, heart
@@ -297,7 +329,7 @@
         const startCamBtn = document.getElementById('startCamBtn');
         const captureBtn = document.getElementById('captureBtn');
         const uploadInput = document.getElementById('uploadInput');
-        const mobileCamInput = document.getElementById('mobileCamInput'); // 新增：手機原生相機
+        const mobileCamInput = document.getElementById('mobileCamInput');
         
         const processCanvas = document.getElementById('processCanvas');
         const ctx = processCanvas.getContext('2d');
@@ -321,11 +353,57 @@
         const badgesContainer = document.getElementById('badgesContainer');
         const addBadgeBtn = document.getElementById('addBadgeBtn');
         const clearBadgeBtn = document.getElementById('clearBadgeBtn');
+        
+        const apiKeyInput = document.getElementById('apiKeyInput');
 
-        // --- 輔助函式：自訂提示框 ---
+        // 初始化讀取 LocalStorage 金鑰
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedKey = localStorage.getItem('gemini_api_key_checheng');
+            // 如果有手動設定過就顯示，否則顯示預設的 Key
+            if (savedKey) {
+                apiKeyInput.value = savedKey;
+            } else if (DEFAULT_API_KEY && !DEFAULT_API_KEY.includes("請在此貼上")) {
+                apiKeyInput.value = DEFAULT_API_KEY;
+            }
+        });
+
+        // --- 輔助函式：Modal 控制 ---
+        function openSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            const content = document.getElementById('settingsContent');
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            const content = document.getElementById('settingsContent');
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        function saveSettings() {
+            const key = apiKeyInput.value.trim();
+            if (key && key !== DEFAULT_API_KEY) {
+                localStorage.setItem('gemini_api_key_checheng', key);
+            } else {
+                localStorage.removeItem('gemini_api_key_checheng');
+            }
+            closeSettingsModal();
+            showMsg('設定已儲存', 'API Key 狀態已更新。', 'success');
+        }
+
         function showMsg(title, text, type = 'info') {
             document.getElementById('msgTitle').innerText = title;
-            document.getElementById('msgText').innerText = text;
+            document.getElementById('msgText').innerHTML = text; // 支援 HTML 標籤
             const icon = document.getElementById('msgIcon');
             if(type === 'error') icon.innerHTML = '<i class="fas fa-exclamation-circle text-4xl text-red-500"></i>';
             else if(type === 'success') icon.innerHTML = '<i class="fas fa-check-circle text-4xl text-emerald-500"></i>';
@@ -352,16 +430,10 @@
             }, 300);
         }
 
-        // --- 影像輸入處理 (WebCam & Upload & Mobile Native Cam) ---
-        
-        // 1. WebRTC 網頁相機 (PC 端或獨立網頁使用)
+        // --- 影像輸入處理 ---
         startCamBtn.addEventListener('click', async () => {
             try {
-                if (stream) {
-                    stopCamera();
-                    return;
-                }
-                // 移除強制的長寬限制，讓手機/瀏覽器更容易通過審核
+                if (stream) { stopCamera(); return; }
                 stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
                 videoElement.srcObject = stream;
                 videoElement.classList.remove('hidden');
@@ -374,7 +446,7 @@
                 captureBtn.classList.remove('hidden');
             } catch (err) {
                 console.error(err);
-                showMsg('相機權限受限', '無法存取網頁相機。如果您使用手機或 Google Sites，請改用上方藍色的「手機拍照」按鈕，這是最穩定的方式！', 'error');
+                showMsg('相機權限受限', '無法存取網頁相機。請改用上方藍色的「手機拍照」按鈕。', 'error');
             }
         });
 
@@ -395,28 +467,21 @@
             if (!stream) return;
             processCanvas.width = 1024;
             processCanvas.height = 1024;
-            
             const size = Math.min(videoElement.videoWidth, videoElement.videoHeight);
             const startX = (videoElement.videoWidth - size) / 2;
             const startY = (videoElement.videoHeight - size) / 2;
-            
             ctx.translate(1024, 0);
             ctx.scale(-1, 1);
             ctx.drawImage(videoElement, startX, startY, size, size, 0, 0, 1024, 1024);
             ctx.setTransform(1, 0, 0, 1, 0, 0);
-            
             setImageFromCanvas();
             stopCamera();
         });
 
-        // 2. 共用上傳處理函式 (給 相簿上傳 & 手機原生拍照 共用)
         function handleFileInput(e) {
             const file = e.target.files[0];
             if (!file) return;
-            
-            // 若目前網頁相機開著，自動關閉它
             if (stream) stopCamera();
-
             const reader = new FileReader();
             reader.onload = (event) => {
                 const img = new Image();
@@ -426,15 +491,13 @@
                     const size = Math.min(img.width, img.height);
                     const startX = (img.width - size) / 2;
                     const startY = (img.height - size) / 2;
-                    
-                    // 繪製到 Canvas 上
                     ctx.drawImage(img, startX, startY, size, size, 0, 0, 1024, 1024);
                     setImageFromCanvas();
                 };
                 img.src = event.target.result;
             };
             reader.readAsDataURL(file);
-            e.target.value = ''; // 重置 input 讓同一張圖可以重複選
+            e.target.value = '';
         }
 
         uploadInput.addEventListener('change', handleFileInput);
@@ -445,25 +508,17 @@
             previewImage.src = originalImageData;
             previewImage.classList.remove('hidden');
             mediaPlaceholder.classList.add('hidden');
-            
             aiImageData = null;
             imageSourceSelect.options[1].disabled = true;
             imageSourceSelect.value = "original";
-            
-            if(badgesContainer.children.length === 0) {
-                addNewBadge();
-            } else {
-                // 如果已經有徽章了，就直接更新圖片源
-                updateAllBadgesImageSrc();
-            }
+            if(badgesContainer.children.length === 0) addNewBadge();
+            else updateAllBadgesImageSrc();
         }
 
         function updateAllBadgesImageSrc() {
              const badges = badgesContainer.querySelectorAll('.badge-side');
              const imgSrc = getActiveImageData();
-             badges.forEach(side => {
-                 side.style.backgroundImage = `url(${imgSrc})`;
-             });
+             badges.forEach(side => side.style.backgroundImage = `url(${imgSrc})`);
         }
 
         // --- AI 魔法 (Gemini API Image-to-Image) ---
@@ -474,7 +529,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                if (!response.ok) throw new Error(`${response.status}`);
                 return await response.json();
             } catch (error) {
                 if (retries > 0) {
@@ -492,6 +547,17 @@
                 return;
             }
 
+            // 取得有效的 API Key (優先使用手動設定的，否則使用預設寫死的)
+            let activeApiKey = localStorage.getItem('gemini_api_key_checheng');
+            if (!activeApiKey && DEFAULT_API_KEY && !DEFAULT_API_KEY.includes("請在此貼上")) {
+                activeApiKey = DEFAULT_API_KEY;
+            }
+            
+            if (!activeApiKey) {
+                showMsg('缺少 API Key', '請點擊右上角「⚙️齒輪圖示」設定您的 Gemini API Key，或請老師在程式碼中預設金鑰。', 'error');
+                return;
+            }
+
             generateAiBtn.classList.add('hidden');
             aiLoading.classList.remove('hidden');
             aiLoading.classList.add('flex');
@@ -502,7 +568,7 @@
                 const userPrompt = aiPrompt.value;
                 const promptText = userPrompt ? `${stylePrompt} Additional details: ${userPrompt}` : stylePrompt;
 
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${activeApiKey}`;
                 
                 const payload = {
                     contents: [{
@@ -522,25 +588,24 @@
                 
                 if (outputPart && outputPart.inlineData && outputPart.inlineData.data) {
                     aiImageData = `data:image/jpeg;base64,${outputPart.inlineData.data}`;
-                    
                     previewImage.src = aiImageData;
                     imageSourceSelect.options[1].disabled = false;
                     imageSourceSelect.value = "ai";
-                    
-                    showMsg('生成成功！', '已成功套用 AI 魔法風格！', 'success');
-                    
-                    if(badgesContainer.children.length === 0) {
-                        addNewBadge();
-                    } else {
-                        updateAllBadgesImageSrc();
-                    }
+                    showMsg('魔法成功！', '已成功套用 AI 魔法風格！', 'success');
+                    if(badgesContainer.children.length === 0) addNewBadge();
+                    else updateAllBadgesImageSrc();
                 } else {
-                    throw new Error("API 未回傳圖片，可能被安全機制阻擋。");
+                    throw new Error("回傳資料異常");
                 }
 
             } catch (error) {
                 console.error("AI Error:", error);
-                showMsg('生成失敗', `發生錯誤：${error.message}`, 'error');
+                // 特別處理 403 / 400 錯誤，給予友善提示
+                if (error.message.includes('403') || error.message.includes('400')) {
+                    showMsg('API 金鑰無效或被拒絕 (Error 403)', '連線被 Google 拒絕。<br>請點擊右上角「⚙️齒輪圖示」檢查：<br>1. 金鑰是否輸入正確<br>2. 該金鑰是否有被設定過嚴的「網站限制 (CORS)」<br>3. 金鑰是否已啟用 Gemini API 服務', 'error');
+                } else {
+                    showMsg('生成失敗', `發生錯誤：${error.message}<br>請稍後再試。`, 'error');
+                }
             } finally {
                 generateAiBtn.classList.remove('hidden');
                 aiLoading.classList.add('hidden');
@@ -558,7 +623,6 @@
                 const target = e.target;
                 target.classList.add('bg-white', 'shadow-sm', 'text-blue-600');
                 target.classList.remove('text-slate-500');
-                
                 currentShape = target.dataset.shape;
                 updateAllBadges();
             });
@@ -572,11 +636,8 @@
 
         imageFitMode.addEventListener('change', (e) => {
             currentFitMode = e.target.value;
-            if (currentFitMode === 'custom') {
-                customScaleContainer.classList.remove('hidden');
-            } else {
-                customScaleContainer.classList.add('hidden');
-            }
+            if (currentFitMode === 'custom') customScaleContainer.classList.remove('hidden');
+            else customScaleContainer.classList.add('hidden');
             updateAllBadges();
         });
 
@@ -588,19 +649,13 @@
 
         imageSourceSelect.addEventListener('change', (e) => {
             const val = e.target.value;
-            if (val === 'ai' && aiImageData) {
-                previewImage.src = aiImageData;
-            } else if (val === 'original' && originalImageData) {
-                previewImage.src = originalImageData;
-            }
+            if (val === 'ai' && aiImageData) previewImage.src = aiImageData;
+            else if (val === 'original' && originalImageData) previewImage.src = originalImageData;
             updateAllBadgesImageSrc();
         });
 
         addBadgeBtn.addEventListener('click', addNewBadge);
-
-        clearBadgeBtn.addEventListener('click', () => {
-            badgesContainer.innerHTML = '';
-        });
+        clearBadgeBtn.addEventListener('click', () => { badgesContainer.innerHTML = ''; });
 
         function getActiveImageData() {
             if (imageSourceSelect.value === 'ai' && aiImageData) return aiImageData;
@@ -609,10 +664,7 @@
 
         function addNewBadge() {
             const imgSrc = getActiveImageData();
-            if (!imgSrc) {
-                showMsg('尚未輸入影像', '請先拍照或上傳圖片。', 'error');
-                return;
-            }
+            if (!imgSrc) { showMsg('尚未輸入影像', '請先拍照或上傳圖片。', 'error'); return; }
 
             const badgeWrapper = document.createElement('div');
             badgeWrapper.className = 'badge-container transition-all group relative';
@@ -645,45 +697,20 @@
         function applyStylesToBadge(wrapper) {
             const sides = wrapper.querySelectorAll('.badge-side');
             const sizePx = currentSize + 'mm';
-            let widthPx = sizePx;
-            let heightPx = sizePx;
-            let borderRadius = '0';
-            let isHeart = false;
+            let widthPx = sizePx, heightPx = sizePx, borderRadius = '0', isHeart = false;
 
-            if (currentShape === 'circle') {
-                borderRadius = '50%';
-            } else if (currentShape === 'square') {
-                borderRadius = '16px';
-            } else if (currentShape === 'rectangle') {
-                heightPx = (currentSize * 0.75) + 'mm';
-                borderRadius = '12px';
-            } else if (currentShape === 'heart') {
-                isHeart = true;
-            }
+            if (currentShape === 'circle') borderRadius = '50%';
+            else if (currentShape === 'square') borderRadius = '16px';
+            else if (currentShape === 'rectangle') { heightPx = (currentSize * 0.75) + 'mm'; borderRadius = '12px'; }
+            else if (currentShape === 'heart') isHeart = true;
 
             sides.forEach(side => {
-                side.style.width = widthPx;
-                side.style.height = heightPx;
-                side.style.borderRadius = borderRadius;
-                
-                if (isHeart) {
-                    side.classList.add('shape-heart');
-                    side.style.border = 'none';
-                    side.style.boxShadow = 'none';
-                } else {
-                    side.classList.remove('shape-heart');
-                    side.style.border = '1px solid #e2e8f0';
-                    side.style.boxShadow = 'inset 0 0 0 2px white';
-                }
-                
+                side.style.width = widthPx; side.style.height = heightPx; side.style.borderRadius = borderRadius;
+                if (isHeart) { side.classList.add('shape-heart'); side.style.border = 'none'; side.style.boxShadow = 'none'; }
+                else { side.classList.remove('shape-heart'); side.style.border = '1px solid #e2e8f0'; side.style.boxShadow = 'inset 0 0 0 2px white'; }
                 side.style.backgroundPosition = 'center';
-                if (currentFitMode === 'custom') {
-                    side.style.backgroundSize = `${currentImageScale}%`;
-                } else {
-                    side.style.backgroundSize = currentFitMode;
-                }
+                side.style.backgroundSize = currentFitMode === 'custom' ? `${currentImageScale}%` : currentFitMode;
             });
-            
             wrapper.style.borderRadius = isHeart ? '0' : borderRadius;
         }
 
@@ -698,15 +725,9 @@
             if (!window.matchMedia('print').matches) {
                 const containerWidth = container.clientWidth - 32;
                 const a4WidthPx = 210 * 3.7795275591;
-                if (containerWidth < a4WidthPx) {
-                    const scale = containerWidth / a4WidthPx;
-                    printArea.style.transform = `scale(${scale})`;
-                } else {
-                    printArea.style.transform = `scale(1)`;
-                }
+                printArea.style.transform = containerWidth < a4WidthPx ? `scale(${containerWidth / a4WidthPx})` : `scale(1)`;
             }
         }
-
         window.addEventListener('resize', resizeA4Preview);
         setTimeout(resizeA4Preview, 100);
 
