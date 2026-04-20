@@ -139,15 +139,15 @@
     <main class="flex-1 max-w-7xl mx-auto w-full flex flex-col lg:flex-row gap-6 p-4 lg:p-6 overflow-hidden">
         
         <aside class="w-full lg:w-80 flex flex-col gap-5 no-print overflow-y-auto pr-2 pb-10">
-            
+            <!-- Step 1 -->
             <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-camera text-blue-500"></i> 1. 影像輸入</h2>
+                <h2 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-camera text-blue-500"></i> 1. 影像輸入 (選填)</h2>
                 <div class="relative w-full aspect-square bg-slate-100 rounded-xl overflow-hidden mb-4 border-2 border-dashed border-slate-300 flex items-center justify-center" id="mediaContainer">
                     <video id="videoElement" autoplay playsinline class="absolute inset-0 w-full h-full object-cover hidden"></video>
                     <img id="previewImage" class="absolute inset-0 w-full h-full object-cover hidden" alt="預覽圖片" />
                     <div id="mediaPlaceholder" class="text-center text-slate-400 p-4">
                         <i class="fas fa-image text-4xl mb-2"></i>
-                        <p class="text-sm mt-2">請使用下方按鈕<br>拍照或上傳圖片</p>
+                        <p class="text-sm mt-2">拍照、上傳圖片<br>或直接使用文字生成</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mb-3">
@@ -170,17 +170,19 @@
                 </div>
             </section>
 
+            <!-- Step 2 -->
             <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="font-bold text-lg mb-2 flex items-center gap-2"><i class="fas fa-wand-magic-sparkles text-amber-500"></i> 2. AI 風格轉換</h2>
-                <p class="text-xs text-slate-500 mb-4">使用 Gemini 生成不同風格的圖片</p>
+                <h2 class="font-bold text-lg mb-2 flex items-center gap-2"><i class="fas fa-wand-magic-sparkles text-amber-500"></i> 2. AI 魔法轉換</h2>
+                <p class="text-xs text-slate-500 mb-4">使用 Imagen 3 模型。若有照片，AI 會先解析再重繪；若無照片，將直接由文字生成。</p>
                 <div class="mb-3">
                     <label class="block text-sm font-medium text-slate-700 mb-1">選擇風格</label>
                     <select id="aiStyle" class="w-full text-sm p-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                        <option value="Convert this image into a high-quality 3D Pixar style cartoon character or scene. Keep the main subject recognizable but make it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors.">3D Pixar 動畫風</option>
-                        <option value="Convert this image into a beautiful watercolor painting style. Soft edges, delicate washes of color, and an artistic, dreamlike quality.">水彩藝術風</option>
-                        <option value="Convert this image into a cyberpunk style. Neon lights, futuristic elements, high tech, dark and gritty atmosphere.">賽博龐克風</option>
-                        <option value="Convert this image into a classic Studio Ghibli anime style. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel.">吉卜力動畫風</option>
-                        <option value="Convert this image into a vibrant pop art style, inspired by Andy Warhol. Bold colors, high contrast, and comic book-like halftone patterns.">普普藝術風</option>
+                        <option value="A highly detailed 3D Pixar style cartoon illustration. Extremely cute, cinematic lighting, vibrant colors.">3D Pixar 動畫風</option>
+                        <option value="A beautiful watercolor painting style. Soft edges, delicate washes of color, artistic.">水彩藝術風</option>
+                        <option value="A cyberpunk style digital art. Neon lights, futuristic elements, highly detailed.">賽博龐克風</option>
+                        <option value="A classic Studio Ghibli anime style illustration. Detailed backgrounds, nostalgic feel.">吉卜力動畫風</option>
+                        <option value="A retro 8-bit pixel art style, flat 2D illustration.">復古像素風</option>
+                        <option value="A clean minimalist line art sketch, black and white ink style.">極簡線條素描</option>
                     </select>
                 </div>
                 <textarea id="aiPrompt" rows="2" class="w-full text-sm p-3 border border-slate-300 rounded-xl mb-3 focus:ring-2 focus:ring-blue-500 outline-none resize-none" placeholder="輸入額外提示 (可選，例如: 加上車城洋蔥元素)"></textarea>
@@ -189,10 +191,11 @@
                 </button>
                 <div id="aiLoading" class="hidden flex-col items-center justify-center mt-3 gap-2">
                     <div class="loader"></div>
-                    <span class="text-sm text-slate-500">AI 魔法詠唱中... (約需 15-30 秒)</span>
+                    <span id="aiStatusText" class="text-sm text-slate-500">AI 魔法詠唱中...</span>
                 </div>
             </section>
 
+            <!-- Step 3 -->
             <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
                 <h2 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-layer-group text-purple-500"></i> 3. 徽章排版設定</h2>
                 <div class="space-y-4">
@@ -245,6 +248,7 @@
             </section>
         </aside>
 
+        <!-- 預覽區 -->
         <section id="previewContainer" class="flex-1 bg-slate-200/50 rounded-2xl overflow-y-auto flex justify-center p-4 lg:p-8 relative">
             <div id="printArea" class="a4-preview">
                 <div class="absolute top-0 left-0 w-full h-full pointer-events-none p-4 opacity-10 no-print flex items-center justify-center">
@@ -260,6 +264,7 @@
         <p>車城國小資訊老師 @ Google Gemini 協作設計 | 嚴禁上傳含有敏感個資之圖片</p>
     </footer>
 
+    <!-- 系統設定 Modal -->
     <div id="settingsModal" class="modal-overlay" style="z-index:100;">
         <div class="modal-content">
             <div class="flex justify-between items-center mb-4">
@@ -271,17 +276,6 @@
                 <input type="password" id="apiKeyInput" class="w-full text-sm p-3 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 font-mono" placeholder="系統已內建，不需填寫">
                 <p class="text-xs text-slate-500 mt-2 leading-relaxed">系統已內建預設金鑰。除非需要專屬金鑰測試，否則請保持空白。</p>
             </div>
-            <!-- 新增：AI 模型代號設定與自動尋找功能 -->
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-slate-700 mb-1">進階：AI 模型代號 (防淘汰機制)</label>
-                <div class="flex gap-2">
-                    <input type="text" id="modelInput" class="w-full text-sm p-3 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 font-mono" placeholder="gemini-3.1-flash-image-preview">
-                    <button onclick="autoFindModel()" class="bg-amber-100 hover:bg-amber-200 text-amber-700 px-3 rounded-lg text-sm font-medium transition-colors whitespace-nowrap border border-amber-200" title="自動尋找最新模型">
-                        <i class="fas fa-search"></i> 自動尋找
-                    </button>
-                </div>
-                <p class="text-xs text-slate-500 mt-2 leading-relaxed">若原廠淘汰舊模型導致報錯，請點擊「自動尋找」來更新。</p>
-            </div>
             <div class="flex flex-col gap-2">
                 <button onclick="saveSettings()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-medium transition-colors shadow-sm">儲存設定</button>
                 <button onclick="clearCache()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 py-2.5 rounded-xl font-medium transition-colors shadow-sm border border-slate-200">
@@ -291,6 +285,7 @@
         </div>
     </div>
 
+    <!-- 訊息 Modal -->
     <div id="msgModal" class="modal-overlay" style="z-index:110;">
         <div class="modal-content text-center">
             <div class="mb-4" id="msgIcon"><i class="fas fa-info-circle text-4xl text-blue-500"></i></div>
@@ -305,9 +300,7 @@
         // 🔑 系統核心設定 (您的車城國小專屬金鑰)
         // ==========================================
         const DEFAULT_API_KEY = "AIzaSyA16u6OldidFZWVmeWE_oyT6FpQ9nJL9YA";
-        const DEFAULT_MODEL = "gemini-3.1-flash-image-preview"; // 預設模型名稱
 
-        // --- 狀態變數 ---
         let originalImageData = null;
         let aiImageData = null;
         let currentShape = 'circle';
@@ -328,6 +321,7 @@
         const ctx = processCanvas.getContext('2d');
         const generateAiBtn = document.getElementById('generateAiBtn');
         const aiLoading = document.getElementById('aiLoading');
+        const aiStatusText = document.getElementById('aiStatusText');
         const aiPrompt = document.getElementById('aiPrompt');
         const aiStyle = document.getElementById('aiStyle');
         const imageSourceSelect = document.getElementById('imageSource');
@@ -340,14 +334,10 @@
         const imageScaleValue = document.getElementById('imageScaleValue');
         const badgesContainer = document.getElementById('badgesContainer');
         const apiKeyInput = document.getElementById('apiKeyInput');
-        const modelInput = document.getElementById('modelInput'); // 新增模型輸入框
 
         window.addEventListener('DOMContentLoaded', () => {
             const savedKey = localStorage.getItem('gemini_api_key_checheng');
             if (savedKey) apiKeyInput.value = savedKey;
-
-            const savedModel = localStorage.getItem('gemini_model_checheng');
-            modelInput.value = savedModel || DEFAULT_MODEL;
         });
 
         // --- Modal 控制 ---
@@ -367,55 +357,15 @@
             const key = apiKeyInput.value.trim();
             if (key) localStorage.setItem('gemini_api_key_checheng', key);
             else localStorage.removeItem('gemini_api_key_checheng');
-
-            const model = modelInput.value.trim();
-            if (model && model !== DEFAULT_MODEL) localStorage.setItem('gemini_model_checheng', model);
-            else localStorage.removeItem('gemini_model_checheng');
-
-            showMsg('設定已儲存', '系統設定已更新。', 'success');
+            showMsg('設定已儲存', key ? '已切換為備用 API Key。' : '已恢復預設 API Key。', 'success');
             closeSettingsModal();
         }
         
         function clearCache() {
             apiKeyInput.value = '';
-            modelInput.value = DEFAULT_MODEL;
             localStorage.removeItem('gemini_api_key_checheng');
-            localStorage.removeItem('gemini_model_checheng');
             closeSettingsModal();
-            showMsg('清除成功', '已清除手機暫存！現在系統會自動使用內建預設值。', 'success');
-        }
-
-        // --- 自動尋找最新模型 ---
-        async function autoFindModel() {
-            const activeApiKey = apiKeyInput.value.trim() || localStorage.getItem('gemini_api_key_checheng') || DEFAULT_API_KEY;
-            if (!activeApiKey) return showMsg('錯誤', '請先設定 API Key', 'error');
-
-            try {
-                modelInput.value = "搜尋中...";
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${activeApiKey}`);
-                if (!res.ok) throw new Error("無法取得模型列表");
-                const data = await res.json();
-                
-                // 尋找包含 image 且支援 generateContent 的模型
-                const imageModels = data.models.filter(m => 
-                    m.name.includes('image') && 
-                    m.supportedGenerationMethods.includes('generateContent')
-                );
-                
-                if (imageModels.length > 0) {
-                    // 排序取名稱最大的 (例如 3.1 會排在 2.5 前面)
-                    imageModels.sort((a, b) => b.name.localeCompare(a.name));
-                    const latestModel = imageModels[0].name.replace('models/', '');
-                    modelInput.value = latestModel;
-                    showMsg('尋找成功', `已自動找到 Google 最新影像模型：<br><br><b class="text-blue-600">${latestModel}</b><br><br>請點擊「儲存設定」來套用！`, 'success');
-                } else {
-                    modelInput.value = DEFAULT_MODEL;
-                    showMsg('尋找失敗', '找不到支援的影像生成模型，已恢復預設值。', 'error');
-                }
-            } catch (err) {
-                modelInput.value = DEFAULT_MODEL;
-                showMsg('連線錯誤', '無法自動尋找模型，請確認 API Key 與網路狀態。', 'error');
-            }
+            showMsg('清除成功', '已清除手機暫存的舊金鑰！現在系統會自動使用內建預設金鑰。', 'success');
         }
 
         // --- 影像輸入處理 ---
@@ -477,7 +427,7 @@
                     setImageFromCanvas();
                 };
                 img.onerror = () => {
-                    showMsg('圖片載入失敗', '手機可能不支援此格式 (如 HEIC)。請將圖片「截圖」後再重新上傳試試！', 'error');
+                    showMsg('圖片載入失敗', '可能是不支援的格式。請將圖片「截圖」後再重新上傳試試！', 'error');
                 }
                 img.src = ev.target.result;
             };
@@ -537,7 +487,7 @@
             });
         }
 
-        // --- AI 魔法 ---
+        // --- 共用 API Fetch 函式 ---
         async function fetchWithRetry(url, payload, retries = 2, delay = 1500) {
             const response = await fetch(url, {
                 method: 'POST',
@@ -563,44 +513,75 @@
             return response.json();
         }
 
+        // ==========================================
+        // 💡 雙模型接力生成法 (完美支援 GitHub 公開金鑰)
+        // ==========================================
         generateAiBtn.addEventListener('click', async () => {
-            if (!originalImageData) { showMsg('請先提供圖片', '請先拍照或上傳圖片再執行 AI 轉換。', 'error'); return; }
+            const userExtra = aiPrompt.value.trim();
+            
+            // 允許沒有照片，但一定要有提示文字
+            if (!originalImageData && !userExtra) { 
+                showMsg('請提供素材', '請先拍照/上傳圖片，或者在「額外提示」中輸入您想生成的畫面！', 'error'); 
+                return; 
+            }
 
             const activeApiKey = localStorage.getItem('gemini_api_key_checheng') || DEFAULT_API_KEY;
             if (!activeApiKey) { showMsg('系統錯誤', '系統遺失 API Key。請聯繫管理員。', 'error'); return; }
-
-            const activeModelName = localStorage.getItem('gemini_model_checheng') || DEFAULT_MODEL;
-
-            const base64Data = originalImageData.split(',')[1];
-            if (!base64Data || base64Data.length < 1000) {
-                showMsg('圖片讀取異常', '手機可能無法解析這張照片 (可能格式不符)。<br>💡 小撇步：請將這張照片「螢幕截圖」後，再上傳一次截圖！', 'error');
-                return;
-            }
 
             generateAiBtn.classList.add('hidden');
             aiLoading.classList.remove('hidden');
             aiLoading.classList.add('flex');
 
             try {
-                const promptText = [aiStyle.value, aiPrompt.value].filter(Boolean).join(' Additional details: ');
+                let finalPrompt = "";
+                const styleText = aiStyle.value;
 
-                // ✅ 關鍵修復：這裡已換上動態 AI 模型變數！
-                const result = await fetchWithRetry(
-                    `https://generativelanguage.googleapis.com/v1beta/models/${activeModelName}:generateContent?key=${activeApiKey}`,
-                    {
-                        contents: [{ role: "user", parts: [
-                            { text: promptText },
-                            { inlineData: { mimeType: "image/jpeg", data: base64Data } }
-                        ]}],
-                        generationConfig: { responseModalities: ['TEXT', 'IMAGE'] }
-                    }
-                );
+                // --- 步驟 1：如果有照片，先用 Gemini Flash 分析照片特徵 ---
+                if (originalImageData) {
+                    aiStatusText.innerText = 'AI 正在解析照片特徵...';
+                    const base64Data = originalImageData.split(',')[1];
+                    if (!base64Data || base64Data.length < 1000) throw new Error("圖片讀取異常，請重新上傳");
 
-                const outputPart = result.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
-                if (!outputPart?.inlineData?.data) throw new Error("API 未回傳有效的圖片資料");
+                    const visionUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${activeApiKey}`;
+                    const visionPayload = {
+                        contents: [{
+                            role: "user",
+                            parts: [
+                                { text: "Describe the main subject, their clothing, expression, and the background concisely in English. This will be used as a prompt for an image generator." },
+                                { inlineData: { mimeType: "image/jpeg", data: base64Data } }
+                            ]
+                        }]
+                    };
 
-                aiImageData = `data:image/jpeg;base64,${outputPart.inlineData.data}`;
+                    const visionResult = await fetchWithRetry(visionUrl, visionPayload);
+                    const description = visionResult.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!description) throw new Error("無法解析照片特徵");
+
+                    finalPrompt = `${styleText} The image features: ${description}. ${userExtra ? 'Additional details: ' + userExtra : ''}`;
+                } else {
+                    // 如果沒有照片，就純粹使用文字生成
+                    finalPrompt = `${styleText} ${userExtra}`;
+                }
+
+                // --- 步驟 2：呼叫最新公開的 Imagen 3 生成圖片 ---
+                aiStatusText.innerText = 'AI 畫家中... (約需 10-20 秒)';
+                
+                const imagenUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${activeApiKey}`;
+                const imagenPayload = {
+                    instances: [{ prompt: finalPrompt }],
+                    parameters: { sampleCount: 1, aspectRatio: "1:1" }
+                };
+
+                const imagenResult = await fetchWithRetry(imagenUrl, imagenPayload);
+                const b64 = imagenResult.predictions?.[0]?.bytesBase64Encoded;
+                if (!b64) throw new Error("API 未回傳有效的圖片資料");
+
+                // 更新畫面
+                aiImageData = `data:image/jpeg;base64,${b64}`;
                 previewImage.src = aiImageData;
+                previewImage.classList.remove('hidden');
+                mediaPlaceholder.classList.add('hidden');
+                
                 imageSourceSelect.options[1].disabled = false;
                 imageSourceSelect.value = 'ai';
                 updateAllBadgesImageSrc();
@@ -611,13 +592,11 @@
                 const code = err.message;
                 
                 if (code.includes('API key not valid') || code.includes('API_KEY_INVALID')) {
-                    showMsg('金鑰已失效 (Error 400)', 'Google 說這把金鑰無效！<br><br>💡 老師請記得：如果舊金鑰刪除了，請在 GitHub 的第 282 行換上新申請的金鑰喔！', 'error');
+                    showMsg('金鑰已失效 (Error 400)', 'Google 說這把金鑰無效！<br><br>💡 請在 GitHub 程式碼第 282 行換上新申請的金鑰喔！', 'error');
                 } else if (code.includes('403')) {
                     showMsg('網域被攔截 (Error 403)', 'Google Cloud 網域白名單設定有誤，請確認 *sites.google.com/* 等規則已正確儲存。', 'error');
-                } else if (code.includes('is not found') || code.includes('not supported')) {
-                    showMsg('模型已淘汰 (Error 400)', '原廠已淘汰目前使用的 AI 模型！<br><br>👉 <b>解決方案：</b>請點擊右上角「⚙️齒輪」，點選<b>「自動尋找」</b>按鈕，系統會幫您自動抓取最新版模型！', 'error');
                 } else {
-                    showMsg('請求失敗 (Error 400)', `可能原因：相片過於複雜或解析度過高，導致傳輸失敗。<br><br><span class="text-xs text-red-600">原廠代碼：${code}</span>`, 'error');
+                    showMsg('請求失敗', `可能原因：畫面包含不支援的內容，或原廠伺服器繁忙。<br><br><span class="text-xs text-red-600 block mt-2 text-left bg-red-50 p-2 rounded border border-red-100">${code}</span>`, 'error');
                 }
             } finally {
                 generateAiBtn.classList.remove('hidden');
