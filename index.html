@@ -107,8 +107,8 @@
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <!-- 設定按鈕 -->
-                <button onclick="openSettingsModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                <!-- 設定按鈕 (保留作為備用或管理員測試用) -->
+                <button onclick="openSettingsModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors" title="系統設定">
                     <i class="fas fa-cog"></i>
                 </button>
                 <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full font-medium transition-colors shadow-sm flex items-center gap-2">
@@ -272,7 +272,7 @@
         <p>車城國小資訊老師 @ Google Gemini 協作設計 | 嚴禁上傳含有敏感個資之圖片</p>
     </footer>
 
-    <!-- 系統設定 Modal -->
+    <!-- 系統設定 Modal (保留作為備用) -->
     <div id="settingsModal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center z-[100] backdrop-blur-sm transition-opacity opacity-0">
         <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl transform scale-95 transition-transform" id="settingsContent">
             <div class="flex justify-between items-center mb-4">
@@ -280,11 +280,11 @@
                 <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times text-xl"></i></button>
             </div>
             <div class="mb-4">
-                <label class="block text-sm font-medium text-slate-700 mb-1">設定您的 Gemini API Key</label>
+                <label class="block text-sm font-medium text-slate-700 mb-1">備用 Gemini API Key</label>
                 <input type="password" id="apiKeyInput" class="w-full text-sm p-3 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 font-mono" placeholder="AIzaSy...">
                 <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-                    部署至 Google Sites 時，必須填入您專屬的 API Key 才能執行 AI 魔法。<br>
-                    <span class="text-amber-600"><i class="fas fa-shield-alt"></i> 此金鑰僅會保存在您當前的瀏覽器中 (LocalStorage)，不會上傳至其他伺服器。</span>
+                    系統已內建預設金鑰。除非您需要使用自己的專屬金鑰測試，否則**請保持空白**。<br>
+                    <span class="text-amber-600"><i class="fas fa-shield-alt"></i> 若填寫，此金鑰僅會保存在您當前的瀏覽器中。</span>
                 </p>
             </div>
             <button onclick="saveSettings()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-medium transition-colors shadow-sm">儲存並關閉</button>
@@ -305,11 +305,9 @@
 
     <script>
         // ==========================================
-        // 🔑 系統核心設定區
+        // 🔑 系統核心設定區：這把就是您的預設 API Key！
+        // 搭配 GCP 的 Website HTTP 限制，即可安全地無縫運作。
         // ==========================================
-        // 已經為您填入從 Google AI Studio 申請到的金鑰！
-        // 只要您在 Google Cloud 控制台設定好這把金鑰的「網站限制 (HTTP Referrers)」，
-        // 手機或學生端就完全不需要手動輸入了！
         const DEFAULT_API_KEY = "AIzaSyA16u6OldidFZWVmeWE_oyT6FpQ9nJL9YA"; 
         
         // --- 內部狀態變數 ---
@@ -356,15 +354,13 @@
         
         const apiKeyInput = document.getElementById('apiKeyInput');
 
-        // 初始化讀取 LocalStorage 金鑰
+        // 初始化讀取 LocalStorage 金鑰 (供備用設定使用)
         window.addEventListener('DOMContentLoaded', () => {
             const savedKey = localStorage.getItem('gemini_api_key_checheng');
-            // 如果有手動設定過就顯示，否則顯示預設的 Key
             if (savedKey) {
                 apiKeyInput.value = savedKey;
-            } else if (DEFAULT_API_KEY && !DEFAULT_API_KEY.includes("請在此貼上")) {
-                apiKeyInput.value = DEFAULT_API_KEY;
             }
+            // 系統啟動時不再自動填入預設 key 到 input 中，避免使用者混淆
         });
 
         // --- 輔助函式：Modal 控制 ---
@@ -392,13 +388,14 @@
 
         function saveSettings() {
             const key = apiKeyInput.value.trim();
-            if (key && key !== DEFAULT_API_KEY) {
+            if (key) {
                 localStorage.setItem('gemini_api_key_checheng', key);
+                showMsg('設定已儲存', '已切換為您手動輸入的備用 API Key。', 'success');
             } else {
                 localStorage.removeItem('gemini_api_key_checheng');
+                showMsg('設定已清除', '已恢復使用系統內建的預設 API Key。', 'success');
             }
             closeSettingsModal();
-            showMsg('設定已儲存', 'API Key 狀態已更新。', 'success');
         }
 
         function showMsg(title, text, type = 'info') {
@@ -547,14 +544,14 @@
                 return;
             }
 
-            // 取得有效的 API Key (優先使用手動設定的，否則使用預設寫死的)
+            // 取得有效的 API Key (優先使用手動設定的，否則自動抓取系統預設金鑰)
             let activeApiKey = localStorage.getItem('gemini_api_key_checheng');
-            if (!activeApiKey && DEFAULT_API_KEY && !DEFAULT_API_KEY.includes("請在此貼上")) {
+            if (!activeApiKey) {
                 activeApiKey = DEFAULT_API_KEY;
             }
             
             if (!activeApiKey) {
-                showMsg('缺少 API Key', '請點擊右上角「⚙️齒輪圖示」設定您的 Gemini API Key，或請老師在程式碼中預設金鑰。', 'error');
+                showMsg('系統錯誤', '系統遺失預設 API Key。請聯繫管理員。', 'error');
                 return;
             }
 
@@ -600,9 +597,9 @@
 
             } catch (error) {
                 console.error("AI Error:", error);
-                // 特別處理 403 / 400 錯誤，給予友善提示
+                // 特別處理 403 / 400 錯誤
                 if (error.message.includes('403') || error.message.includes('400')) {
-                    showMsg('API 金鑰無效或被拒絕 (Error 403)', '連線被 Google 拒絕。<br>請點擊右上角「⚙️齒輪圖示」檢查：<br>1. 金鑰是否輸入正確<br>2. 該金鑰是否有被設定過嚴的「網站限制 (CORS)」<br>3. 金鑰是否已啟用 Gemini API 服務', 'error');
+                    showMsg('API 連線被拒絕 (Error 403)', '請通知資訊老師檢查 Google Cloud 的「Website 網域限制」設定，確認是否已將目前網址加入白名單。', 'error');
                 } else {
                     showMsg('生成失敗', `發生錯誤：${error.message}<br>請稍後再試。`, 'error');
                 }
@@ -683,6 +680,7 @@
 
             const sideB = document.createElement('div');
             sideB.className = 'badge-side';
+            // B面設定與A面同向，不再強制翻轉
             sideB.style.backgroundImage = `url(${imgSrc})`;
 
             badgeWrapper.appendChild(delBtn);
