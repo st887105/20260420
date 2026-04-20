@@ -42,8 +42,6 @@
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
-            border: 1px solid #e2e8f0;
-            box-shadow: inset 0 0 0 2px white;
         }
 
         .fold-line {
@@ -125,7 +123,7 @@
                 <h2 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-camera text-blue-500"></i> 1. 影像輸入</h2>
                 
                 <!-- WebCam 預覽 -->
-                <div class="relative w-full aspect-square bg-slate-100 rounded-xl overflow-hidden mb-3 border-2 border-dashed border-slate-300 flex items-center justify-center group" id="mediaContainer">
+                <div class="relative w-full aspect-square bg-slate-100 rounded-xl overflow-hidden mb-4 border-2 border-dashed border-slate-300 flex items-center justify-center group" id="mediaContainer">
                     <video id="videoElement" autoplay playsinline class="absolute inset-0 w-full h-full object-cover hidden"></video>
                     <img id="previewImage" class="absolute inset-0 w-full h-full object-cover hidden" />
                     
@@ -135,17 +133,27 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-2">
-                    <button id="startCamBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-lg text-sm font-medium transition-colors flex justify-center items-center gap-2">
-                        <i class="fas fa-video"></i> 開啟相機
-                    </button>
-                    <button id="captureBtn" class="bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg text-sm font-medium transition-colors flex justify-center items-center gap-2 hidden">
-                        <i class="fas fa-camera-retro"></i> 拍照
-                    </button>
-                    <label class="bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-lg text-sm font-medium transition-colors flex justify-center items-center gap-2 cursor-pointer">
-                        <i class="fas fa-upload"></i> 上傳圖片
+                <!-- 手機優先：原生拍照與上傳 -->
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                    <label class="bg-blue-50 hover:bg-blue-100 text-blue-700 py-2.5 rounded-lg text-sm font-bold transition-colors flex justify-center items-center gap-2 cursor-pointer border border-blue-200 shadow-sm">
+                        <i class="fas fa-mobile-alt"></i> 手機拍照
+                        <!-- 重點：capture="environment" 呼叫手機原生後鏡頭 -->
+                        <input type="file" id="mobileCamInput" accept="image/*" capture="environment" class="hidden">
+                    </label>
+                    <label class="bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-lg text-sm font-medium transition-colors flex justify-center items-center gap-2 cursor-pointer border border-slate-200">
+                        <i class="fas fa-upload"></i> 相簿上傳
                         <input type="file" id="uploadInput" accept="image/png, image/jpeg" class="hidden">
                     </label>
+                </div>
+
+                <!-- PC 網頁相機 (折疊或次要) -->
+                <div class="border-t border-slate-100 pt-3">
+                    <button id="startCamBtn" class="w-full bg-slate-50 hover:bg-slate-100 text-slate-500 py-2 rounded-lg text-xs font-medium transition-colors flex justify-center items-center gap-2 border border-slate-200">
+                        <i class="fas fa-laptop"></i> 開啟網頁相機 (PC 適用)
+                    </button>
+                    <button id="captureBtn" class="w-full mt-2 bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg text-sm font-medium transition-colors flex justify-center items-center gap-2 hidden">
+                        <i class="fas fa-camera-retro"></i> 擷取畫面
+                    </button>
                 </div>
             </section>
 
@@ -172,7 +180,7 @@
                 </button>
                 <div id="aiLoading" class="hidden flex-col items-center justify-center mt-3 gap-2">
                     <div class="loader"></div>
-                    <span class="text-sm text-slate-500 ai-status-text">AI 正在施展魔法中，請稍候...</span>
+                    <span class="text-sm text-slate-500 ai-status-text">AI 魔法詠唱中... (約需10-15秒)</span>
                 </div>
             </section>
 
@@ -275,7 +283,7 @@
         const apiKey = ""; // 執行環境動態注入
         let originalImageData = null; // 原始圖片 Base64
         let aiImageData = null; // AI 生成圖片 Base64
-        let currentShape = 'circle'; // circle 或 square
+        let currentShape = 'circle'; // circle 或 square, rectangle, heart
         let currentSize = 50; // mm
         let currentFitMode = 'cover'; // cover, contain, custom
         let currentImageScale = 100; // %
@@ -285,9 +293,12 @@
         const videoElement = document.getElementById('videoElement');
         const previewImage = document.getElementById('previewImage');
         const mediaPlaceholder = document.getElementById('mediaPlaceholder');
+        
         const startCamBtn = document.getElementById('startCamBtn');
         const captureBtn = document.getElementById('captureBtn');
         const uploadInput = document.getElementById('uploadInput');
+        const mobileCamInput = document.getElementById('mobileCamInput'); // 新增：手機原生相機
+        
         const processCanvas = document.getElementById('processCanvas');
         const ctx = processCanvas.getContext('2d');
         
@@ -341,27 +352,29 @@
             }, 300);
         }
 
-        // --- 影像輸入處理 (WebCam & Upload) ---
+        // --- 影像輸入處理 (WebCam & Upload & Mobile Native Cam) ---
+        
+        // 1. WebRTC 網頁相機 (PC 端或獨立網頁使用)
         startCamBtn.addEventListener('click', async () => {
             try {
                 if (stream) {
-                    // 如果已經開啟，則關閉
                     stopCamera();
                     return;
                 }
-                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: 1024, height: 1024 } });
+                // 移除強制的長寬限制，讓手機/瀏覽器更容易通過審核
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
                 videoElement.srcObject = stream;
                 videoElement.classList.remove('hidden');
                 previewImage.classList.add('hidden');
                 mediaPlaceholder.classList.add('hidden');
                 
-                startCamBtn.innerHTML = '<i class="fas fa-video-slash"></i> 關閉相機';
-                startCamBtn.classList.replace('bg-slate-100', 'bg-red-100');
-                startCamBtn.classList.replace('text-slate-700', 'text-red-600');
+                startCamBtn.innerHTML = '<i class="fas fa-video-slash"></i> 關閉網頁相機';
+                startCamBtn.classList.replace('bg-slate-50', 'bg-red-50');
+                startCamBtn.classList.replace('text-slate-500', 'text-red-500');
                 captureBtn.classList.remove('hidden');
             } catch (err) {
-                showMsg('相機錯誤', '無法存取相機，請確認權限是否開啟。', 'error');
                 console.error(err);
+                showMsg('相機權限受限', '無法存取網頁相機。如果您使用手機或 Google Sites，請改用上方藍色的「手機拍照」按鈕，這是最穩定的方式！', 'error');
             }
         });
 
@@ -370,9 +383,9 @@
                 stream.getTracks().forEach(track => track.stop());
                 stream = null;
                 videoElement.classList.add('hidden');
-                startCamBtn.innerHTML = '<i class="fas fa-video"></i> 開啟相機';
-                startCamBtn.classList.replace('bg-red-100', 'bg-slate-100');
-                startCamBtn.classList.replace('text-red-600', 'text-slate-700');
+                startCamBtn.innerHTML = '<i class="fas fa-laptop"></i> 開啟網頁相機 (PC 適用)';
+                startCamBtn.classList.replace('bg-red-50', 'bg-slate-50');
+                startCamBtn.classList.replace('text-red-500', 'text-slate-500');
                 captureBtn.classList.add('hidden');
                 if(!originalImageData) mediaPlaceholder.classList.remove('hidden');
             }
@@ -380,45 +393,52 @@
 
         captureBtn.addEventListener('click', () => {
             if (!stream) return;
-            // 設定方形 Canvas
-            const size = Math.min(videoElement.videoWidth, videoElement.videoHeight);
             processCanvas.width = 1024;
             processCanvas.height = 1024;
             
-            // 裁切正中間
+            const size = Math.min(videoElement.videoWidth, videoElement.videoHeight);
             const startX = (videoElement.videoWidth - size) / 2;
             const startY = (videoElement.videoHeight - size) / 2;
             
-            // 為了避免鏡像問題，如果是前鏡頭通常需要翻轉，這裡我們直接繪製
             ctx.translate(1024, 0);
             ctx.scale(-1, 1);
             ctx.drawImage(videoElement, startX, startY, size, size, 0, 0, 1024, 1024);
-            ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
             
             setImageFromCanvas();
             stopCamera();
         });
 
-        uploadInput.addEventListener('change', (e) => {
+        // 2. 共用上傳處理函式 (給 相簿上傳 & 手機原生拍照 共用)
+        function handleFileInput(e) {
             const file = e.target.files[0];
             if (!file) return;
+            
+            // 若目前網頁相機開著，自動關閉它
+            if (stream) stopCamera();
+
             const reader = new FileReader();
             reader.onload = (event) => {
                 const img = new Image();
                 img.onload = () => {
-                    // 自動裁切成方形 (取中間)
                     processCanvas.width = 1024;
                     processCanvas.height = 1024;
                     const size = Math.min(img.width, img.height);
                     const startX = (img.width - size) / 2;
                     const startY = (img.height - size) / 2;
+                    
+                    // 繪製到 Canvas 上
                     ctx.drawImage(img, startX, startY, size, size, 0, 0, 1024, 1024);
                     setImageFromCanvas();
                 };
                 img.src = event.target.result;
             };
             reader.readAsDataURL(file);
-        });
+            e.target.value = ''; // 重置 input 讓同一張圖可以重複選
+        }
+
+        uploadInput.addEventListener('change', handleFileInput);
+        mobileCamInput.addEventListener('change', handleFileInput);
 
         function setImageFromCanvas() {
             originalImageData = processCanvas.toDataURL('image/png');
@@ -426,19 +446,27 @@
             previewImage.classList.remove('hidden');
             mediaPlaceholder.classList.add('hidden');
             
-            // 重置 AI 圖片
             aiImageData = null;
             imageSourceSelect.options[1].disabled = true;
             imageSourceSelect.value = "original";
             
-            // 自動加一個原始徽章到預覽區
             if(badgesContainer.children.length === 0) {
                 addNewBadge();
+            } else {
+                // 如果已經有徽章了，就直接更新圖片源
+                updateAllBadgesImageSrc();
             }
         }
 
+        function updateAllBadgesImageSrc() {
+             const badges = badgesContainer.querySelectorAll('.badge-side');
+             const imgSrc = getActiveImageData();
+             badges.forEach(side => {
+                 side.style.backgroundImage = `url(${imgSrc})`;
+             });
+        }
+
         // --- AI 魔法 (Gemini API Image-to-Image) ---
-        // 實作指數退避重試
         async function fetchWithRetry(url, payload, retries = 5, delay = 1000) {
             try {
                 const response = await fetch(url, {
@@ -467,16 +495,13 @@
             generateAiBtn.classList.add('hidden');
             aiLoading.classList.remove('hidden');
             aiLoading.classList.add('flex');
-            aiStatusText.innerText = 'AI 魔法詠唱中... (約需10-15秒)';
 
             try {
-                // 移除 base64 前綴
                 const base64Data = originalImageData.split(',')[1];
                 const stylePrompt = aiStyle.value;
                 const userPrompt = aiPrompt.value;
                 const promptText = userPrompt ? `${stylePrompt} Additional details: ${userPrompt}` : stylePrompt;
 
-                // 呼叫 gemini-2.5-flash-image-preview 模型
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${apiKey}`;
                 
                 const payload = {
@@ -493,26 +518,28 @@
                 };
 
                 const result = await fetchWithRetry(url, payload);
-                
-                // 提取回傳的 Base64 圖片
                 const outputPart = result.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
                 
                 if (outputPart && outputPart.inlineData && outputPart.inlineData.data) {
                     aiImageData = `data:image/jpeg;base64,${outputPart.inlineData.data}`;
                     
-                    // 更新 UI
                     previewImage.src = aiImageData;
                     imageSourceSelect.options[1].disabled = false;
                     imageSourceSelect.value = "ai";
                     
-                    showMsg('生成成功！', '已成功將您的圖片轉換為 Pixar 風格！', 'success');
-                    addNewBadge(); // 自動加一個新的上去
+                    showMsg('生成成功！', '已成功套用 AI 魔法風格！', 'success');
+                    
+                    if(badgesContainer.children.length === 0) {
+                        addNewBadge();
+                    } else {
+                        updateAllBadgesImageSrc();
+                    }
                 } else {
-                    throw new Error("API 未回傳有效的圖片資料，可能是遭到安全機制阻擋。");
+                    throw new Error("API 未回傳圖片，可能被安全機制阻擋。");
                 }
 
             } catch (error) {
-                console.error("AI Generation Error:", error);
+                console.error("AI Error:", error);
                 showMsg('生成失敗', `發生錯誤：${error.message}`, 'error');
             } finally {
                 generateAiBtn.classList.remove('hidden');
@@ -522,11 +549,8 @@
         });
 
         // --- 排版與預覽互動 ---
-        
-        // 形狀切換
         shapeBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                // UI 更新
                 shapeBtns.forEach(b => {
                     b.classList.remove('bg-white', 'shadow-sm', 'text-blue-600');
                     b.classList.add('text-slate-500');
@@ -540,14 +564,12 @@
             });
         });
 
-        // 尺寸切換
         sizeSlider.addEventListener('input', (e) => {
             currentSize = e.target.value;
             sizeValue.innerText = `${currentSize}mm`;
             updateAllBadges();
         });
 
-        // 圖片顯示模式切換
         imageFitMode.addEventListener('change', (e) => {
             currentFitMode = e.target.value;
             if (currentFitMode === 'custom') {
@@ -558,16 +580,12 @@
             updateAllBadges();
         });
 
-        // 自訂縮放比例切換
         imageScaleSlider.addEventListener('input', (e) => {
             currentImageScale = e.target.value;
             imageScaleValue.innerText = `${currentImageScale}%`;
-            if (currentFitMode === 'custom') {
-                updateAllBadges();
-            }
+            if (currentFitMode === 'custom') updateAllBadges();
         });
 
-        // 資料來源切換
         imageSourceSelect.addEventListener('change', (e) => {
             const val = e.target.value;
             if (val === 'ai' && aiImageData) {
@@ -575,12 +593,11 @@
             } else if (val === 'original' && originalImageData) {
                 previewImage.src = originalImageData;
             }
+            updateAllBadgesImageSrc();
         });
 
-        // 新增徽章
         addBadgeBtn.addEventListener('click', addNewBadge);
 
-        // 清除徽章
         clearBadgeBtn.addEventListener('click', () => {
             badgesContainer.innerHTML = '';
         });
@@ -600,16 +617,11 @@
             const badgeWrapper = document.createElement('div');
             badgeWrapper.className = 'badge-container transition-all group relative';
             
-            // 刪除按鈕 (只在非列印時顯示)
             const delBtn = document.createElement('button');
             delBtn.innerHTML = '<i class="fas fa-times"></i>';
             delBtn.className = 'absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full text-xs items-center justify-center hidden group-hover:flex no-print z-20 shadow-md';
             delBtn.onclick = () => badgeWrapper.remove();
 
-            // 建立雙面結構 (A面 - 摺線 - B面(倒轉))
-            // 鑰匙圈對摺通常需要一邊是倒的，這樣對摺後方向才會一致。
-            // 這裡設計 A 面正向，B 面上下顛倒
-            
             const sideA = document.createElement('div');
             sideA.className = 'badge-side';
             sideA.style.backgroundImage = `url(${imgSrc})`;
@@ -620,7 +632,6 @@
             const sideB = document.createElement('div');
             sideB.className = 'badge-side';
             sideB.style.backgroundImage = `url(${imgSrc})`;
-            // 根據使用者需求，已移除 B 面倒轉，讓兩邊圖片皆為同向正的
 
             badgeWrapper.appendChild(delBtn);
             badgeWrapper.appendChild(sideA);
@@ -628,13 +639,12 @@
             badgeWrapper.appendChild(sideB);
 
             badgesContainer.appendChild(badgeWrapper);
-            
             applyStylesToBadge(badgeWrapper);
         }
 
         function applyStylesToBadge(wrapper) {
             const sides = wrapper.querySelectorAll('.badge-side');
-            const sizePx = currentSize + 'mm'; // 使用 mm 作為單位以便精準列印
+            const sizePx = currentSize + 'mm';
             let widthPx = sizePx;
             let heightPx = sizePx;
             let borderRadius = '0';
@@ -645,7 +655,7 @@
             } else if (currentShape === 'square') {
                 borderRadius = '16px';
             } else if (currentShape === 'rectangle') {
-                heightPx = (currentSize * 0.75) + 'mm'; // 設定長方形為 4:3 比例
+                heightPx = (currentSize * 0.75) + 'mm';
                 borderRadius = '12px';
             } else if (currentShape === 'heart') {
                 isHeart = true;
@@ -656,7 +666,6 @@
                 side.style.height = heightPx;
                 side.style.borderRadius = borderRadius;
                 
-                // 處理愛心遮罩與框線
                 if (isHeart) {
                     side.classList.add('shape-heart');
                     side.style.border = 'none';
@@ -667,12 +676,11 @@
                     side.style.boxShadow = 'inset 0 0 0 2px white';
                 }
                 
-                // 設定圖片自動置中與動態縮放模式
                 side.style.backgroundPosition = 'center';
                 if (currentFitMode === 'custom') {
                     side.style.backgroundSize = `${currentImageScale}%`;
                 } else {
-                    side.style.backgroundSize = currentFitMode; // 'cover' 或 'contain'
+                    side.style.backgroundSize = currentFitMode;
                 }
             });
             
@@ -684,18 +692,15 @@
             badges.forEach(applyStylesToBadge);
         }
 
-        // 自適應 A4 預覽縮放 (為了讓畫面在小螢幕也能看見完整 A4)
         function resizeA4Preview() {
             const container = document.querySelector('.custom-scrollbar');
             const printArea = document.getElementById('printArea');
-            // 如果不是在列印模式下
             if (!window.matchMedia('print').matches) {
-                const containerWidth = container.clientWidth - 32; // padding
-                const a4WidthPx = 210 * 3.7795275591; // approx 210mm in px at 96dpi
+                const containerWidth = container.clientWidth - 32;
+                const a4WidthPx = 210 * 3.7795275591;
                 if (containerWidth < a4WidthPx) {
                     const scale = containerWidth / a4WidthPx;
                     printArea.style.transform = `scale(${scale})`;
-                    // printArea.style.marginBottom = `-${(1-scale)*297*3.77}px`;
                 } else {
                     printArea.style.transform = `scale(1)`;
                 }
