@@ -7,13 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* 隱藏原生滾動條，保持畫面整潔 */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* CSS 變數統一管理徽章樣式，大幅提升拖拉滑桿時的效能 */
         :root {
             --badge-size: 50mm;
             --badge-height: 50mm;
@@ -43,7 +41,6 @@
             background: #f8fafc;
         }
 
-        /* 徽章尺寸直接讀取 CSS 變數 */
         .badge-side {
             width: var(--badge-size);
             height: var(--badge-height);
@@ -76,7 +73,6 @@
             flex-shrink: 0;
         }
 
-        /* 列印專屬樣式 */
         @media print {
             body { background: white; margin: 0; padding: 0; }
             .no-print { display: none !important; }
@@ -88,7 +84,6 @@
             .badge-container { border-color: #94a3b8; }
         }
 
-        /* 載入動畫 */
         .loader {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #3b82f6;
@@ -98,7 +93,6 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* 系統彈窗控制 */
         .modal-overlay {
             display: none;
             position: fixed; inset: 0;
@@ -122,7 +116,6 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
 
-    <!-- 頂部導覽列 -->
     <header class="bg-white shadow-sm border-b border-slate-200 no-print sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -133,7 +126,6 @@
                 </div>
             </div>
             <div class="flex items-center gap-2">
-                <!-- 設定按鈕 -->
                 <button onclick="openSettingsModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors" title="系統設定">
                     <i class="fas fa-cog"></i>
                 </button>
@@ -149,7 +141,7 @@
         <!-- 左側控制面板 -->
         <aside class="w-full lg:w-80 flex flex-col gap-5 no-print overflow-y-auto pr-2 pb-10">
             
-            <!-- Step 1: 影像輸入 -->
+            <!-- Step 1 -->
             <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
                 <h2 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-camera text-blue-500"></i> 1. 影像輸入</h2>
                 <div class="relative w-full aspect-square bg-slate-100 rounded-xl overflow-hidden mb-4 border-2 border-dashed border-slate-300 flex items-center justify-center" id="mediaContainer">
@@ -167,7 +159,7 @@
                     </label>
                     <label class="bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-lg text-sm font-medium transition-colors flex justify-center items-center gap-2 cursor-pointer border border-slate-200">
                         <i class="fas fa-upload"></i> 相簿上傳
-                        <input type="file" id="uploadInput" accept="image/png, image/jpeg, image/webp" class="hidden">
+                        <input type="file" id="uploadInput" accept="image/png, image/jpeg, image/webp, image/heic" class="hidden">
                     </label>
                 </div>
                 <div class="border-t border-slate-100 pt-3">
@@ -180,7 +172,7 @@
                 </div>
             </section>
 
-            <!-- Step 2: AI 魔法 -->
+            <!-- Step 2 -->
             <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
                 <h2 class="font-bold text-lg mb-2 flex items-center gap-2"><i class="fas fa-wand-magic-sparkles text-amber-500"></i> 2. AI 風格轉換</h2>
                 <p class="text-xs text-slate-500 mb-4">使用 Gemini 生成不同風格的圖片</p>
@@ -194,7 +186,7 @@
                         <option value="Convert this image into a vibrant pop art style, inspired by Andy Warhol. Bold colors, high contrast, and comic book-like halftone patterns.">普普藝術風</option>
                     </select>
                 </div>
-                <textarea id="aiPrompt" rows="2" class="w-full text-sm p-3 border border-slate-300 rounded-xl mb-3 focus:ring-2 focus:ring-blue-500 outline-none resize-none" placeholder="輸入額外提示 (可選，例如：加上車城洋蔥元素)"></textarea>
+                <textarea id="aiPrompt" rows="2" class="w-full text-sm p-3 border border-slate-300 rounded-xl mb-3 focus:ring-2 focus:ring-blue-500 outline-none resize-none" placeholder="輸入額外提示 (可選，例如: 加上車城洋蔥元素)"></textarea>
                 <button id="generateAiBtn" class="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white py-3 rounded-xl font-bold shadow-md transition-all flex justify-center items-center gap-2">
                     <i class="fas fa-sparkles"></i> 一鍵 AI 魔法轉換
                 </button>
@@ -204,7 +196,7 @@
                 </div>
             </section>
 
-            <!-- Step 3: 排版設定 -->
+            <!-- Step 3 -->
             <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
                 <h2 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fas fa-layer-group text-purple-500"></i> 3. 徽章排版設定</h2>
                 <div class="space-y-4">
@@ -299,18 +291,18 @@
         <div class="modal-content text-center">
             <div class="mb-4" id="msgIcon"><i class="fas fa-info-circle text-4xl text-blue-500"></i></div>
             <h3 class="text-lg font-bold text-slate-800 mb-2" id="msgTitle">提示</h3>
-            <p class="text-slate-600 text-sm mb-6 leading-relaxed" id="msgText">訊息內容</p>
+            <p class="text-slate-600 text-sm mb-6 leading-relaxed break-words" id="msgText">訊息內容</p>
             <button onclick="closeModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-medium transition-colors">確認</button>
         </div>
     </div>
 
     <script>
         // ==========================================
-        // 🔑 系統核心設定 (您的車城國小專屬金鑰)
+        // 🔑 系統核心設定
         // ==========================================
-        const DEFAULT_API_KEY = "AIzaSyA16u6OldidFZWVmeWE_oyT6FpQ9nJL9YA";
+        // 修正了 API Key 中 l 與 I 的錯字
+        const DEFAULT_API_KEY = "AIzaSyA16u6OIdidFZWVmeWE_oyT6FpQ9nJL9YA";
 
-        // --- 狀態變數 ---
         let originalImageData = null;
         let aiImageData = null;
         let currentShape = 'circle';
@@ -318,9 +310,8 @@
         let currentFitMode = 'cover';
         let currentImageScale = 100;
         let stream = null;
-        let activeImageObjectURL = null; // 記憶體優化：使用 ObjectURL 取代龐大的 base64 綁定
+        let activeImageObjectURL = null;
 
-        // --- DOM 元素 ---
         const videoElement = document.getElementById('videoElement');
         const previewImage = document.getElementById('previewImage');
         const mediaPlaceholder = document.getElementById('mediaPlaceholder');
@@ -350,9 +341,7 @@
             if (savedKey) apiKeyInput.value = savedKey;
         });
 
-        // ==========================================
-        // Modal 控制
-        // ==========================================
+        // --- Modal 控制 ---
         function openSettingsModal() { document.getElementById('settingsModal').classList.add('active'); }
         function closeSettingsModal() { document.getElementById('settingsModal').classList.remove('active'); }
         
@@ -369,7 +358,7 @@
             const key = apiKeyInput.value.trim();
             if (key) localStorage.setItem('gemini_api_key_checheng', key);
             else localStorage.removeItem('gemini_api_key_checheng');
-            showMsg('設定已儲存', key ? '已切換為您手動輸入的備用 API Key。' : '已恢復使用系統內建的預設 API Key。', 'success');
+            showMsg('設定已儲存', key ? '已切換為備用 API Key。' : '已恢復預設 API Key。', 'success');
             closeSettingsModal();
         }
         
@@ -377,12 +366,10 @@
             apiKeyInput.value = '';
             localStorage.removeItem('gemini_api_key_checheng');
             closeSettingsModal();
-            showMsg('清除成功', '已清除手機暫存的舊金鑰！<br><br>現在系統會自動抓取內建的預設金鑰運作。請再次點擊「魔法轉換」試試看！', 'success');
+            showMsg('清除成功', '已清除手機暫存的舊金鑰！現在系統會自動使用內建預設金鑰。', 'success');
         }
 
-        // ==========================================
-        // 影像輸入處理
-        // ==========================================
+        // --- 影像輸入處理 ---
         startCamBtn.addEventListener('click', async () => {
             if (stream) { stopCamera(); return; }
             try {
@@ -396,7 +383,7 @@
                 startCamBtn.classList.replace('text-slate-500', 'text-red-500');
                 captureBtn.classList.remove('hidden');
             } catch (err) {
-                showMsg('相機權限受限', '無法存取網頁相機。請改用上方藍色的「手機拍照」按鈕。', 'error');
+                showMsg('相機受限', '無法存取相機。請改用藍色「手機拍照」按鈕。', 'error');
             }
         });
 
@@ -414,13 +401,14 @@
 
         captureBtn.addEventListener('click', () => {
             if (!stream) return;
-            processCanvas.width = processCanvas.height = 1024;
+            // 【優化】縮小截取畫布以防手機爆內存
+            processCanvas.width = processCanvas.height = 768;
             const vw = videoElement.videoWidth, vh = videoElement.videoHeight;
             const size = Math.min(vw, vh);
             ctx.setTransform(1, 0, 0, 1, 0, 0);
-            ctx.translate(1024, 0);
+            ctx.translate(768, 0);
             ctx.scale(-1, 1);
-            ctx.drawImage(videoElement, (vw - size) / 2, (vh - size) / 2, size, size, 0, 0, 1024, 1024);
+            ctx.drawImage(videoElement, (vw - size) / 2, (vh - size) / 2, size, size, 0, 0, 768, 768);
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             setImageFromCanvas();
             stopCamera();
@@ -431,27 +419,22 @@
             if (!file) return;
             if (stream) stopCamera();
 
-            createImageBitmap(file).then(bitmap => {
-                processCanvas.width = processCanvas.height = 1024;
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
-                const size = Math.min(bitmap.width, bitmap.height);
-                ctx.drawImage(bitmap, (bitmap.width - size) / 2, (bitmap.height - size) / 2, size, size, 0, 0, 1024, 1024);
-                bitmap.close(); 
-                setImageFromCanvas();
-            }).catch(() => {
-                const reader = new FileReader();
-                reader.onload = ev => {
-                    const img = new Image();
-                    img.onload = () => {
-                        processCanvas.width = processCanvas.height = 1024;
-                        const size = Math.min(img.width, img.height);
-                        ctx.drawImage(img, (img.width - size) / 2, (img.height - size) / 2, size, size, 0, 0, 1024, 1024);
-                        setImageFromCanvas();
-                    };
-                    img.src = ev.target.result;
+            // 【優化】針對手機相片使用穩定度最高的 FileReader，避免破圖
+            const reader = new FileReader();
+            reader.onload = ev => {
+                const img = new Image();
+                img.onload = () => {
+                    processCanvas.width = processCanvas.height = 768; // 壓縮防斷線
+                    const size = Math.min(img.width, img.height);
+                    ctx.drawImage(img, (img.width - size) / 2, (img.height - size) / 2, size, size, 0, 0, 768, 768);
+                    setImageFromCanvas();
                 };
-                reader.readAsDataURL(file);
-            });
+                img.onerror = () => {
+                    showMsg('圖片載入失敗', '手機可能不支援此格式 (如 HEIC)。請將圖片「截圖」後再重新上傳試試！', 'error');
+                }
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
             e.target.value = '';
         }
 
@@ -463,6 +446,7 @@
 
             processCanvas.toBlob(blob => {
                 activeImageObjectURL = URL.createObjectURL(blob);
+                // 【優化】統一轉為 JPEG 格式，避免檔案過大導致 400 Error
                 originalImageData = processCanvas.toDataURL('image/jpeg', 0.85); 
                 previewImage.src = activeImageObjectURL;
                 previewImage.classList.remove('hidden');
@@ -484,9 +468,7 @@
             });
         }
 
-        // ==========================================
-        // CSS 變數統一控制排版樣式
-        // ==========================================
+        // --- CSS 排版控制 ---
         function updateCSSVars() {
             const root = document.documentElement;
             const isRect = currentShape === 'rectangle';
@@ -510,21 +492,29 @@
             });
         }
 
-        // ==========================================
-        // AI 魔法 API (使用 Image-to-Image 專屬模型)
-        // ==========================================
-        async function fetchWithRetry(url, payload, retries = 3, delay = 1500) {
+        // --- AI 魔法 (強化版 Fetch，可顯示原廠錯誤) ---
+        async function fetchWithRetry(url, payload, retries = 2, delay = 1500) {
             const response = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
+            
             if (!response.ok) {
+                // 嘗試解析 Google 官方詳細的錯誤原因
+                let errorDetails = `HTTP 狀態碼 ${response.status}`;
+                try {
+                    const errData = await response.json();
+                    if (errData.error && errData.error.message) {
+                        errorDetails = errData.error.message;
+                    }
+                } catch(e) {}
+
                 if (retries > 0 && response.status >= 500) {
                     await new Promise(res => setTimeout(res, delay));
                     return fetchWithRetry(url, payload, retries - 1, delay * 2);
                 }
-                throw new Error(String(response.status));
+                throw new Error(errorDetails); // 將真正的錯誤拋出
             }
             return response.json();
         }
@@ -533,17 +523,22 @@
             if (!originalImageData) { showMsg('請先提供圖片', '請先拍照或上傳圖片再執行 AI 轉換。', 'error'); return; }
 
             const activeApiKey = localStorage.getItem('gemini_api_key_checheng') || DEFAULT_API_KEY;
-            if (!activeApiKey) { showMsg('系統錯誤', '系統遺失預設 API Key。請聯繫管理員。', 'error'); return; }
+            if (!activeApiKey) { showMsg('系統錯誤', '系統遺失 API Key。請聯繫管理員。', 'error'); return; }
+
+            // 【防呆攔截】檢查圖片是否成功轉碼
+            const base64Data = originalImageData.split(',')[1];
+            if (!base64Data || base64Data.length < 1000) {
+                showMsg('圖片讀取異常', '手機可能無法解析這張照片 (可能格式不符)。<br>💡 小撇步：請將這張照片「螢幕截圖」後，再上傳一次截圖！', 'error');
+                return;
+            }
 
             generateAiBtn.classList.add('hidden');
             aiLoading.classList.remove('hidden');
             aiLoading.classList.add('flex');
 
             try {
-                const base64Data = originalImageData.split(',')[1];
                 const promptText = [aiStyle.value, aiPrompt.value].filter(Boolean).join(' Additional details: ');
 
-                // 呼叫 gemini-2.5-flash-image-preview 模型進行圖像生成
                 const result = await fetchWithRetry(
                     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${activeApiKey}`,
                     {
@@ -556,7 +551,7 @@
                 );
 
                 const outputPart = result.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
-                if (!outputPart?.inlineData?.data) throw new Error("回傳資料異常，請再試一次");
+                if (!outputPart?.inlineData?.data) throw new Error("API 未回傳有效的圖片資料");
 
                 aiImageData = `data:image/jpeg;base64,${outputPart.inlineData.data}`;
                 previewImage.src = aiImageData;
@@ -566,12 +561,16 @@
                 showMsg('魔法成功！', 'AI 風格套用完成！', 'success');
 
             } catch (err) {
+                console.error("AI Error Details:", err);
                 const code = err.message;
-                if (code === '403' || code === '400') {
-                    showMsg('API 連線被拒絕 (Error 403)',
-                        '<b>請點擊右上角「⚙️齒輪按鈕」然後點擊「清除暫存」。</b><br><br>這能清除手機舊記憶，重新套用您剛設定好的網域保護金鑰！', 'error');
+                
+                // 智慧判斷錯誤類型
+                if (code.includes('API key not valid') || code.includes('API_KEY_INVALID')) {
+                    showMsg('金鑰已失效 (Error 400)', 'Google 說這把金鑰無效！<br><br>💡 如果老師您最近「刪除了舊金鑰」，請務必回到 GitHub 代碼第 282 行換上新的金鑰。', 'error');
+                } else if (code.includes('403')) {
+                    showMsg('網域被攔截 (Error 403)', 'Google Cloud 網域白名單設定有誤，請確認 *sites.google.com/* 等規則已正確儲存。', 'error');
                 } else {
-                    showMsg('生成失敗', `錯誤代碼：${err.message}<br>請稍後再試。`, 'error');
+                    showMsg('請求失敗 (Error 400)', `可能原因：相片過於複雜或解析度過高，導致傳輸失敗。<br><br><span class="text-xs text-red-600">原廠代碼：${code}</span>`, 'error');
                 }
             } finally {
                 generateAiBtn.classList.remove('hidden');
@@ -580,9 +579,7 @@
             }
         });
 
-        // ==========================================
-        // 排版控制與事件監聽
-        // ==========================================
+        // --- 排版互動 ---
         shapeBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 shapeBtns.forEach(b => { b.classList.remove('bg-white', 'shadow-sm', 'text-blue-600'); b.classList.add('text-slate-500'); });
@@ -658,7 +655,6 @@
             }
         }
 
-        // A4 預覽區自適應縮放
         let resizeTimer;
         function resizeA4Preview() {
             clearTimeout(resizeTimer);
