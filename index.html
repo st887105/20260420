@@ -795,12 +795,15 @@ async function loadRec(sfx) {
     Object.keys(grp).sort().reverse().forEach(dt=>{
       html+=`<div class="date-grp"><i class="fas fa-calendar-day"></i>${dt} (${grp[dt].length})</div>`;
       grp[dt].forEach(r=>{
-        const th=r.aiImageUrl?r.aiImageUrl.replace('/view','')+'=s80':'';
+        // 縮圖：優先用 GitHub raw（公開），否則用 Drive 縮圖（需登入）
+        const ghThumb = r.githubUrl || '';
+        const drThumb = r.aiImageUrl ? r.aiImageUrl.replace('/view','')+'=s80' : '';
+        const th = ghThumb || drThumb;
         const chkId=`chk${sfx}${r.rowIndex}`;
         html+=`<div class="rec-item fu" id="ri${sfx}${r.rowIndex}" style="align-items:flex-start;">`;
-        // 勾選框（僅桌面版顯示）
-        if(sfx==='D') html+=`<input type="checkbox" class="rec-chk" id="${chkId}" data-url="${r.aiImageUrl||''}" data-rowindex="${r.rowIndex}" onchange="updPrintBar()" style="margin-top:14px;">`;
-        html+=`<a href="${r.aiImageUrl||'#'}" target="_blank"><img class="rthumb" src="${th}" onerror="this.style.background='var(--border2)';this.removeAttribute('src');" alt=""></a>`;
+        // 勾選框（僅桌面版顯示）— 同時存 github 和 drive URL
+        if(sfx==='D') html+=`<input type="checkbox" class="rec-chk" id="${chkId}" data-github="${r.githubUrl||''}" data-drive="${r.aiImageUrl||''}" data-rowindex="${r.rowIndex}" onchange="updPrintBar()" style="margin-top:14px;">`;
+        html+=`<a href="${r.aiImageUrl||'#'}" target="_blank"><img class="rthumb" src="${th}" onerror="this.src='${drThumb}';this.onerror=null;" alt=""></a>`;
         html+=`<div class="rbody">`;
         html+=`<div style="font-size:.63rem;color:var(--muted);font-family:'DM Mono',monospace;">${r.timestamp}</div>`;
         html+=`<div style="font-size:.72rem;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);" title="${r.stylePrompt}">${r.stylePrompt}</div>`;
@@ -832,20 +835,23 @@ async function delRec(rowIndex, sfx) {
 // ================================================
 // 勾選列印相關
 // ================================================
-function getCheckedUrls() {
+function getCheckedItems() {
   return Array.from(document.querySelectorAll('.rec-chk:checked'))
-    .map(c => c.dataset.url).filter(Boolean);
+    .map(c => ({ github: c.dataset.github||'', drive: c.dataset.drive||'' }))
+    .filter(item => item.github || item.drive);
+}
+// 舊介面相容
+function getCheckedUrls() {
+  return getCheckedItems().map(i => i.drive).filter(Boolean);
 }
 
 function updPrintBar() {
-  const urls = getCheckedUrls();
-  const cnt  = urls.length;
-  const bar  = $('printBar');
+  const items = getCheckedItems();
+  const cnt   = items.length;
+  const bar   = $('printBar');
   if (!bar) return;
-  // 計算 A4 容量：A4 = 210mm x 297mm，padding 15mm 四邊
-  // 可用：180mm x 267mm，每個 bwrap ≈ size*2 + 10mm (fold+gap)
-  const bw   = size * 2 + 12; // 寬：兩個徽章+折痕
-  const bh   = (shape==='rectangle' ? size*0.75 : size) + 6; // 高+gap
+  const bw   = size * 2 + 12;
+  const bh   = (shape==='rectangle' ? size*0.75 : size) + 6;
   const cols = Math.max(1, Math.floor(180 / bw));
   const rows = Math.max(1, Math.floor(267 / bh));
   const cap  = cols * rows;
@@ -864,29 +870,31 @@ function toggleAllRec() {
 }
 
 function printSelected() {
-  const urls = getCheckedUrls();
-  if (!urls.length) { showMsg('⚠️ 未選取','請先勾選要列印的紀錄','info'); return; }
+  const items = getCheckedItems();
+  if (!items.length) { showMsg('⚠️ 未選取','請先勾選要列印的紀錄','info'); return; }
 
-  // 清空 A4 版面，重新填入勾選的紀錄
   const bdg = $('bdgD');
   bdg.innerHTML = '';
 
-  urls.forEach(url => {
-    // 把 Drive 查看連結轉為直接圖片連結（=s512 高解析）
-    const imgUrl = url.replace('/view','') + '=s512';
+  items.forEach(item => {
+    // 優先用 GitHub raw URL（公開，不需登入）
+    // 若沒有 GitHub 則 fallback 用 Drive 直連（需同帳號）
+    const imgUrl = item.github || (item.drive ? item.drive.replace('/view','')+'=s1024' : '');
+    if (!imgUrl) return;
+
     const w = document.createElement('div');
     w.className = 'bwrap';
     const mk = () => {
       const face = document.createElement('div');
       face.className = 'bface';
-      // 用 <img> 子元素確保列印時能顯示
+      face.style.position = 'relative';
+      face.style.backgroundImage = `url(${imgUrl})`;
+      if(shape==='heart') face.classList.add('heart');
       const img = document.createElement('img');
       img.className = 'bface-img';
       img.src = imgUrl;
-      img.style.cssText = `width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;`;
-      face.style.backgroundImage = `url(${imgUrl})`;
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;';
       face.appendChild(img);
-      if(shape==='heart') face.classList.add('heart');
       return face;
     };
     const fold = document.createElement('div'); fold.className='fold';
@@ -900,9 +908,8 @@ function printSelected() {
   });
 
   updCnt();
-  // 給圖片一點時間載入再列印
-  showMsg('✅ 已排版','A4 版面已更新，2 秒後自動列印。請確認印表機設定。','success');
-  setTimeout(()=>{ closeMsg(); setTimeout(()=>window.print(), 400); }, 1800);
+  // 等圖片載入後列印
+  showMsg('✅ 已排版','A4 版面已更新，請等圖片載入完成後點列印按鈕（右上角）。','success');
 }
 
 // ================================================
