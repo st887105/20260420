@@ -34,19 +34,16 @@
             min-height: 100vh;
         }
 
-        /* ── Scrollbar ── */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--c-surface); }
         ::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 3px; }
 
-        /* ── Header ── */
         header {
             background: var(--c-surface);
             border-bottom: 1px solid var(--c-border);
             position: sticky; top: 0; z-index: 50;
         }
 
-        /* ── Cards ── */
         .card {
             background: var(--c-card);
             border: 1px solid var(--c-border);
@@ -63,7 +60,6 @@
             gap: 8px;
         }
 
-        /* ── Inputs ── */
         .inp {
             width: 100%;
             background: var(--c-surface);
@@ -77,7 +73,6 @@
         }
         .inp:focus { border-color: var(--c-accent); }
 
-        /* ── Buttons ── */
         .btn-primary {
             background: var(--c-accent);
             color: #fff;
@@ -123,7 +118,6 @@
         .btn-amber:active { transform: scale(0.98); }
         .btn-amber:disabled { opacity: 0.4; cursor: not-allowed; }
 
-        /* ── Shape buttons ── */
         .shape-btn {
             flex: 1;
             min-width: 58px;
@@ -143,7 +137,6 @@
             border-color: var(--c-accent);
         }
 
-        /* ── A4 Preview ── */
         .a4-preview {
             width: 210mm;
             min-height: 297mm;
@@ -155,7 +148,6 @@
             transform-origin: top center;
         }
 
-        /* ── Badge ── */
         .badge-container {
             display: inline-flex;
             flex-direction: row;
@@ -195,7 +187,6 @@
             flex-shrink: 0;
         }
 
-        /* ── Status pill ── */
         .pill {
             display: inline-flex; align-items: center; gap: 5px;
             padding: 3px 10px;
@@ -208,7 +199,6 @@
         .pill-amber  { background: rgba(245,158,11,0.15); color: var(--c-amber); border: 1px solid rgba(245,158,11,0.3); }
         .pill-blue   { background: rgba(79,140,255,0.15); color: var(--c-accent);border: 1px solid rgba(79,140,255,0.3); }
 
-        /* ── Record item ── */
         .record-item {
             background: var(--c-surface);
             border: 1px solid var(--c-border);
@@ -226,7 +216,6 @@
             background: var(--c-border);
         }
 
-        /* ── Loader ── */
         .spinner {
             width: 22px; height: 22px;
             border: 3px solid rgba(79,140,255,0.2);
@@ -236,7 +225,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ── Modal ── */
         .modal-bg {
             display: none;
             position: fixed; inset: 0;
@@ -256,20 +244,16 @@
             box-shadow: 0 32px 64px rgba(0,0,0,0.6);
         }
 
-        /* ── Tab ── */
         .tab-btn { padding: 6px 14px; border-radius: 8px; font-size: 0.83rem; font-weight: 600; cursor: pointer; border: none; background: transparent; color: var(--c-muted); transition: all 0.15s; }
         .tab-btn.active { background: var(--c-accent); color: #fff; }
 
-        /* ── Config dot ── */
         .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
         .dot-green { background: var(--c-green); box-shadow: 0 0 6px var(--c-green); }
         .dot-red   { background: var(--c-red);   box-shadow: 0 0 6px var(--c-red); }
         .dot-amber { background: var(--c-amber);  box-shadow: 0 0 6px var(--c-amber); }
 
-        /* ── Range slider ── */
         input[type=range] { accent-color: var(--c-accent); }
 
-        /* ── Print ── */
         @media print {
             body { background: white; color: #1e293b; }
             .no-print { display: none !important; }
@@ -277,15 +261,12 @@
             .badge-container { border-color: #94a3b8; }
         }
 
-        /* ── Fade in ── */
         @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .fade-up { animation: fadeUp 0.3s ease forwards; }
 
-        /* ── Progress bar ── */
         .progress-bar { height: 3px; background: var(--c-border); border-radius: 2px; overflow: hidden; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--c-accent), #a78bfa); border-radius: 2px; transition: width 0.4s; }
 
-        /* ── Result card ── */
         .result-card {
             background: linear-gradient(135deg, rgba(79,140,255,0.08), rgba(167,139,250,0.08));
             border: 1px solid rgba(79,140,255,0.25);
@@ -308,16 +289,13 @@
             <div style="width:38px;height:38px;background:var(--c-accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.1rem;font-family:'Space Grotesk',sans-serif;">車</div>
             <div>
                 <div style="font-weight:700;font-size:1rem;font-family:'Space Grotesk',sans-serif;line-height:1.2;">車城國小｜AI 徽章拍貼機</div>
-                <div style="font-size:0.72rem;color:var(--c-muted);">GitHub Pages + GAS 雲端雙 AI 驅動 v2.0</div>
+                <div style="font-size:0.72rem;color:var(--c-muted);">GitHub Pages + GAS 雲端雙 AI 驅動 v2.2</div>
             </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;">
-            <div id="configStatusBadge" class="pill pill-amber" style="cursor:pointer;" onclick="openSettings()">
-                <span class="dot dot-amber"></span> 未連線
+            <div id="configStatusBadge" class="pill pill-amber">
+                <span class="dot dot-amber"></span> 連線中...
             </div>
-            <button onclick="openSettings()" class="btn-ghost" title="系統設定">
-                <i class="fas fa-gear"></i>
-            </button>
             <button onclick="window.print()" class="btn-primary" style="padding:8px 16px;">
                 <i class="fas fa-print"></i> <span class="hidden sm:inline">列印</span>
             </button>
@@ -331,7 +309,7 @@
     <!-- ── LEFT PANEL ── -->
     <aside class="no-print" style="width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - 80px);overflow-y:auto;padding-right:4px;padding-bottom:40px;">
 
-        <!-- Step 1: 影像輸入 -->
+        <!-- Step 1 -->
         <div class="card">
             <div class="card-title"><span style="color:var(--c-accent);">①</span> 影像輸入</div>
             <div id="mediaBox" style="width:100%;aspect-ratio:1;background:var(--c-surface);border-radius:12px;overflow:hidden;margin-bottom:12px;border:2px dashed var(--c-border);position:relative;display:flex;align-items:center;justify-content:center;">
@@ -364,7 +342,7 @@
             </button>
         </div>
 
-        <!-- Step 2: AI 生成 -->
+        <!-- Step 2 -->
         <div class="card">
             <div class="card-title"><span style="color:var(--c-amber);">②</span> 雲端 AI 生成</div>
             <div style="margin-bottom:8px;">
@@ -393,7 +371,6 @@
                 </div>
             </div>
 
-            <!-- 生成結果 -->
             <div id="resultBox" style="display:none;margin-top:12px;" class="result-card fade-up">
                 <div style="font-size:0.78rem;font-weight:700;margin-bottom:8px;color:var(--c-accent);">
                     <i class="fas fa-circle-check"></i> 生成成功
@@ -416,7 +393,7 @@
             </div>
         </div>
 
-        <!-- Step 3: 排版設定 -->
+        <!-- Step 3 -->
         <div class="card">
             <div class="card-title"><span style="color:#a78bfa;">③</span> 徽章排版設定</div>
             <div style="display:flex;flex-direction:column;gap:12px;">
@@ -482,32 +459,17 @@
         <canvas id="processCanvas" style="display:none;"></canvas>
     </div>
 
-    <!-- ── RIGHT PANEL: Records ── -->
+    <!-- ── RIGHT PANEL ── -->
     <aside class="no-print" style="width:280px;flex-shrink:0;display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - 80px);overflow-y:auto;padding-right:4px;padding-bottom:40px;">
 
-        <!-- Config Status -->
+        <!-- Backend Status -->
         <div class="card">
             <div class="card-title"><i class="fas fa-server" style="color:var(--c-accent);"></i> 後端狀態</div>
             <div id="configStatusPanel" style="display:flex;flex-direction:column;gap:6px;font-size:0.8rem;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="color:var(--c-muted);">Gemini API</span>
-                    <span class="dot dot-amber"></span>
+                <div style="text-align:center;padding:8px 0;color:var(--c-muted);">
+                    <div class="spinner" style="margin:0 auto 8px;"></div>
+                    連線偵測中...
                 </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="color:var(--c-muted);">Google Drive</span>
-                    <span class="dot dot-amber"></span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="color:var(--c-muted);">GitHub 推送</span>
-                    <span class="dot dot-amber"></span>
-                </div>
-                <div id="folderIdDisplay" style="color:var(--c-muted);font-size:0.72rem;word-break:break-all;border-top:1px solid var(--c-border);padding-top:8px;display:none;">
-                    <i class="fas fa-folder-open" style="color:var(--c-amber);margin-right:4px;"></i>
-                    資料夾 ID：<span id="folderIdText" style="color:var(--c-text);font-family:monospace;"></span>
-                </div>
-                <button onclick="checkBackendConfig()" class="btn-ghost" style="margin-top:4px;justify-content:center;font-size:0.78rem;">
-                    <i class="fas fa-rotate"></i> 重新檢測
-                </button>
             </div>
         </div>
 
@@ -521,8 +483,8 @@
             </div>
             <div id="recordsPanel">
                 <div style="text-align:center;padding:20px 0;color:var(--c-muted);font-size:0.82rem;">
-                    <i class="fas fa-database" style="font-size:1.5rem;display:block;margin-bottom:6px;"></i>
-                    請先設定 GAS 網址<br>以查看上傳紀錄
+                    <div class="spinner" style="margin:0 auto 8px;"></div>
+                    載入中...
                 </div>
             </div>
         </div>
@@ -530,53 +492,6 @@
     </aside>
 
 </main>
-
-<!-- ══════════════════════ SETTINGS MODAL ══════════════════════ -->
-<div id="settingsModal" class="modal-bg">
-    <div class="modal-box" style="max-width:460px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <div style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;">
-                <i class="fas fa-gear" style="color:var(--c-accent);margin-right:8px;"></i>系統設定
-            </div>
-            <button onclick="closeSettings()" style="background:none;border:none;color:var(--c-muted);cursor:pointer;font-size:1.2rem;">
-                <i class="fas fa-xmark"></i>
-            </button>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:14px;">
-            <div>
-                <label style="font-size:0.82rem;color:var(--c-muted);display:block;margin-bottom:6px;">
-                    <i class="fas fa-link" style="margin-right:4px;"></i>GAS Web App 網址 <span style="color:var(--c-red);">*必填</span>
-                </label>
-                <input type="url" id="gasUrlInput" class="inp" style="font-family:monospace;font-size:0.78rem;" placeholder="https://script.google.com/macros/s/.../exec">
-                <p style="font-size:0.72rem;color:var(--c-muted);margin-top:4px;">部署 GAS 後取得的 Web App 網址</p>
-            </div>
-
-            <div style="background:var(--c-surface);border-radius:10px;padding:12px;font-size:0.78rem;color:var(--c-muted);line-height:1.7;">
-                <div style="font-weight:700;color:var(--c-text);margin-bottom:6px;"><i class="fas fa-info-circle" style="color:var(--c-accent);margin-right:4px;"></i>GAS 指令碼屬性說明</div>
-                <div><code style="color:var(--c-accent);">GEMINI_API_KEY</code> — Gemini API 金鑰 (必填)</div>
-                <div><code style="color:var(--c-amber);">DRIVE_FOLDER_ID</code> — Drive 資料夾 ID (建議填入)</div>
-                <div><code style="color:var(--c-green);">GITHUB_TOKEN</code> — GitHub PAT Token (選填)</div>
-                <div><code style="color:var(--c-green);">GITHUB_REPO</code> — 格式：username/repo (選填)</div>
-                <div><code style="color:var(--c-green);">GITHUB_BRANCH</code> — 預設 main (選填)</div>
-            </div>
-
-            <div style="background:rgba(79,140,255,0.07);border:1px solid rgba(79,140,255,0.2);border-radius:10px;padding:10px;font-size:0.75rem;color:var(--c-muted);">
-                <i class="fas fa-shield-halved" style="color:var(--c-accent);margin-right:4px;"></i>
-                API Key 存放於 GAS 指令碼屬性，前端不儲存任何金鑰，安全無虞。
-            </div>
-
-            <div style="display:flex;gap:8px;">
-                <button onclick="saveSettings()" class="btn-primary" style="flex:1;justify-content:center;">
-                    <i class="fas fa-floppy-disk"></i> 儲存設定
-                </button>
-                <button onclick="checkBackendConfig(true)" class="btn-ghost" style="flex:1;justify-content:center;">
-                    <i class="fas fa-plug"></i> 測試連線
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- ══════════════════════ MESSAGE MODAL ══════════════════════ -->
 <div id="msgModal" class="modal-bg">
@@ -590,6 +505,13 @@
 
 <!-- ══════════════════════ SCRIPT ══════════════════════ -->
 <script>
+// ════════════════════════════════════════
+// ★★★ 直接綁定 GAS Web App 網址 ★★★
+// 修改這裡即可，無需每台設備重新設定
+// ════════════════════════════════════════
+const GAS_URL = 'https://script.google.com/macros/s/請換成你的網址/exec';
+// ════════════════════════════════════════
+
 // ── 全域狀態 ──
 let originalImageData = null;
 let aiImageData       = null;
@@ -602,69 +524,45 @@ let activeObjectURL   = null;
 let sessionId         = 'sess_' + Date.now();
 
 // ── DOM refs ──
-const videoEl         = document.getElementById('videoEl');
-const previewImg      = document.getElementById('previewImg');
-const mediaPlaceholder= document.getElementById('mediaPlaceholder');
-const startCamBtn     = document.getElementById('startCamBtn');
-const captureBtn      = document.getElementById('captureBtn');
-const uploadInput     = document.getElementById('uploadInput');
-const mobileCamInput  = document.getElementById('mobileCamInput');
-const processCanvas   = document.getElementById('processCanvas');
-const ctx             = processCanvas.getContext('2d');
-const generateAiBtn   = document.getElementById('generateAiBtn');
-const aiLoadingBox    = document.getElementById('aiLoadingBox');
-const progressFill    = document.getElementById('progressFill');
-const loadingMsg      = document.getElementById('loadingMsg');
-const aiStyle         = document.getElementById('aiStyle');
-const aiPrompt        = document.getElementById('aiPrompt');
-const imageSource     = document.getElementById('imageSource');
-const imageFitMode    = document.getElementById('imageFitMode');
-const scaleSlider     = document.getElementById('scaleSlider');
-const scaleVal        = document.getElementById('scaleVal');
-const sizeSlider      = document.getElementById('sizeSlider');
-const sizeVal         = document.getElementById('sizeVal');
-const badgesContainer = document.getElementById('badgesContainer');
-const gasUrlInput     = document.getElementById('gasUrlInput');
-const resultBox       = document.getElementById('resultBox');
-const recordsPanel    = document.getElementById('recordsPanel');
+const videoEl          = document.getElementById('videoEl');
+const previewImg       = document.getElementById('previewImg');
+const mediaPlaceholder = document.getElementById('mediaPlaceholder');
+const startCamBtn      = document.getElementById('startCamBtn');
+const captureBtn       = document.getElementById('captureBtn');
+const uploadInput      = document.getElementById('uploadInput');
+const mobileCamInput   = document.getElementById('mobileCamInput');
+const processCanvas    = document.getElementById('processCanvas');
+const ctx              = processCanvas.getContext('2d');
+const generateAiBtn    = document.getElementById('generateAiBtn');
+const aiLoadingBox     = document.getElementById('aiLoadingBox');
+const progressFill     = document.getElementById('progressFill');
+const loadingMsg       = document.getElementById('loadingMsg');
+const aiStyle          = document.getElementById('aiStyle');
+const aiPrompt         = document.getElementById('aiPrompt');
+const imageSource      = document.getElementById('imageSource');
+const imageFitMode     = document.getElementById('imageFitMode');
+const scaleSlider      = document.getElementById('scaleSlider');
+const scaleVal         = document.getElementById('scaleVal');
+const sizeSlider       = document.getElementById('sizeSlider');
+const sizeVal          = document.getElementById('sizeVal');
+const badgesContainer  = document.getElementById('badgesContainer');
+const resultBox        = document.getElementById('resultBox');
+const recordsPanel     = document.getElementById('recordsPanel');
 
 // ── 初始化 ──
 window.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('gas_url_v2');
-    if (saved) {
-        gasUrlInput.value = saved;
-        checkBackendConfig();
-    }
     resizeA4();
+    checkBackendConfig();
+    loadRecords();
 });
 
 // ══════════════════════════════════
-//  SETTINGS
-// ══════════════════════════════════
-function openSettings() { document.getElementById('settingsModal').classList.add('open'); }
-function closeSettings() { document.getElementById('settingsModal').classList.remove('open'); }
-
-function saveSettings() {
-    const url = gasUrlInput.value.trim();
-    if (url) localStorage.setItem('gas_url_v2', url);
-    else     localStorage.removeItem('gas_url_v2');
-    closeSettings();
-    showMsg('✅ 儲存成功', 'GAS 連線網址已更新。', 'success');
-    checkBackendConfig();
-}
-
-// ══════════════════════════════════
-//  JSONP 核心工具（繞過學校 Workspace CORS redirect）
-//  學校網域 GAS exec → redirect → googleusercontent echo
-//  fetch 會被 CORS 擋，改用 <script> 注入完全不受限
+//  JSONP（繞過學校 Workspace CORS）
 // ══════════════════════════════════
 function jsonpGet(url, callbackParam = 'callback') {
     return new Promise((resolve, reject) => {
-        const cbName = '_gasJsonp_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
-        const timeout = setTimeout(() => {
-            cleanup();
-            reject(new Error('JSONP timeout'));
-        }, 15000);
+        const cbName  = '_gasJsonp_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
+        const timeout = setTimeout(() => { cleanup(); reject(new Error('JSONP timeout')); }, 15000);
 
         function cleanup() {
             delete window[cbName];
@@ -673,49 +571,32 @@ function jsonpGet(url, callbackParam = 'callback') {
             clearTimeout(timeout);
         }
 
-        window[cbName] = (data) => {
-            cleanup();
-            resolve(data);
-        };
+        window[cbName] = (data) => { cleanup(); resolve(data); };
 
-        const sep = url.includes('?') ? '&' : '?';
+        const sep    = url.includes('?') ? '&' : '?';
         const script = document.createElement('script');
-        script.id  = cbName;
-        script.src = `${url}${sep}${callbackParam}=${cbName}`;
-        script.onerror = () => { cleanup(); reject(new Error('JSONP script load error')); };
+        script.id    = cbName;
+        script.src   = `${url}${sep}${callbackParam}=${cbName}`;
+        script.onerror = () => { cleanup(); reject(new Error('JSONP 載入失敗')); };
         document.head.appendChild(script);
     });
 }
 
 // ══════════════════════════════════
-//  BACKEND CONFIG CHECK（JSONP 版）
+//  後端狀態檢測
 // ══════════════════════════════════
-async function checkBackendConfig(showResult = false) {
-    const url = getGasUrl();
-    if (!url) { updateConfigUI(null); return; }
+async function checkBackendConfig() {
     try {
-        const data = await jsonpGet(url + '?action=getConfig');
+        const data = await jsonpGet(GAS_URL + '?action=getConfig');
         updateConfigUI(data);
-        if (showResult) {
-            showMsg(
-                '🔗 連線測試結果',
-                `Gemini API：${data.hasGeminiKey ? '✅ 已設定' : '❌ 未設定'}<br>
-                 Drive 資料夾：${data.hasFolderId ? '✅ ' + data.folderId : '⚠️ 使用預設'}<br>
-                 GitHub：${data.hasGitHub ? '✅ ' + data.githubRepo : '⚠️ 未設定'}`,
-                data.hasGeminiKey ? 'success' : 'error'
-            );
-        }
     } catch(e) {
         updateConfigUI(null);
-        if (showResult) showMsg('❌ 連線失敗', '無法連接 GAS 後端，請確認網址是否正確並已部署。', 'error');
     }
 }
 
 function updateConfigUI(data) {
     const badge = document.getElementById('configStatusBadge');
     const panel = document.getElementById('configStatusPanel');
-    const folderIdDisplay = document.getElementById('folderIdDisplay');
-    const folderIdText    = document.getElementById('folderIdText');
 
     if (!data) {
         badge.className = 'pill pill-red';
@@ -787,7 +668,7 @@ captureBtn.addEventListener('click', () => {
     processCanvas.width = processCanvas.height = 512;
     const vw = videoEl.videoWidth, vh = videoEl.videoHeight;
     const size = Math.min(vw, vh);
-    ctx.setTransform(-1, 0, 0, 1, 512, 0); // 鏡像翻轉
+    ctx.setTransform(-1, 0, 0, 1, 512, 0);
     ctx.drawImage(videoEl, (vw - size) / 2, (vh - size) / 2, size, size, 0, 0, 512, 512);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     commitCanvas();
@@ -818,14 +699,14 @@ mobileCamInput.addEventListener('change', handleFileInput);
 function commitCanvas() {
     if (activeObjectURL) URL.revokeObjectURL(activeObjectURL);
     processCanvas.toBlob(blob => {
-        activeObjectURL    = URL.createObjectURL(blob);
-        originalImageData  = processCanvas.toDataURL('image/jpeg', 0.72);
-        previewImg.src     = activeObjectURL;
+        activeObjectURL   = URL.createObjectURL(blob);
+        originalImageData = processCanvas.toDataURL('image/jpeg', 0.72);
+        previewImg.src    = activeObjectURL;
         previewImg.style.display = '';
         mediaPlaceholder.style.display = 'none';
-        aiImageData        = null;
+        aiImageData = null;
         imageSource.options[1].disabled = true;
-        imageSource.value  = 'original';
+        imageSource.value = 'original';
         resultBox.style.display = 'none';
         if (badgesContainer.children.length === 0) addBadge();
         else refreshAllBadges();
@@ -837,7 +718,7 @@ function commitCanvas() {
 // ══════════════════════════════════
 const LOADING_STEPS = [
     [15,  'Gemini Vision 分析圖片中...'],
-    [40,  'Imagen 3 繪圖生成中...'],
+    [40,  'Gemini 圖像生成中...'],
     [70,  '儲存至 Google Drive...'],
     [88,  '推送至 GitHub...'],
     [95,  '回傳圖片中...']
@@ -845,10 +726,7 @@ const LOADING_STEPS = [
 
 generateAiBtn.addEventListener('click', async () => {
     if (!originalImageData) { showMsg('⚠️ 請先提供圖片', '請先拍照或上傳圖片再進行 AI 生成。', 'error'); return; }
-    const gasUrl = getGasUrl();
-    if (!gasUrl)             { showMsg('⚠️ 尚未設定後端', '請點擊右上角齒輪設定 GAS Web App 網址。', 'error'); return; }
 
-    // UI: 開始
     generateAiBtn.disabled = true;
     aiLoadingBox.style.display = '';
     resultBox.style.display = 'none';
@@ -863,7 +741,7 @@ generateAiBtn.addEventListener('click', async () => {
 
     try {
         const prompt = [aiStyle.value, aiPrompt.value.trim()].filter(Boolean).join('. Additional: ');
-        const res = await fetch(gasUrl, {
+        const res = await fetch(GAS_URL, {
             method: 'POST',
             body: JSON.stringify({ prompt, image: originalImageData.split(',')[1], sessionId }),
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -877,16 +755,15 @@ generateAiBtn.addEventListener('click', async () => {
         const data = await res.json();
         if (!data.success) throw new Error(data.error || 'GAS 後端處理失敗');
 
-        // 成功：更新 UI
-        aiImageData = `data:image/jpeg;base64,${data.aiImage}`;
+        // 成功
+        aiImageData = `data:${data.aiImageMime || 'image/png'};base64,${data.aiImage}`;
         previewImg.src = aiImageData;
         imageSource.options[1].disabled = false;
         imageSource.value = 'ai';
         refreshAllBadges();
 
-        // 結果卡片
-        document.getElementById('driveLink').href = data.aiImageUrl || '#';
-        document.getElementById('folderLink').href = data.folderUrl || '#';
+        document.getElementById('driveLink').href  = data.aiImageUrl || '#';
+        document.getElementById('folderLink').href = data.folderUrl  || '#';
         document.getElementById('descriptionText').textContent = data.description || '';
         if (data.githubUrl) {
             document.getElementById('githubLink').href = data.githubUrl;
@@ -895,8 +772,6 @@ generateAiBtn.addEventListener('click', async () => {
             document.getElementById('githubResultRow').style.display = 'none';
         }
         resultBox.style.display = '';
-
-        // 自動重新整理紀錄
         setTimeout(loadRecords, 1500);
 
     } catch (err) {
@@ -912,14 +787,12 @@ generateAiBtn.addEventListener('click', async () => {
 });
 
 // ══════════════════════════════════
-//  UPLOAD RECORDS（JSONP 版）
+//  UPLOAD RECORDS
 // ══════════════════════════════════
 async function loadRecords() {
-    const gasUrl = getGasUrl();
-    if (!gasUrl) return;
     recordsPanel.innerHTML = `<div style="display:flex;justify-content:center;padding:16px;"><div class="spinner"></div></div>`;
     try {
-        const data = await jsonpGet(gasUrl + '?action=getRecords&limit=15');
+        const data = await jsonpGet(GAS_URL + '?action=getRecords&limit=15');
         if (!data.success || data.records.length === 0) {
             recordsPanel.innerHTML = `<div style="text-align:center;padding:16px;color:var(--c-muted);font-size:0.82rem;">尚無上傳紀錄</div>`;
             return;
@@ -928,8 +801,7 @@ async function loadRecords() {
             <div class="record-item fade-up" style="margin-bottom:8px;">
                 <a href="${r.aiImageUrl || '#'}" target="_blank">
                     <img class="record-thumb" src="${r.aiImageUrl ? r.aiImageUrl.replace('/view','') + '=s100' : ''}"
-                         onerror="this.style.background='var(--c-border)';this.removeAttribute('src');"
-                         alt="AI圖">
+                         onerror="this.style.background='var(--c-border)';this.removeAttribute('src');" alt="AI圖">
                 </a>
                 <div style="flex:1;min-width:0;">
                     <div style="font-size:0.72rem;color:var(--c-muted);">${r.timestamp}</div>
@@ -989,10 +861,10 @@ function getActiveSrc() {
 }
 
 function updateCSS() {
-    const r = document.documentElement;
-    const isRect    = currentShape === 'rectangle';
-    const isHeart   = currentShape === 'heart';
-    const isCircle  = currentShape === 'circle';
+    const r        = document.documentElement;
+    const isRect   = currentShape === 'rectangle';
+    const isHeart  = currentShape === 'heart';
+    const isCircle = currentShape === 'circle';
     r.style.setProperty('--badge-size',   currentSize + 'mm');
     r.style.setProperty('--badge-height', isRect ? (currentSize * 0.75) + 'mm' : currentSize + 'mm');
     r.style.setProperty('--badge-radius', isCircle ? '50%' : isRect ? '12px' : isHeart ? '0' : '14px');
@@ -1041,10 +913,6 @@ function addBadge() {
 // ══════════════════════════════════
 //  UTILS
 // ══════════════════════════════════
-function getGasUrl() {
-    return gasUrlInput.value.trim() || localStorage.getItem('gas_url_v2') || '';
-}
-
 function showMsg(title, body, type = 'info') {
     const icons = { success: '✅', error: '❌', info: 'ℹ️' };
     document.getElementById('msgIcon').textContent  = icons[type] || '💬';
@@ -1054,7 +922,6 @@ function showMsg(title, body, type = 'info') {
 }
 function closeMsg() { document.getElementById('msgModal').classList.remove('open'); }
 
-// A4 縮放
 let resizeTimer;
 function resizeA4() {
     clearTimeout(resizeTimer);
@@ -1062,7 +929,7 @@ function resizeA4() {
         const wrap = document.getElementById('previewWrap');
         const area = document.getElementById('printArea');
         if (!wrap || !area) return;
-        const w = wrap.clientWidth - 48;
+        const w  = wrap.clientWidth - 48;
         const a4 = 210 * 3.7795;
         area.style.transform = w < a4 ? `scale(${(w / a4).toFixed(4)})` : 'scale(1)';
     }, 80);
