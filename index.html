@@ -124,7 +124,20 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 @keyframes fu{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 .fu{animation:fu .22s ease forwards;}
 
-@media print{.no-print{display:none !important;}body{background:#fff;color:#1e293b;}.a4{box-shadow:none;margin:0;padding:10mm;width:100%;min-height:auto;transform:scale(1)!important;background:#fff;}.bwrap{border-color:#94a3b8;}}
+@media print{
+  .no-print{display:none !important;}
+  body{background:#fff;color:#1e293b;}
+  /* Desktop print: A4 area */
+  .a4{box-shadow:none;margin:0;padding:10mm;width:100%;min-height:auto;transform:scale(1)!important;background:#fff;}
+  .bwrap{border-color:#94a3b8;}
+  /* Mobile print: expand preview area to full page */
+  .app-mobile{display:block !important;}
+  .mob-sec:not(#mobBadgeSec){display:none !important;}
+  #mobBadgeSec{display:block !important;padding:0 !important;}
+  #mobBadgeSec .card-hd,#mobBadgeSec label,#mobBadgeSec .stabs,#mobBadgeSec .slrow,#mobBadgeSec input,#mobBadgeSec .g2,#mobBadgeSec>div:last-child{display:none !important;}
+  #mPreviewWrap{background:transparent !important;padding:0 !important;}
+  #mPrintArea{max-width:100% !important;width:210mm !important;min-height:297mm !important;padding:15mm !important;box-shadow:none !important;}
+}
 
 /* DESKTOP >= 961px */
 @media(min-width:961px){
@@ -325,6 +338,44 @@ input[type=range]{accent-color:var(--accent);width:100%;}
     </div>
   </div>
 
+  <!-- M2b: Badge Layout (mobile simplified) -->
+  <div class="mob-sec" id="mobBadgeSec">
+    <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-stamp" style="color:#7c6af5;"></i>③ 徽章排版設定</div>
+
+    <!-- Shape -->
+    <label class="lbl" style="margin-bottom:5px;">徽章形狀</label>
+    <div class="stabs" style="margin-bottom:10px;">
+      <button class="stab on" data-shape="circle">圓形</button>
+      <button class="stab" data-shape="square">方形</button>
+      <button class="stab" data-shape="rectangle">長方形</button>
+      <button class="stab" data-shape="heart">愛心</button>
+    </div>
+
+    <!-- Size -->
+    <div class="slrow"><span style="color:var(--muted);">尺寸</span><span id="szVM" class="slval">50mm</span></div>
+    <input type="range" id="szRM" min="30" max="80" value="50" style="margin-bottom:10px;">
+
+    <!-- Add / Clear badges -->
+    <div class="g2" style="margin-bottom:10px;">
+      <button id="addM" class="btn btn-g"><i class="fas fa-plus"></i> 新增徽章</button>
+      <button id="clrM" class="btn btn-g" style="color:var(--red);border-color:rgba(245,54,92,.3);"><i class="fas fa-trash"></i> 清除</button>
+    </div>
+
+    <!-- Mini A4 preview for mobile -->
+    <div style="font-size:.72rem;color:var(--muted);margin-bottom:6px;"><i class="fas fa-file-alt" style="margin-right:4px;"></i>列印預覽</div>
+    <div id="mPreviewWrap" style="background:#e8eaf0;border-radius:10px;overflow:auto;padding:10px;display:flex;justify-content:center;max-height:340px;">
+      <div id="mPrintArea" style="background:#fff;width:100%;max-width:360px;min-height:200px;padding:8px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.2);">
+        <div id="bdgM" style="display:flex;flex-wrap:wrap;align-content:flex-start;gap:3px;"></div>
+        <div class="no-print" style="padding:16px 0 8px;text-align:center;color:#94a3b8;font-size:.7rem;" id="bdgMPh">
+          <i class="fas fa-stamp" style="font-size:1.2rem;display:block;margin-bottom:5px;"></i>按「新增徽章」加入圖片
+        </div>
+      </div>
+    </div>
+    <div style="font-size:.7rem;color:var(--muted);text-align:center;margin-top:6px;">
+      <i class="fas fa-info-circle" style="margin-right:3px;"></i>點右上角 <i class="fas fa-print"></i> 列印按鈕輸出 A4
+    </div>
+  </div>
+
   <!-- M3: Records -->
   <div class="mob-sec" style="padding-bottom:24px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
@@ -366,30 +417,17 @@ const sid='sess_'+Date.now();
 // CONNECTION: fetch first, JSONP fallback
 // This solves mobile Chrome blocking dynamic scripts
 // ================================================
-async function gasGet(url) {
-  // Try fetch first (works on mobile, no CORS issue for GET to GAS)
-  try {
-    const ctrl = new AbortController();
-    const tid  = setTimeout(() => ctrl.abort(), 14000);
-    const r    = await fetch(url, { signal: ctrl.signal });
-    clearTimeout(tid);
-    if (r.ok) {
-      const txt = await r.text();
-      // GAS may return JSONP wrapped or plain JSON
-      const clean = txt.replace(/^[^(]+\(/, '').replace(/\)\s*$/, '');
-      return JSON.parse(clean);
-    }
-  } catch(e) {}
-
-  // JSONP fallback for desktop CORS redirect cases
+// GAS GET: always use JSONP (fetch gets blocked by Google auth redirect on mobile)
+// GAS POST: use fetch directly (no redirect issue)
+function gasGet(url) {
   return new Promise((res, rej) => {
     const cb  = '_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
     const tid = setTimeout(() => {
       delete window[cb];
       const el = document.getElementById(cb);
       if (el) el.remove();
-      rej(new Error('連線逾時'));
-    }, 14000);
+      rej(new Error('連線逾時，請確認網路是否正常'));
+    }, 18000);
     window[cb] = d => {
       clearTimeout(tid);
       delete window[cb];
@@ -404,7 +442,16 @@ async function gasGet(url) {
     s.onerror = () => {
       clearTimeout(tid);
       delete window[cb];
-      rej(new Error('無法連接後端，請確認 GAS_URL'));
+      // JSONP blocked (mobile CSP) - try fetch as last resort
+      fetch(url + sep + 'callback=_noop', {signal: AbortSignal.timeout(15000)})
+        .then(r => r.text())
+        .then(txt => {
+          // Strip JSONP wrapper if present
+          const clean = txt.replace(/^[^({\[]*/, '').replace(/[)\s]*$/, '');
+          try { res(JSON.parse(clean)); }
+          catch(e) { rej(new Error('無法解析後端回應')); }
+        })
+        .catch(() => rej(new Error('無法連接後端，請確認 GAS_URL 是否正確')));
     };
     document.head.appendChild(s);
   });
@@ -569,6 +616,8 @@ function onFileM(e, mirror) {
     objM=url; origM=dat;
     $('prvM').src=url; $('prvM').style.display=''; $('phM').style.display='none';
     aiM=null; $('resM').style.display='none'; $('aiResM').classList.remove('show');
+    // Refresh existing mobile badges with new image
+    $('bdgM').querySelectorAll('.bface').forEach(f => { f.style.backgroundImage='url('+url+')'; });
   }, mirror);
   e.target.value='';
 }
@@ -608,6 +657,8 @@ async function doGen(origData, sfx) {
       $('drM').href=d.aiImageUrl||'#';
       $('flM').href=d.folderUrl||'#';
       if(d.githubUrl){$('ghM').href=d.githubUrl;$('ghRM').style.display='';}else{$('ghRM').style.display='none';}
+      // Auto-add/refresh badge in mobile print area
+      autoAddMobileBadge(imgData);
     }
     resBox.style.display='';
     setTimeout(()=>loadRec(sfx),1500);
@@ -697,7 +748,11 @@ function upCSS(){
   r.style.setProperty('--bh',shape==='rectangle'?(size*.75)+'mm':size+'mm');
   r.style.setProperty('--br',shape==='circle'?'50%':shape==='rectangle'?'10px':shape==='heart'?'0':'12px');
   r.style.setProperty('--bgs',fit==='custom'?scale+'%':fit);
-  $('bdgD').querySelectorAll('.bface').forEach(f=>{shape==='heart'?f.classList.add('heart'):f.classList.remove('heart');});
+  // Update both desktop and mobile badge faces
+  ['bdgD','bdgM'].forEach(id=>{
+    const el=$(id); if(!el)return;
+    el.querySelectorAll('.bface').forEach(f=>{shape==='heart'?f.classList.add('heart'):f.classList.remove('heart');});
+  });
 }
 function refreshBadges(){
   const src=getSrc(); if(!src)return;
@@ -715,6 +770,64 @@ function addBadge(){
   const mk=()=>{const d=document.createElement('div');d.className='bface';d.style.backgroundImage='url('+src+')';if(shape==='heart')d.classList.add('heart');return d;};
   const fold=document.createElement('div');fold.className='fold';
   w.append(del,mk(),fold,mk()); $('bdgD').appendChild(w);
+}
+
+// ── Mobile badge logic ──
+function addBadgeM() {
+  const src = aiM || objM || origM;
+  if(!src){showMsg('⚠️ 尚未輸入影像','請先自拍或上傳圖片','error');return;}
+  const bdg = $('bdgM');
+  const wrap = document.createElement('div');
+  wrap.className = 'bwrap';
+  const del = document.createElement('button');
+  del.innerHTML = '<i class="fas fa-xmark"></i>';
+  del.className = 'no-print';
+  del.style.cssText = 'position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;';
+  del.onclick = () => wrap.remove();
+  const mk = () => {
+    const d = document.createElement('div');
+    d.className = 'bface';
+    d.style.backgroundImage = 'url('+src+')';
+    if (shape==='heart') d.classList.add('heart');
+    return d;
+  };
+  const fold = document.createElement('div'); fold.className='fold';
+  wrap.append(del, mk(), fold, mk());
+  bdg.appendChild(wrap);
+  // Hide placeholder
+  const ph = $('bdgMPh'); if(ph) ph.style.display='none';
+}
+
+// Mobile size slider
+const szRM = $('szRM');
+if(szRM) {
+  szRM.addEventListener('input', e=>{
+    size = +e.target.value;
+    $('szVM').textContent = size+'mm';
+    upCSS();
+  });
+}
+
+// Mobile add/clear
+const addMBtn = $('addM');
+const clrMBtn = $('clrM');
+if(addMBtn) addMBtn.addEventListener('click', addBadgeM);
+if(clrMBtn) clrMBtn.addEventListener('click', ()=>{
+  $('bdgM').innerHTML='';
+  const ph=$('bdgMPh'); if(ph){ph.style.display='';ph.style.cssText='';}
+});
+
+// After AI generates on mobile, auto-add one badge
+function autoAddMobileBadge(src) {
+  if($('bdgM').children.length === 0 && src) {
+    // brief delay to let aiM be set
+    setTimeout(addBadgeM, 300);
+  } else {
+    // refresh existing badges
+    $('bdgM').querySelectorAll('.bface').forEach(f => {
+      f.style.backgroundImage = 'url('+src+')';
+    });
+  }
 }
 
 // ================================================
