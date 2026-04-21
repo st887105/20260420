@@ -8,142 +8,173 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
 :root{
-  --bg:#0d0f14;--surface:#13161e;--card:#1a1e2a;--border:#252a38;--border2:#2e3448;
-  --accent:#5b8dee;--amber:#f0a500;--green:#2dce89;--red:#f5365c;
-  --text:#dde4f0;--muted:#556080;
+  --bg:#f5f7fa;
+  --surface:#ffffff;
+  --card:#ffffff;
+  --border:#e2e8f0;
+  --border2:#cbd5e1;
+  --accent:#2563eb;
+  --accent2:#1d4ed8;
+  --amber:#d97706;
+  --green:#059669;
+  --red:#dc2626;
+  --purple:#7c3aed;
+  --text:#1e293b;
+  --text2:#475569;
+  --muted:#94a3b8;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 15px rgba(0,0,0,.08),0 4px 6px rgba(0,0,0,.05);
   --bs:50mm;--bh:50mm;--br:50%;--bgs:cover;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:14px;}
-::-webkit-scrollbar{width:4px;height:4px;}
-::-webkit-scrollbar-track{background:var(--surface);}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
 
 /* TOPBAR */
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 14px;height:52px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:9px;}
-.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;flex-shrink:0;font-size:1rem;}
-.logo-name{font-weight:700;font-size:.88rem;line-height:1.3;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow);}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;flex-shrink:0;font-size:1rem;box-shadow:0 2px 8px rgba(37,99,235,.35);}
+.logo-name{font-weight:700;font-size:.9rem;line-height:1.3;color:var(--text);}
 .logo-ver{font-size:.6rem;color:var(--muted);font-family:'DM Mono',monospace;}
 
 /* PILLS */
-.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:.7rem;font-weight:700;}
-.pill-g{background:rgba(45,206,137,.1);color:var(--green);border:1px solid rgba(45,206,137,.25);}
-.pill-r{background:rgba(245,54,92,.1);color:var(--red);border:1px solid rgba(245,54,92,.25);}
-.pill-a{background:rgba(240,165,0,.1);color:var(--amber);border:1px solid rgba(240,165,0,.25);}
-.pill-b{background:rgba(91,141,238,.1);color:var(--accent);border:1px solid rgba(91,141,238,.25);}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:.7rem;font-weight:700;}
+.pill-g{background:#dcfce7;color:var(--green);border:1px solid #bbf7d0;}
+.pill-r{background:#fee2e2;color:var(--red);border:1px solid #fecaca;}
+.pill-a{background:#fef3c7;color:var(--amber);border:1px solid #fde68a;}
+.pill-b{background:#dbeafe;color:var(--accent);border:1px solid #bfdbfe;}
 .dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0;}
-.dg{background:var(--green);box-shadow:0 0 5px var(--green);}
-.dr{background:var(--red);box-shadow:0 0 5px var(--red);}
-.da{background:var(--amber);box-shadow:0 0 5px var(--amber);}
+.dg{background:var(--green);}
+.dr{background:var(--red);}
+.da{background:var(--amber);}
 
 /* BUTTONS */
-.btn{border:none;border-radius:8px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s,transform .1s;font-family:inherit;}
+.btn{border:none;border-radius:8px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;font-family:inherit;}
 .btn:active{transform:scale(.97);}
-.btn:disabled{opacity:.35;cursor:not-allowed;}
-.btn-p{background:var(--accent);color:#fff;padding:8px 14px;font-size:.8rem;}
-.btn-p:hover{opacity:.82;}
-.btn-g{background:var(--surface);color:var(--text);border:1px solid var(--border2);padding:7px 12px;font-size:.78rem;}
-.btn-g:hover{background:var(--border);}
-.btn-o{background:linear-gradient(135deg,var(--amber),#d07000);color:#fff;padding:12px;font-size:.92rem;width:100%;border-radius:10px;}
-.btn-o:hover{opacity:.87;}
-.btn-del{background:rgba(245,54,92,.1);color:var(--red);border:1px solid rgba(245,54,92,.2);padding:4px 8px;font-size:.68rem;border-radius:6px;}
-.btn-del:hover{background:rgba(245,54,92,.2);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn-p{background:var(--accent);color:#fff;padding:8px 14px;font-size:.8rem;box-shadow:0 1px 3px rgba(37,99,235,.3);}
+.btn-p:hover:not(:disabled){background:var(--accent2);}
+.btn-g{background:var(--surface);color:var(--text2);border:1px solid var(--border2);padding:7px 12px;font-size:.78rem;}
+.btn-g:hover:not(:disabled){background:var(--bg);border-color:var(--border2);}
+.btn-o{background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;padding:12px;font-size:.92rem;width:100%;border-radius:10px;box-shadow:0 2px 8px rgba(37,99,235,.3);}
+.btn-o:hover:not(:disabled){opacity:.9;box-shadow:0 4px 12px rgba(37,99,235,.4);}
+.btn-del{background:#fee2e2;color:var(--red);border:1px solid #fecaca;padding:4px 8px;font-size:.68rem;border-radius:6px;}
+.btn-del:hover{background:#fecaca;}
+.btn-green{background:#dcfce7;color:var(--green);border:1px solid #bbf7d0;padding:7px 12px;font-size:.78rem;}
+.btn-green:hover{background:#bbf7d0;}
 .wfull{width:100%;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 
 /* CARD */
-.card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:14px;}
-.card-hd{font-weight:700;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:11px;display:flex;align-items:center;gap:6px;}
-.inp{width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:8px 11px;font-size:.82rem;color:var(--text);outline:none;transition:border-color .2s;font-family:inherit;}
-.inp:focus{border-color:var(--accent);}
-.lbl{font-size:.72rem;color:var(--muted);display:block;margin-bottom:4px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+.card-hd{font-weight:700;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.inp{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:8px 11px;font-size:.82rem;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;font-family:inherit;}
+.inp:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12);}
+.lbl{font-size:.72rem;color:var(--text2);display:block;margin-bottom:4px;font-weight:500;}
 
 /* SHAPE TABS */
-.stabs{display:flex;background:var(--surface);border-radius:8px;padding:3px;gap:2px;}
-.stab{flex:1;padding:6px 2px;font-size:.7rem;font-weight:700;border-radius:6px;border:1px solid transparent;cursor:pointer;background:transparent;color:var(--muted);transition:all .15s;}
-.stab.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+.stabs{display:flex;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:3px;gap:2px;}
+.stab{flex:1;padding:6px 2px;font-size:.68rem;font-weight:700;border-radius:6px;border:1px solid transparent;cursor:pointer;background:transparent;color:var(--muted);transition:all .15s;font-family:inherit;}
+.stab.on{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 1px 3px rgba(37,99,235,.3);}
 
 /* MEDIA BOX */
-.mbox{width:100%;aspect-ratio:1;background:var(--surface);border-radius:10px;overflow:hidden;border:2px dashed var(--border2);position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:9px;}
+.mbox{width:100%;aspect-ratio:1;background:var(--bg);border-radius:12px;overflow:hidden;border:2px dashed var(--border2);position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:9px;}
 .mbox video,.mbox img.preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .mph{text-align:center;color:var(--muted);}
 .mph i{font-size:1.8rem;}
 .mph p{font-size:.72rem;margin-top:6px;}
 
 /* AI RESULT (mobile) */
-.ai-res-wrap{width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--surface);border:1px solid var(--border2);display:none;margin-bottom:10px;}
+.ai-res-wrap{width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--bg);border:1px solid var(--border);display:none;margin-bottom:10px;}
 .ai-res-wrap.show{display:block;}
 .ai-res-wrap img{width:100%;height:100%;object-fit:cover;}
 
 /* PROGRESS */
 .pgwrap{margin-top:9px;}
-.pgbar{height:3px;background:var(--border2);border-radius:2px;overflow:hidden;}
-.pgfill{height:100%;background:linear-gradient(90deg,var(--accent),#7c6af5);border-radius:2px;transition:width .4s;}
-.pgmsg{display:flex;align-items:center;gap:7px;font-size:.73rem;color:var(--muted);margin-top:5px;}
+.pgbar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.pgfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:2px;transition:width .4s;}
+.pgmsg{display:flex;align-items:center;gap:7px;font-size:.73rem;color:var(--text2);margin-top:5px;}
 
 /* SPINNER */
-.spin{width:17px;height:17px;flex-shrink:0;border:2px solid rgba(91,141,238,.18);border-top-color:var(--accent);border-radius:50%;animation:rot .7s linear infinite;}
+.spin{width:17px;height:17px;flex-shrink:0;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:rot .7s linear infinite;}
 @keyframes rot{to{transform:rotate(360deg);}}
 
 /* RESULT CARD */
-.rcard{background:linear-gradient(135deg,rgba(91,141,238,.07),rgba(124,106,245,.07));border:1px solid rgba(91,141,238,.2);border-radius:10px;padding:11px;margin-top:9px;}
+.rcard{background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:1px solid #bfdbfe;border-radius:10px;padding:12px;margin-top:9px;}
 .rrow{display:flex;align-items:center;gap:7px;font-size:.73rem;margin-bottom:5px;}
 .rrow:last-child{margin-bottom:0;}
 .rico{width:22px;text-align:center;color:var(--muted);flex-shrink:0;}
 .rlink{color:var(--accent);text-decoration:none;word-break:break-all;}
 .rlink:hover{text-decoration:underline;}
 
+/* STATUS */
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:.73rem;border-bottom:1px solid var(--border);}
+.stat-row:last-of-type{border-bottom:none;}
+
 /* OFFLINE BANNER */
-.offbanner{display:none;background:rgba(245,54,92,.08);border:1px solid rgba(245,54,92,.3);border-radius:10px;padding:10px 12px;font-size:.75rem;color:var(--red);margin-bottom:9px;gap:8px;align-items:flex-start;}
+.offbanner{display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:10px 12px;font-size:.75rem;color:var(--red);margin-bottom:9px;gap:8px;align-items:flex-start;}
 .offbanner.show{display:flex;}
 
 /* RECORDS */
-.rec-item{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px;display:flex;gap:8px;margin-bottom:6px;}
-.rthumb{width:44px;height:44px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--border2);}
+.rec-item{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:9px;display:flex;gap:8px;margin-bottom:6px;transition:box-shadow .15s;}
+.rec-item:hover{box-shadow:var(--shadow-md);}
+.rthumb{width:46px;height:46px;border-radius:7px;object-fit:cover;flex-shrink:0;background:var(--border);border:1px solid var(--border);}
 .rbody{flex:1;min-width:0;}
 .date-grp{font-size:.66rem;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;letter-spacing:.04em;padding:5px 0 4px;border-bottom:1px solid var(--border);margin-bottom:5px;display:flex;align-items:center;gap:5px;}
 
 /* SLIDER */
 input[type=range]{accent-color:var(--accent);width:100%;}
-.slrow{display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:3px;}
+.slrow{display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:4px;}
 .slval{color:var(--accent);font-weight:700;font-family:'DM Mono',monospace;}
 
+/* MULTI-PERSON BADGE INPUT */
+.person-row{display:flex;align-items:center;gap:7px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 10px;margin-bottom:6px;}
+.person-num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.person-status{font-size:.7rem;color:var(--text2);flex:1;}
+.person-thumb{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--border);background:var(--border2);}
+
 /* A4 BADGE */
-.a4{width:210mm;min-height:297mm;background:#fff;color:#1e293b;box-shadow:0 0 0 1px rgba(255,255,255,.04),0 16px 48px rgba(0,0,0,.55);margin:0 auto;padding:18mm;transform-origin:top center;}
-.bwrap{display:inline-flex;flex-direction:row;align-items:center;margin:7px;border:1px dashed #cbd5e1;padding:4px;border-radius:6px;background:#f8fafc;position:relative;}
+.a4{width:210mm;min-height:297mm;background:#fff;color:#1e293b;box-shadow:0 0 0 1px rgba(0,0,0,.08),0 16px 48px rgba(0,0,0,.15);margin:0 auto;padding:15mm;transform-origin:top center;}
+.bwrap{display:inline-flex;flex-direction:row;align-items:center;margin:5px;border:1px dashed #cbd5e1;padding:4px;border-radius:6px;background:#f8fafc;position:relative;}
 .bface{width:var(--bs);height:var(--bh);border-radius:var(--br);background-size:var(--bgs);background-position:center;background-repeat:no-repeat;border:1px solid #e2e8f0;box-shadow:inset 0 0 0 2px white;flex-shrink:0;}
 .bface.heart{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");-webkit-mask-size:100% 100%;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");mask-size:100% 100%;border:none;box-shadow:none;}
 .fold{width:2px;height:var(--bh);background-image:linear-gradient(to bottom,#94a3b8 50%,transparent 50%);background-size:2px 7px;background-repeat:repeat-y;margin:0 3px;flex-shrink:0;}
 
 /* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:16px;}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:16px;}
 .modal-bg.open{display:flex;}
-.mbox2{background:var(--card);border:1px solid var(--border2);border-radius:15px;padding:22px;max-width:340px;width:100%;box-shadow:0 30px 60px rgba(0,0,0,.6);text-align:center;}
+.mbox2{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:360px;width:100%;box-shadow:var(--shadow-lg);text-align:center;}
 
 @keyframes fu{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 .fu{animation:fu .22s ease forwards;}
 
 @media print{
   .no-print{display:none !important;}
-  body{background:#fff;color:#1e293b;}
-  /* Desktop print: A4 area */
+  body{background:#fff;}
   .a4{box-shadow:none;margin:0;padding:10mm;width:100%;min-height:auto;transform:scale(1)!important;background:#fff;}
   .bwrap{border-color:#94a3b8;}
-  /* Mobile print: expand preview area to full page */
   .app-mobile{display:block !important;}
   .mob-sec:not(#mobBadgeSec){display:none !important;}
   #mobBadgeSec{display:block !important;padding:0 !important;}
-  #mobBadgeSec .card-hd,#mobBadgeSec label,#mobBadgeSec .stabs,#mobBadgeSec .slrow,#mobBadgeSec input,#mobBadgeSec .g2,#mobBadgeSec>div:last-child{display:none !important;}
+  #mobBadgeSec .card-hd,#mobBadgeSec label,#mobBadgeSec .stabs,#mobBadgeSec .slrow,#mobBadgeSec input,#mobBadgeSec .g2,#mobBadgeSec .btn-section,#mobBadgeSec>div:last-child{display:none !important;}
   #mPreviewWrap{background:transparent !important;padding:0 !important;}
-  #mPrintArea{max-width:100% !important;width:210mm !important;min-height:297mm !important;padding:15mm !important;box-shadow:none !important;}
+  #mPrintArea{max-width:100% !important;width:210mm !important;min-height:297mm !important;padding:12mm !important;box-shadow:none !important;}
 }
+
+/* SECTION DIVIDER */
+.sec-divider{height:1px;background:var(--border);margin:4px 0;}
+
+/* BADGE COUNT */
+.badge-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border-radius:11px;background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;padding:0 5px;}
 
 /* DESKTOP >= 961px */
 @media(min-width:961px){
-  .app-desktop{display:grid;grid-template-columns:284px 1fr 254px;gap:10px;padding:10px;max-width:1400px;margin:0 auto;}
-  .panel-l,.panel-r{display:flex;flex-direction:column;gap:9px;max-height:calc(100vh - 60px);overflow-y:auto;padding-bottom:20px;}
-  .panel-c{background:var(--surface);border:1px solid var(--border);border-radius:13px;overflow:hidden;display:flex;justify-content:center;padding:18px;align-items:flex-start;}
+  .app-desktop{display:grid;grid-template-columns:290px 1fr 270px;gap:12px;padding:12px;max-width:1440px;margin:0 auto;}
+  .panel-l,.panel-r{display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 68px);overflow-y:auto;padding-bottom:20px;}
+  .panel-c{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;justify-content:center;padding:20px;align-items:flex-start;box-shadow:var(--shadow);}
   .mobile-only{display:none !important;}
 }
 
@@ -151,13 +182,13 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 @media(max-width:960px){
   .desktop-only{display:none !important;}
   .app-mobile{display:flex;flex-direction:column;gap:0;}
-  .mob-sec{padding:12px 14px;}
+  .mob-sec{padding:14px 14px;}
   .mob-sec+.mob-sec{border-top:1px solid var(--border);}
   .mbox{aspect-ratio:4/3;}
 }
 @media(max-width:600px){
-  .topbar{padding:0 10px;}
-  .logo-name{font-size:.82rem;}
+  .topbar{padding:0 12px;}
+  .logo-name{font-size:.84rem;}
 }
 </style>
 </head>
@@ -166,13 +197,13 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 <!-- TOPBAR -->
 <header class="topbar no-print">
   <div class="logo">
-    <div class="logo-icon">輯</div>
+    <div class="logo-icon"><i class="fas fa-stamp" style="font-size:.85rem;"></i></div>
     <div>
       <div class="logo-name">車城國小｜AI 徽章拍貼機</div>
-      <div class="logo-ver">v2.3 · Gemini 2.5 Flash</div>
+      <div class="logo-ver">v3.0 · Gemini 2.5 Flash · 多人列印版</div>
     </div>
   </div>
-  <div style="display:flex;align-items:center;gap:7px;">
+  <div style="display:flex;align-items:center;gap:8px;">
     <div id="sPill" class="pill pill-a"><span class="dot da"></span>連線中</div>
     <button onclick="window.print()" class="btn btn-p no-print" style="padding:7px 12px;"><i class="fas fa-print"></i></button>
   </div>
@@ -183,7 +214,7 @@ input[type=range]{accent-color:var(--accent);width:100%;}
   <aside class="panel-l no-print">
     <div id="offD" class="offbanner">
       <i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px;"></i>
-      <div style="flex:1;"><strong>後端未連線</strong><br><span style="font-size:.67rem;opacity:.8;" id="offMsgD">請確認 GAS_URL 並重新部署</span></div>
+      <div style="flex:1;"><strong>後端未連線</strong><br><span style="font-size:.67rem;" id="offMsgD">請確認 GAS_URL 並重新部署</span></div>
       <button onclick="chkBackend()" class="btn btn-g" style="flex-shrink:0;padding:5px 9px;font-size:.68rem;"><i class="fas fa-rotate"></i></button>
     </div>
 
@@ -193,13 +224,13 @@ input[type=range]{accent-color:var(--accent);width:100%;}
       <div class="mbox">
         <video id="vidD" autoplay playsinline style="display:none;"></video>
         <img class="preview" id="prvD" style="display:none;" alt="">
-        <div id="phD" class="mph"><i class="fas fa-image"></i><p>拍照或上傳圖片</p></div>
+        <div id="phD" class="mph"><i class="fas fa-image" style="color:var(--muted);"></i><p>拍照或上傳圖片</p></div>
       </div>
       <div class="g2" style="margin-bottom:7px;">
-        <label style="cursor:pointer;"><input type="file" id="camD" accept="image/*" capture="environment" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-mobile-screen-button"></i> 手機拍照</div></label>
-        <label style="cursor:pointer;"><input type="file" id="upD" accept="image/png,image/jpeg,image/webp" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-upload"></i> 相簿上傳</div></label>
+        <label style="cursor:pointer;"><input type="file" id="camD" accept="image/*" capture="environment" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-mobile-screen-button" style="color:var(--accent);"></i> 手機拍照</div></label>
+        <label style="cursor:pointer;"><input type="file" id="upD" accept="image/png,image/jpeg,image/webp" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-upload" style="color:var(--purple);"></i> 相簿上傳</div></label>
       </div>
-      <button id="webcamD" class="btn btn-g wfull" style="font-size:.72rem;"><i class="fas fa-laptop"></i> 開啟網頁相機 (PC)</button>
+      <button id="webcamD" class="btn btn-g wfull" style="font-size:.72rem;"><i class="fas fa-laptop" style="color:var(--accent);"></i> 開啟網頁相機 (PC)</button>
       <button id="capD" class="btn btn-p wfull" style="margin-top:7px;display:none;"><i class="fas fa-camera"></i> 擷取畫面</button>
     </div>
 
@@ -227,14 +258,14 @@ input[type=range]{accent-color:var(--accent);width:100%;}
         <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span><a id="drD" href="#" target="_blank" class="rlink">Drive 查看圖片</a></div>
         <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span><a id="flD" href="#" target="_blank" class="rlink">日期資料夾</a></div>
         <div id="ghRD" class="rrow" style="display:none;"><span class="rico"><i class="fab fa-github"></i></span><a id="ghD" href="#" target="_blank" class="rlink">GitHub</a></div>
-        <div style="margin-top:5px;font-size:.68rem;color:var(--muted);line-height:1.5;border-top:1px solid var(--border);padding-top:6px;"><i class="fas fa-eye" style="margin-right:3px;"></i><span id="descD"></span></div>
+        <div style="margin-top:5px;font-size:.68rem;color:var(--text2);line-height:1.5;border-top:1px solid var(--border);padding-top:6px;"><i class="fas fa-eye" style="margin-right:3px;color:var(--muted);"></i><span id="descD"></span></div>
       </div>
     </div>
 
     <!-- Step 3 -->
     <div class="card">
-      <div class="card-hd"><i class="fas fa-sliders" style="color:#7c6af5;"></i>③ 徽章排版</div>
-      <div style="display:flex;flex-direction:column;gap:9px;">
+      <div class="card-hd"><i class="fas fa-sliders" style="color:var(--purple);"></i>③ 徽章排版</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
         <div><label class="lbl">圖像來源</label>
           <select id="srcD" class="inp"><option value="original">原始圖片</option><option value="ai" disabled>AI 生成圖（尚未生成）</option></select>
         </div>
@@ -250,37 +281,61 @@ input[type=range]{accent-color:var(--accent);width:100%;}
           <select id="fitD" class="inp"><option value="cover">裁切填滿</option><option value="contain">完整顯示</option><option value="custom">自訂縮放</option></select>
         </div>
         <div id="scWD" style="display:none;">
-          <div class="slrow"><span style="color:var(--muted);">縮放</span><span id="scVD" class="slval">100%</span></div>
+          <div class="slrow"><span style="color:var(--text2);">縮放</span><span id="scVD" class="slval">100%</span></div>
           <input type="range" id="scRD" min="10" max="300" value="100">
         </div>
         <div>
-          <div class="slrow"><span style="color:var(--muted);">尺寸</span><span id="szVD" class="slval">50mm</span></div>
-          <input type="range" id="szRD" min="30" max="80" value="50">
+          <div class="slrow"><span style="color:var(--text2);">尺寸</span><span id="szVD" class="slval">50mm</span></div>
+          <input type="range" id="szRD" min="25" max="80" value="50">
         </div>
         <div class="g2">
-          <button id="addD" class="btn btn-g"><i class="fas fa-plus"></i> 新增</button>
-          <button id="clrD" class="btn btn-g" style="color:var(--red);border-color:rgba(245,54,92,.3);"><i class="fas fa-trash"></i> 清除</button>
+          <button id="addD" class="btn btn-p"><i class="fas fa-plus"></i> 新增</button>
+          <button id="clrD" class="btn btn-del" style="padding:8px;"><i class="fas fa-trash"></i> 清除</button>
+        </div>
+        <div style="font-size:.7rem;color:var(--muted);text-align:center;">
+          A4 已放 <span id="cntD" class="badge-count">0</span> 個徽章
         </div>
       </div>
     </div>
   </aside>
 
+  <!-- CENTER: A4 Preview -->
   <div class="panel-c">
     <div id="a4D" class="a4">
-      <div class="no-print" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.03;pointer-events:none;user-select:none;"><span style="font-size:2.2rem;font-weight:900;transform:rotate(-30deg);white-space:nowrap;">A4 列印預覽</span></div>
+      <div class="no-print" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.04;pointer-events:none;user-select:none;"><span style="font-size:2.5rem;font-weight:900;transform:rotate(-30deg);white-space:nowrap;color:#1e293b;">A4 列印預覽</span></div>
       <div id="bdgD" style="display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px;position:relative;z-index:1;"></div>
     </div>
     <canvas id="cvsD" style="display:none;"></canvas>
   </div>
 
-  <aside class="panel-r no-print" style="display:flex;flex-direction:column;gap:9px;max-height:calc(100vh - 60px);overflow-y:auto;padding-bottom:20px;">
+  <!-- RIGHT PANEL -->
+  <aside class="panel-r no-print" style="display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 68px);overflow-y:auto;padding-bottom:20px;">
+    <!-- 多人管理 -->
+    <div class="card">
+      <div class="card-hd"><i class="fas fa-users" style="color:var(--green);"></i>多人批次列印</div>
+      <div style="font-size:.72rem;color:var(--text2);margin-bottom:10px;line-height:1.6;">
+        上傳多位同學照片，依序生成徽章並排版在同一張 A4，一次列印節省資源。
+      </div>
+      <div id="personList" style="margin-bottom:8px;"></div>
+      <label style="cursor:pointer;">
+        <input type="file" id="multiUp" accept="image/png,image/jpeg,image/webp" multiple style="display:none;">
+        <div class="btn btn-green wfull" style="padding:9px;font-size:.78rem;">
+          <i class="fas fa-users"></i> 批次上傳多人照片
+        </div>
+      </label>
+      <div style="font-size:.68rem;color:var(--muted);text-align:center;margin-top:6px;">可一次選取多張照片</div>
+    </div>
+
+    <!-- Status -->
     <div class="card">
       <div class="card-hd"><i class="fas fa-server" style="color:var(--accent);"></i>後端狀態</div>
       <div id="stPnD"><div style="display:flex;justify-content:center;padding:8px;"><div class="spin"></div></div></div>
     </div>
+
+    <!-- Records -->
     <div class="card" style="flex:1;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
-        <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:#7c6af5;"></i>上傳紀錄</div>
+        <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:var(--purple);"></i>上傳紀錄</div>
         <button onclick="loadRec('D')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
       </div>
       <div id="recD"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
@@ -292,7 +347,7 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 <div class="app-mobile mobile-only">
   <div id="offM" class="offbanner" style="margin:10px 14px 0;">
     <i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px;"></i>
-    <div style="flex:1;"><strong>後端未連線</strong><div style="font-size:.67rem;opacity:.8;margin-top:2px;" id="offMsgM">請確認 GAS_URL 並重新部署</div></div>
+    <div style="flex:1;"><strong>後端未連線</strong><div style="font-size:.67rem;margin-top:2px;" id="offMsgM">請確認 GAS_URL 並重新部署</div></div>
     <button onclick="chkBackend()" class="btn btn-g" style="flex-shrink:0;padding:5px 9px;font-size:.68rem;"><i class="fas fa-rotate"></i></button>
   </div>
 
@@ -302,10 +357,10 @@ input[type=range]{accent-color:var(--accent);width:100%;}
     <div class="mbox" style="aspect-ratio:4/3;">
       <video id="vidM" autoplay playsinline style="display:none;"></video>
       <img class="preview" id="prvM" style="display:none;" alt="">
-      <div id="phM" class="mph"><i class="fas fa-image"></i><p>點下方按鈕拍照或上傳</p></div>
+      <div id="phM" class="mph"><i class="fas fa-image" style="color:var(--muted);"></i><p>點下方按鈕拍照或上傳</p></div>
     </div>
     <div class="g2">
-      <label style="cursor:pointer;"><input type="file" id="camM" accept="image/*" capture="user" style="display:none;"><div class="btn btn-g wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-camera"></i> 自拍</div></label>
+      <label style="cursor:pointer;"><input type="file" id="camM" accept="image/*" capture="user" style="display:none;"><div class="btn btn-p wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-camera"></i> 自拍</div></label>
       <label style="cursor:pointer;"><input type="file" id="upM" accept="image/png,image/jpeg,image/webp" style="display:none;"><div class="btn btn-g wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-images"></i> 相簿</div></label>
     </div>
   </div>
@@ -338,11 +393,9 @@ input[type=range]{accent-color:var(--accent);width:100%;}
     </div>
   </div>
 
-  <!-- M2b: Badge Layout (mobile simplified) -->
+  <!-- M2b: Badge Layout -->
   <div class="mob-sec" id="mobBadgeSec">
-    <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-stamp" style="color:#7c6af5;"></i>③ 徽章排版設定</div>
-
-    <!-- Shape -->
+    <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-stamp" style="color:var(--purple);"></i>③ 徽章排版設定</div>
     <label class="lbl" style="margin-bottom:5px;">徽章形狀</label>
     <div class="stabs" style="margin-bottom:10px;">
       <button class="stab on" data-shape="circle">圓形</button>
@@ -350,21 +403,15 @@ input[type=range]{accent-color:var(--accent);width:100%;}
       <button class="stab" data-shape="rectangle">長方形</button>
       <button class="stab" data-shape="heart">愛心</button>
     </div>
-
-    <!-- Size -->
-    <div class="slrow"><span style="color:var(--muted);">尺寸</span><span id="szVM" class="slval">50mm</span></div>
-    <input type="range" id="szRM" min="30" max="80" value="50" style="margin-bottom:10px;">
-
-    <!-- Add / Clear badges -->
-    <div class="g2" style="margin-bottom:10px;">
-      <button id="addM" class="btn btn-g"><i class="fas fa-plus"></i> 新增徽章</button>
-      <button id="clrM" class="btn btn-g" style="color:var(--red);border-color:rgba(245,54,92,.3);"><i class="fas fa-trash"></i> 清除</button>
+    <div class="slrow"><span style="color:var(--text2);">尺寸</span><span id="szVM" class="slval">50mm</span></div>
+    <input type="range" id="szRM" min="25" max="80" value="50" style="margin-bottom:10px;">
+    <div class="g2 btn-section" style="margin-bottom:10px;">
+      <button id="addM" class="btn btn-p"><i class="fas fa-plus"></i> 新增徽章</button>
+      <button id="clrM" class="btn btn-del" style="padding:10px;"><i class="fas fa-trash"></i> 清除</button>
     </div>
-
-    <!-- Mini A4 preview for mobile -->
-    <div style="font-size:.72rem;color:var(--muted);margin-bottom:6px;"><i class="fas fa-file-alt" style="margin-right:4px;"></i>列印預覽</div>
-    <div id="mPreviewWrap" style="background:#e8eaf0;border-radius:10px;overflow:auto;padding:10px;display:flex;justify-content:center;max-height:340px;">
-      <div id="mPrintArea" style="background:#fff;width:100%;max-width:360px;min-height:200px;padding:8px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.2);">
+    <div style="font-size:.72rem;color:var(--text2);margin-bottom:7px;"><i class="fas fa-file-alt" style="margin-right:4px;color:var(--muted);"></i>列印預覽</div>
+    <div id="mPreviewWrap" style="background:#e8eaf0;border-radius:10px;overflow:auto;padding:10px;display:flex;justify-content:center;max-height:380px;">
+      <div id="mPrintArea" style="background:#fff;width:100%;max-width:360px;min-height:200px;padding:8px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.15);">
         <div id="bdgM" style="display:flex;flex-wrap:wrap;align-content:flex-start;gap:3px;"></div>
         <div class="no-print" style="padding:16px 0 8px;text-align:center;color:#94a3b8;font-size:.7rem;" id="bdgMPh">
           <i class="fas fa-stamp" style="font-size:1.2rem;display:block;margin-bottom:5px;"></i>按「新增徽章」加入圖片
@@ -379,7 +426,7 @@ input[type=range]{accent-color:var(--accent);width:100%;}
   <!-- M3: Records -->
   <div class="mob-sec" style="padding-bottom:24px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
-      <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:#7c6af5;"></i>上傳紀錄</div>
+      <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:var(--purple);"></i>上傳紀錄</div>
       <button onclick="loadRec('M')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
     </div>
     <div id="recM"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
@@ -390,8 +437,8 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 <div id="msgModal" class="modal-bg">
   <div class="mbox2">
     <div id="mIcon" style="font-size:2rem;margin-bottom:9px;"></div>
-    <div id="mTitle" style="font-size:.9rem;font-weight:700;margin-bottom:6px;"></div>
-    <div id="mBody" style="font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.6;word-break:break-word;"></div>
+    <div id="mTitle" style="font-size:.92rem;font-weight:700;margin-bottom:6px;color:var(--text);"></div>
+    <div id="mBody" style="font-size:.78rem;color:var(--text2);margin-bottom:16px;line-height:1.6;word-break:break-word;"></div>
     <button onclick="closeMsg()" class="btn btn-p wfull">確認</button>
   </div>
 </div>
@@ -400,26 +447,31 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 
 <script>
 // ================================================
-// STAR  GAS Web App URL - change this line  STAR
+// ★ GAS Web App URL
 // ================================================
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxKFwj84mf4eVvlflEkHusYghFPfXe9zJ-QQkNnMaUrOasc43WDDRvMY87dn2QglCo/exec';
 // ================================================
 
-const isMob = () => window.innerWidth <= 960;
 const $ = id => document.getElementById(id);
-
 let origD=null,aiD=null,objD=null,strmD=null;
 let origM=null,aiM=null,objM=null;
 let shape='circle',size=50,fit='cover',scale=100;
 const sid='sess_'+Date.now();
 
 // ================================================
-// CONNECTION: fetch first, JSONP fallback
-// This solves mobile Chrome blocking dynamic scripts
+// CONNECTION — 手機版改用 fetch POST，避免 JSONP 被 CSP 擋
+// GET 行為（getConfig / getRecords）用 JSONP fallback
 // ================================================
-// GAS GET: always use JSONP (fetch gets blocked by Google auth redirect on mobile)
-// GAS POST: use fetch directly (no redirect issue)
 function gasGet(url) {
+  // 優先用 fetch，失敗才用 JSONP
+  return fetch(url + (url.includes('?') ? '&' : '?') + '_nc=' + Date.now(), {
+    signal: AbortSignal.timeout(20000)
+  })
+    .then(r => r.json())
+    .catch(() => gasGetJsonp(url));
+}
+
+function gasGetJsonp(url) {
   return new Promise((res, rej) => {
     const cb  = '_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
     const tid = setTimeout(() => {
@@ -427,7 +479,7 @@ function gasGet(url) {
       const el = document.getElementById(cb);
       if (el) el.remove();
       rej(new Error('連線逾時，請確認網路是否正常'));
-    }, 18000);
+    }, 20000);
     window[cb] = d => {
       clearTimeout(tid);
       delete window[cb];
@@ -441,17 +493,7 @@ function gasGet(url) {
     s.src     = url + sep + 'callback=' + cb;
     s.onerror = () => {
       clearTimeout(tid);
-      delete window[cb];
-      // JSONP blocked (mobile CSP) - try fetch as last resort
-      fetch(url + sep + 'callback=_noop', {signal: AbortSignal.timeout(15000)})
-        .then(r => r.text())
-        .then(txt => {
-          // Strip JSONP wrapper if present
-          const clean = txt.replace(/^[^({\[]*/, '').replace(/[)\s]*$/, '');
-          try { res(JSON.parse(clean)); }
-          catch(e) { rej(new Error('無法解析後端回應')); }
-        })
-        .catch(() => rej(new Error('無法連接後端，請確認 GAS_URL 是否正確')));
+      rej(new Error('無法連接後端，請確認 GAS_URL 是否正確'));
     };
     document.head.appendChild(s);
   });
@@ -471,47 +513,41 @@ async function chkBackend() {
     pill.className = d.hasGeminiKey ? 'pill pill-g' : 'pill pill-a';
     pill.innerHTML = '<span class="dot '+(d.hasGeminiKey?'dg':'da')+'"></span>'+(d.hasGeminiKey?'已連線':'部分設定');
 
-    const mk = ok => '<span class="dot '+(ok?'dg':'dr')+'" style="display:inline-block;"></span>';
+    const mk = ok => `<span class="dot ${ok?'dg':'dr'}" style="display:inline-block;width:8px;height:8px;"></span>`;
     const pD = $('stPnD');
     if (pD) pD.innerHTML =
-      '<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;"><span style="color:var(--muted);">Gemini API</span>'+mk(d.hasGeminiKey)+'</div>'+
-      '<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;"><span style="color:var(--muted);">Google Drive</span>'+mk(d.hasFolderId)+'</div>'+
-      '<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;"><span style="color:var(--muted);">GitHub</span>'+mk(d.hasGitHub)+'</div>'+
-      (d.hasFolderId?'<div style="font-size:.65rem;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:4px;word-break:break-all;"><i class="fas fa-folder-open" style="color:var(--amber);margin-right:3px;"></i><a href="'+d.folderUrl+'" target="_blank" style="color:var(--accent);text-decoration:none;">'+d.folderId+'</a></div>':'')+
-      (d.hasGitHub?'<div style="font-size:.65rem;color:var(--muted);padding-top:3px;"><i class="fab fa-github" style="margin-right:3px;"></i>'+d.githubRepo+'</div>':'')+
-      '<button onclick="chkBackend()" class="btn btn-g" style="margin-top:7px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> 重新偵測</button>';
+      `<div class="stat-row"><span style="color:var(--text2);">Gemini API</span>${mk(d.hasGeminiKey)}</div>`+
+      `<div class="stat-row"><span style="color:var(--text2);">Google Drive</span>${mk(d.hasFolderId)}</div>`+
+      `<div class="stat-row"><span style="color:var(--text2);">GitHub</span>${mk(d.hasGitHub)}</div>`+
+      (d.hasFolderId?`<div style="font-size:.65rem;color:var(--muted);padding-top:6px;word-break:break-all;"><i class="fas fa-folder-open" style="color:var(--amber);margin-right:3px;"></i><a href="${d.folderUrl}" target="_blank" style="color:var(--accent);text-decoration:none;">${d.folderId}</a></div>`:'')+
+      (d.hasGitHub?`<div style="font-size:.65rem;color:var(--muted);padding-top:3px;"><i class="fab fa-github" style="margin-right:3px;"></i>${d.githubRepo}</div>`:'')+
+      `<button onclick="chkBackend()" class="btn btn-g" style="margin-top:9px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> 重新偵測</button>`;
 
   } catch(e) {
     pill.className='pill pill-r';
-    pill.innerHTML='<span class="dot dr"></span>未連縋';
+    pill.innerHTML='<span class="dot dr"></span>未連線';
     const msg = e.message;
     ['D','M'].forEach(s => {
       const b=$('off'+s); if(b) b.classList.add('show');
       const m=$('offMsg'+s); if(m) m.textContent=msg;
     });
     const pD=$('stPnD');
-    if(pD) pD.innerHTML='<div style="color:var(--red);font-size:.73rem;padding:6px 0;text-align:center;"><i class="fas fa-triangle-exclamation"></i> 連線失敗</div><button onclick="chkBackend()" class="btn btn-g" style="margin-top:6px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> 重新偵測</button>';
+    if(pD) pD.innerHTML=`<div style="color:var(--red);font-size:.73rem;padding:6px 0;text-align:center;"><i class="fas fa-triangle-exclamation"></i> 連線失敗</div><button onclick="chkBackend()" class="btn btn-g" style="margin-top:6px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> 重新偵測</button>`;
   }
 }
 
 // ================================================
 // IMAGE PROCESSING
 // ================================================
-// ── Beauty filter: smooth skin using canvas blur + overlay ──
 function applyBeauty(ctx, w, h) {
-  // Step1: get image data
   const imgData = ctx.getImageData(0, 0, w, h);
   const d = imgData.data;
-  // Simple skin smoothing: reduce high-frequency noise by blending neighbours
-  // Apply a mild gaussian-like blur only on skin-tone pixels
   const tmp = new Uint8ClampedArray(d);
   for (let y = 1; y < h-1; y++) {
     for (let x = 1; x < w-1; x++) {
       const i = (y*w+x)*4;
       const r=d[i], g=d[i+1], b=d[i+2];
-      // Detect rough skin tone range (R>100, R>G, R>B, not too bright)
       if (r > 90 && r > g*0.85 && r > b*1.1 && r < 240) {
-        // 3x3 box blur for this pixel
         let sr=0,sg=0,sb=0,cnt=0;
         for(let dy=-1;dy<=1;dy++){for(let dx=-1;dx<=1;dx++){
           const j=((y+dy)*w+(x+dx))*4;
@@ -525,13 +561,10 @@ function applyBeauty(ctx, w, h) {
   }
   imgData.data.set(tmp);
   ctx.putImageData(imgData, 0, 0);
-  // Step2: add slight brightness + contrast boost for glow effect
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.globalAlpha = 0.08;
+  ctx.globalAlpha = 0.06;
   ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, w, h);
   ctx.globalAlpha = 1.0;
-  ctx.globalCompositeOperation = 'source-over';
 }
 
 function procFile(file, cvsId, onDone, mirror) {
@@ -542,13 +575,9 @@ function procFile(file, cvsId, onDone, mirror) {
     img.onload = () => {
       c.width = c.height = 512;
       const sz = Math.min(img.width, img.height);
-      if (mirror) {
-        // Mirror horizontally for selfie camera
-        ctx.setTransform(-1, 0, 0, 1, 512, 0);
-      }
+      if (mirror) ctx.setTransform(-1, 0, 0, 1, 512, 0);
       ctx.drawImage(img, (img.width-sz)/2, (img.height-sz)/2, sz, sz, 0, 0, 512, 512);
       ctx.setTransform(1, 0, 0, 1, 0, 0);
-      // Apply beauty filter
       applyBeauty(ctx, 512, 512);
       c.toBlob(blob => onDone(URL.createObjectURL(blob), c.toDataURL('image/jpeg',.85)), 'image/jpeg',.85);
     };
@@ -557,12 +586,17 @@ function procFile(file, cvsId, onDone, mirror) {
   rd.readAsDataURL(file);
 }
 
-// DESKTOP camera
+// procFile that returns a Promise
+function procFileAsync(file, cvsId, mirror) {
+  return new Promise(res => procFile(file, cvsId, (url, dat) => res({url, dat}), mirror));
+}
+
+// Webcam
 $('webcamD').addEventListener('click', async () => {
   if (strmD) {
     strmD.getTracks().forEach(t=>t.stop()); strmD=null;
     $('vidD').style.display='none';
-    $('webcamD').innerHTML='<i class="fas fa-laptop"></i> 開啟網頁相機 (PC)';
+    $('webcamD').innerHTML='<i class="fas fa-laptop" style="color:var(--accent);"></i> 開啟網頁相機 (PC)';
     $('capD').style.display='none';
     if (!origD) $('phD').style.display='';
     return;
@@ -571,9 +605,9 @@ $('webcamD').addEventListener('click', async () => {
     strmD = await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});
     $('vidD').srcObject=strmD; $('vidD').style.display='';
     $('prvD').style.display='none'; $('phD').style.display='none';
-    $('webcamD').innerHTML='<i class="fas fa-video-slash"></i> 額闭相机';
+    $('webcamD').innerHTML='<i class="fas fa-video-slash"></i> 關閉相機';
     $('capD').style.display='';
-  } catch(e){ showMsg('❌ 相機受限','請改用上傳拝酟','error'); }
+  } catch(e){ showMsg('❌ 相機受限','請改用上傳方式','error'); }
 });
 $('capD').addEventListener('click', () => {
   const v=$('vidD'), c=$('cvsD'), ctx=c.getContext('2d');
@@ -591,7 +625,7 @@ $('capD').addEventListener('click', () => {
   },'image/jpeg',.72);
   strmD.getTracks().forEach(t=>t.stop()); strmD=null;
   $('vidD').style.display='none'; $('capD').style.display='none';
-  $('webcamD').innerHTML='<i class="fas fa-laptop"></i> 開啟網頁相機 (PC)';
+  $('webcamD').innerHTML='<i class="fas fa-laptop" style="color:var(--accent);"></i> 開啟網頁相機 (PC)';
 });
 
 function onFileD(e, mirror) {
@@ -616,7 +650,6 @@ function onFileM(e, mirror) {
     objM=url; origM=dat;
     $('prvM').src=url; $('prvM').style.display=''; $('phM').style.display='none';
     aiM=null; $('resM').style.display='none'; $('aiResM').classList.remove('show');
-    // Refresh existing mobile badges with new image
     $('bdgM').querySelectorAll('.bface').forEach(f => { f.style.backgroundImage='url('+url+')'; });
   }, mirror);
   e.target.value='';
@@ -625,9 +658,45 @@ $('upM').addEventListener('change', e => onFileM(e, false));
 $('camM').addEventListener('change', e => onFileM(e, true));
 
 // ================================================
+// MULTI-PERSON BATCH UPLOAD (Desktop)
+// ================================================
+const multiPersonImages = []; // {url, dat, name}
+
+$('multiUp') && $('multiUp').addEventListener('change', async e => {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+  const list = $('personList');
+  for (const file of files) {
+    const idx = multiPersonImages.length;
+    // Placeholder row
+    const row = document.createElement('div');
+    row.className = 'person-row';
+    row.id = 'prow'+idx;
+    row.innerHTML = `<div class="person-num">${idx+1}</div><div class="person-status"><div class="spin" style="width:14px;height:14px;display:inline-block;"></div> 處理中...</div>`;
+    list.appendChild(row);
+
+    const {url, dat} = await procFileAsync(file, 'cvsD', false);
+    multiPersonImages.push({url, dat, name: file.name});
+
+    // Set as current for badge preview
+    objD = url; origD = dat;
+    $('prvD').src = url; $('prvD').style.display=''; $('phD').style.display='none';
+    addBadge(); // Add one badge per person
+
+    row.innerHTML = `<div class="person-num">${idx+1}</div><img class="person-thumb" src="${url}" alt=""><div class="person-status" style="font-size:.7rem;">✅ ${file.name.substring(0,18)}<br><span style="color:var(--muted);">已加入列印佇列</span></div><button onclick="removePerson(${idx})" class="btn btn-del" style="padding:3px 6px;"><i class="fas fa-xmark"></i></button>`;
+  }
+  e.target.value='';
+});
+
+function removePerson(idx) {
+  const el = $('prow'+idx);
+  if(el) el.remove();
+}
+
+// ================================================
 // AI GENERATE
 // ================================================
-const STEPS=[[15,'Gemini Vision 分析圖片中...'],[42,'Gemini 圖像生成中...'],[72,'储存至 Google Drive...'],[88,'推送至 GitHub...'],[95,'回仮結果中...']];
+const STEPS=[[15,'Gemini Vision 分析圖片中...'],[42,'Gemini 圖像生成中...'],[72,'儲存至 Google Drive...'],[88,'推送至 GitHub...'],[95,'回傳結果中...']];
 
 async function doGen(origData, sfx) {
   const btn=$('gen'+sfx), ldBox=$('ldBox'+sfx), pgFill=$('pg'+sfx), ldTxt=$('ld'+sfx), resBox=$('res'+sfx);
@@ -637,11 +706,16 @@ async function doGen(origData, sfx) {
   const iv=setInterval(()=>{ if(si<STEPS.length){pgFill.style.width=STEPS[si][0]+'%';ldTxt.innerHTML=STEPS[si][1];si++;} },4500);
   try {
     const prompt = [$('sty'+sfx).value, $('prm'+sfx).value.trim()].filter(Boolean).join('. Additional: ');
-    const r = await fetch(GAS_URL,{method:'POST',body:JSON.stringify({prompt,image:origData.split(',')[1],sessionId:sid}),headers:{'Content-Type':'text/plain;charset=utf-8'},redirect:'follow'});
+    const r = await fetch(GAS_URL, {
+      method:'POST',
+      body: JSON.stringify({prompt, image: origData.split(',')[1], sessionId: sid}),
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      redirect:'follow'
+    });
     clearInterval(iv); pgFill.style.width='100%';
     if(!r.ok) throw new Error('HTTP '+r.status);
     const d = await r.json();
-    if(!d.success) throw new Error(d.error||'後端處理失承');
+    if(!d.success) throw new Error(d.error||'後端處理失敗');
     const mime=d.aiImageMime||'image/png';
     const imgData='data:'+mime+';base64,'+d.aiImage;
     if (sfx==='D') {
@@ -657,14 +731,13 @@ async function doGen(origData, sfx) {
       $('drM').href=d.aiImageUrl||'#';
       $('flM').href=d.folderUrl||'#';
       if(d.githubUrl){$('ghM').href=d.githubUrl;$('ghRM').style.display='';}else{$('ghRM').style.display='none';}
-      // Auto-add/refresh badge in mobile print area
       autoAddMobileBadge(imgData);
     }
     resBox.style.display='';
     setTimeout(()=>loadRec(sfx),1500);
   } catch(err) {
     clearInterval(iv); pgFill.style.width='0%';
-    showMsg('❌ 端處理失承', err.message, 'error');
+    showMsg('❌ 處理失敗', err.message, 'error');
   } finally {
     setTimeout(()=>{ldBox.style.display='none';pgFill.style.width='0%';},600);
     btn.disabled=false;
@@ -682,7 +755,7 @@ async function loadRec(sfx) {
   try {
     const d = await gasGet(GAS_URL+'?action=getRecords&limit=30');
     if(!d.success||!d.records.length){
-      panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted);font-size:.75rem;">尚無上傳紀錄</div>';
+      panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted);font-size:.75rem;"><i class="fas fa-inbox" style="font-size:1.2rem;display:block;margin-bottom:6px;"></i>尚無上傳紀錄</div>';
       return;
     }
     const grp={};
@@ -693,44 +766,44 @@ async function loadRec(sfx) {
     });
     let html='';
     Object.keys(grp).sort().reverse().forEach(dt=>{
-      html+='<div class="date-grp"><i class="fas fa-calendar-day"></i>'+dt+' ('+grp[dt].length+')</div>';
+      html+=`<div class="date-grp"><i class="fas fa-calendar-day"></i>${dt} (${grp[dt].length})</div>`;
       grp[dt].forEach(r=>{
         const th=r.aiImageUrl?r.aiImageUrl.replace('/view','')+'=s80':'';
-        html+='<div class="rec-item fu" id="ri'+sfx+r.rowIndex+'">';
-        html+='<a href="'+(r.aiImageUrl||'#')+'" target="_blank"><img class="rthumb" src="'+th+'" onerror="this.style.background=\'var(--border2)\';this.removeAttribute(\'src\');" alt=""></a>';
-        html+='<div class="rbody">';
-        html+='<div style="font-size:.63rem;color:var(--muted);font-family:\'DM Mono\',monospace;">'+r.timestamp+'</div>';
-        html+='<div style="font-size:.72rem;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="'+r.stylePrompt+'">'+r.stylePrompt+'</div>';
-        html+='<div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center;">';
-        if(r.aiImageUrl) html+='<a href="'+r.aiImageUrl+'" target="_blank" class="pill pill-b" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-google-drive"></i></a>';
-        if(r.githubUrl)  html+='<a href="'+r.githubUrl+'" target="_blank" class="pill pill-g" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-github"></i></a>';
-        html+='<button onclick="delRec('+r.rowIndex+',\''+sfx+'\')" class="btn btn-del" style="margin-left:auto;" title="删除"><i class="fas fa-trash-can"></i></button>';
-        html+='</div></div></div>';
+        html+=`<div class="rec-item fu" id="ri${sfx}${r.rowIndex}">`;
+        html+=`<a href="${r.aiImageUrl||'#'}" target="_blank"><img class="rthumb" src="${th}" onerror="this.style.background='var(--border2)';this.removeAttribute('src');" alt=""></a>`;
+        html+=`<div class="rbody">`;
+        html+=`<div style="font-size:.63rem;color:var(--muted);font-family:'DM Mono',monospace;">${r.timestamp}</div>`;
+        html+=`<div style="font-size:.72rem;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);" title="${r.stylePrompt}">${r.stylePrompt}</div>`;
+        html+=`<div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center;">`;
+        if(r.aiImageUrl) html+=`<a href="${r.aiImageUrl}" target="_blank" class="pill pill-b" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-google-drive"></i></a>`;
+        if(r.githubUrl)  html+=`<a href="${r.githubUrl}" target="_blank" class="pill pill-g" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-github"></i></a>`;
+        html+=`<button onclick="delRec(${r.rowIndex},'${sfx}')" class="btn btn-del" style="margin-left:auto;" title="刪除"><i class="fas fa-trash-can"></i></button>`;
+        html+=`</div></div></div>`;
       });
     });
-    html+='<div style="font-size:.65rem;color:var(--muted);text-align:center;padding-top:5px;">共 '+d.total+' 筆</div>';
+    html+=`<div style="font-size:.65rem;color:var(--muted);text-align:center;padding-top:5px;">共 ${d.total} 筆</div>`;
     panel.innerHTML=html;
   } catch(e) {
-    panel.innerHTML='<div style="text-align:center;padding:14px;color:var(--red);font-size:.73rem;"><i class="fas fa-circle-xmark"></i> 無法載入紀錄<br><span style="font-size:.65rem;opacity:.7;">'+e.message+'</span><br><button onclick="loadRec(\''+sfx+'\')" class="btn btn-g" style="margin-top:8px;font-size:.7rem;"><i class="fas fa-rotate"></i> 重試</button></div>';
+    panel.innerHTML=`<div style="text-align:center;padding:14px;color:var(--red);font-size:.73rem;"><i class="fas fa-circle-xmark"></i> 無法載入紀錄<br><span style="font-size:.65rem;opacity:.7;">${e.message}</span><br><button onclick="loadRec('${sfx}')" class="btn btn-g" style="margin-top:8px;font-size:.7rem;"><i class="fas fa-rotate"></i> 重試</button></div>`;
   }
 }
 
 async function delRec(rowIndex, sfx) {
-  if(!confirm('確定删除此筆紀錄？\nDrive 檔格不受影響')) return;
+  if(!confirm('確定刪除此筆紀錄？\nDrive 檔案不受影響')) return;
   try {
     const d=await gasGet(GAS_URL+'?action=deleteRecord&rowIndex='+rowIndex);
     if(!d.success) throw new Error(d.error);
     const el=$('ri'+sfx+rowIndex);
     if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>el.remove(),300);}
-  } catch(e){ showMsg('❌ 删除失承',e.message,'error'); }
+  } catch(e){ showMsg('❌ 刪除失敗',e.message,'error'); }
 }
 
 // ================================================
-// BADGE LAYOUT (desktop only)
+// BADGE LAYOUT (desktop)
 // ================================================
 document.querySelectorAll('.stab').forEach(b=>{
   b.addEventListener('click',()=>{
-    document.querySelectorAll('.stab').forEach(x=>x.classList.remove('on'));
+    b.closest('.stabs').querySelectorAll('.stab').forEach(x=>x.classList.remove('on'));
     b.classList.add('on'); shape=b.dataset.shape; upCSS();
   });
 });
@@ -739,7 +812,7 @@ $('fitD').addEventListener('change',e=>{fit=e.target.value;$('scWD').style.displ
 $('scRD').addEventListener('input',e=>{scale=+e.target.value;$('scVD').textContent=scale+'%';if(fit==='custom')upCSS();});
 $('srcD').addEventListener('change',()=>{refreshBadges();});
 $('addD').addEventListener('click',addBadge);
-$('clrD').addEventListener('click',()=>{$('bdgD').innerHTML='';});
+$('clrD').addEventListener('click',()=>{$('bdgD').innerHTML='';updCnt();});
 
 function getSrc(){return($('srcD').value==='ai'&&aiD)?aiD:(objD||origD);}
 function upCSS(){
@@ -748,7 +821,6 @@ function upCSS(){
   r.style.setProperty('--bh',shape==='rectangle'?(size*.75)+'mm':size+'mm');
   r.style.setProperty('--br',shape==='circle'?'50%':shape==='rectangle'?'10px':shape==='heart'?'0':'12px');
   r.style.setProperty('--bgs',fit==='custom'?scale+'%':fit);
-  // Update both desktop and mobile badge faces
   ['bdgD','bdgM'].forEach(id=>{
     const el=$(id); if(!el)return;
     el.querySelectorAll('.bface').forEach(f=>{shape==='heart'?f.classList.add('heart'):f.classList.remove('heart');});
@@ -758,21 +830,25 @@ function refreshBadges(){
   const src=getSrc(); if(!src)return;
   $('bdgD').querySelectorAll('.bface').forEach(f=>{f.style.backgroundImage='url('+src+')';});
 }
-function addBadge(){
-  const src=getSrc();
+function updCnt(){
+  const c = $('cntD');
+  if(c) c.textContent = Math.floor($('bdgD').children.length);
+}
+function addBadge(customSrc){
+  const src=customSrc||getSrc();
   if(!src){showMsg('⚠️ 尚未輸入','請先拍照或上傳','error');return;}
   const w=document.createElement('div'); w.className='bwrap';
   const del=document.createElement('button');
   del.innerHTML='<i class="fas fa-xmark"></i>';
   del.className='no-print';
   del.style.cssText='position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;';
-  del.onclick=()=>w.remove();
+  del.onclick=()=>{w.remove();updCnt();};
   const mk=()=>{const d=document.createElement('div');d.className='bface';d.style.backgroundImage='url('+src+')';if(shape==='heart')d.classList.add('heart');return d;};
   const fold=document.createElement('div');fold.className='fold';
-  w.append(del,mk(),fold,mk()); $('bdgD').appendChild(w);
+  w.append(del,mk(),fold,mk()); $('bdgD').appendChild(w); updCnt();
 }
 
-// ── Mobile badge logic ──
+// Mobile badge
 function addBadgeM() {
   const src = aiM || objM || origM;
   if(!src){showMsg('⚠️ 尚未輸入影像','請先自拍或上傳圖片','error');return;}
@@ -794,36 +870,24 @@ function addBadgeM() {
   const fold = document.createElement('div'); fold.className='fold';
   wrap.append(del, mk(), fold, mk());
   bdg.appendChild(wrap);
-  // Hide placeholder
   const ph = $('bdgMPh'); if(ph) ph.style.display='none';
 }
 
-// Mobile size slider
 const szRM = $('szRM');
-if(szRM) {
-  szRM.addEventListener('input', e=>{
-    size = +e.target.value;
-    $('szVM').textContent = size+'mm';
-    upCSS();
-  });
-}
-
-// Mobile add/clear
-const addMBtn = $('addM');
-const clrMBtn = $('clrM');
+if(szRM) szRM.addEventListener('input', e=>{
+  size = +e.target.value; $('szVM').textContent = size+'mm'; upCSS();
+});
+const addMBtn = $('addM'), clrMBtn = $('clrM');
 if(addMBtn) addMBtn.addEventListener('click', addBadgeM);
 if(clrMBtn) clrMBtn.addEventListener('click', ()=>{
   $('bdgM').innerHTML='';
   const ph=$('bdgMPh'); if(ph){ph.style.display='';ph.style.cssText='';}
 });
 
-// After AI generates on mobile, auto-add one badge
 function autoAddMobileBadge(src) {
   if($('bdgM').children.length === 0 && src) {
-    // brief delay to let aiM be set
     setTimeout(addBadgeM, 300);
   } else {
-    // refresh existing badges
     $('bdgM').querySelectorAll('.bface').forEach(f => {
       f.style.backgroundImage = 'url('+src+')';
     });
@@ -838,11 +902,11 @@ function rzA4(){
   clearTimeout(rzT); rzT=setTimeout(()=>{
     const wrap=document.querySelector('.panel-c'), area=$('a4D');
     if(!wrap||!area)return;
-    const w=wrap.clientWidth-36, a4=210*3.7795;
+    const w=wrap.clientWidth-40, a4=210*3.7795;
     const sc=w<a4?w/a4:1;
     area.style.transform='scale('+sc.toFixed(4)+')';
     area.style.transformOrigin='top center';
-    wrap.style.minHeight=(297*3.7795*sc+36)+'px';
+    wrap.style.minHeight=(297*3.7795*sc+40)+'px';
   },80);
 }
 window.addEventListener('resize',rzA4);
@@ -865,7 +929,6 @@ function closeMsg(){$('msgModal').classList.remove('open');}
 window.addEventListener('DOMContentLoaded',()=>{
   rzA4();
   chkBackend();
-  // Load records for current view; also load for other view lazily
   loadRec('D');
   loadRec('M');
 });
