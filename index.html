@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>&#36655;&#22478;&#22283;&#23567; AI &#24537;&#31456;&#25308;&#36149;&#26426;</title>
+<title>車城國小 AI 徽章拍貼機</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
@@ -153,14 +153,14 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 <!-- TOPBAR -->
 <header class="topbar no-print">
   <div class="logo">
-    <div class="logo-icon">&#36655;</div>
+    <div class="logo-icon">輯</div>
     <div>
-      <div class="logo-name">&#36655;&#22478;&#22283;&#23567;&#65288;AI &#24537;&#31456;&#25308;&#36149;&#26426;&#65289;</div>
-      <div class="logo-ver">v2.3 &middot; Gemini 2.5 Flash</div>
+      <div class="logo-name">車城國小｜AI 徽章拍貼機</div>
+      <div class="logo-ver">v2.3 · Gemini 2.5 Flash</div>
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:7px;">
-    <div id="sPill" class="pill pill-a"><span class="dot da"></span>&#36899;&#32267;&#20013;</div>
+    <div id="sPill" class="pill pill-a"><span class="dot da"></span>連線中</div>
     <button onclick="window.print()" class="btn btn-p no-print" style="padding:7px 12px;"><i class="fas fa-print"></i></button>
   </div>
 </header>
@@ -170,49 +170,49 @@ input[type=range]{accent-color:var(--accent);width:100%;}
   <aside class="panel-l no-print">
     <div id="offD" class="offbanner">
       <i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px;"></i>
-      <div style="flex:1;"><strong>&#24460;&#31471;&#26410;&#36899;&#32267;</strong><br><span style="font-size:.67rem;opacity:.8;" id="offMsgD">&#35531;&#30906;&#35469; GAS_URL &#24182;&#37325;&#26032;&#37096;&#32422;</span></div>
+      <div style="flex:1;"><strong>後端未連線</strong><br><span style="font-size:.67rem;opacity:.8;" id="offMsgD">請確認 GAS_URL 並重新部署</span></div>
       <button onclick="chkBackend()" class="btn btn-g" style="flex-shrink:0;padding:5px 9px;font-size:.68rem;"><i class="fas fa-rotate"></i></button>
     </div>
 
     <!-- Step 1 -->
     <div class="card">
-      <div class="card-hd"><i class="fas fa-camera-retro" style="color:var(--accent);"></i>&#9312; &#24433;&#20687;&#36664;&#20837;</div>
+      <div class="card-hd"><i class="fas fa-camera-retro" style="color:var(--accent);"></i>① 影像輸入</div>
       <div class="mbox">
         <video id="vidD" autoplay playsinline style="display:none;"></video>
         <img class="preview" id="prvD" style="display:none;" alt="">
-        <div id="phD" class="mph"><i class="fas fa-image"></i><p>&#25308;&#29031;&#25110;&#19978;&#20傳;&#22294;&#29255;</p></div>
+        <div id="phD" class="mph"><i class="fas fa-image"></i><p>拍照或上傳圖片</p></div>
       </div>
       <div class="g2" style="margin-bottom:7px;">
-        <label style="cursor:pointer;"><input type="file" id="camD" accept="image/*" capture="environment" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-mobile-screen-button"></i> &#25163;&#27231;&#25308;&#29031;</div></label>
-        <label style="cursor:pointer;"><input type="file" id="upD" accept="image/png,image/jpeg,image/webp" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-upload"></i> &#30456;&#31807;&#19978;&#20傳;</div></label>
+        <label style="cursor:pointer;"><input type="file" id="camD" accept="image/*" capture="environment" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-mobile-screen-button"></i> 手機拍照</div></label>
+        <label style="cursor:pointer;"><input type="file" id="upD" accept="image/png,image/jpeg,image/webp" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-upload"></i> 相簿上傳</div></label>
       </div>
-      <button id="webcamD" class="btn btn-g wfull" style="font-size:.72rem;"><i class="fas fa-laptop"></i> &#38283;&#21551;&#32178;&#39023;&#30456;&#26426;</button>
-      <button id="capD" class="btn btn-p wfull" style="margin-top:7px;display:none;"><i class="fas fa-camera"></i> &#25308;&#21462;&#30011;&#38754;</button>
+      <button id="webcamD" class="btn btn-g wfull" style="font-size:.72rem;"><i class="fas fa-laptop"></i> 開啟網頁相機 (PC)</button>
+      <button id="capD" class="btn btn-p wfull" style="margin-top:7px;display:none;"><i class="fas fa-camera"></i> 擷取畫面</button>
     </div>
 
     <!-- Step 2 -->
     <div class="card">
-      <div class="card-hd"><i class="fas fa-wand-magic-sparkles" style="color:var(--amber);"></i>&#9313; AI &#29983;&#25104;</div>
-      <label class="lbl">&#39118;&#26684;</label>
+      <div class="card-hd"><i class="fas fa-wand-magic-sparkles" style="color:var(--amber);"></i>② AI 生成</div>
+      <label class="lbl">風格</label>
       <select id="styD" class="inp" style="margin-bottom:8px;">
-        <option value="Generate a high-quality 3D Pixar style cartoon character. Keep it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors">&#127916; 3D Pixar &#21205;&#30059;&#39118;</option>
-        <option value="Generate a beautiful watercolor painting. Soft edges, delicate washes of color, and an artistic, dreamlike quality">&#127912; &#27700;&#24425;&#34354;&#34899;&#39118;</option>
-        <option value="Generate a cyberpunk style image. Neon lights, futuristic elements, high tech, dark and gritty atmosphere">&#127750; &#36064;&#20055;&#26379;&#20811;&#39118;</option>
-        <option value="Generate a classic Studio Ghibli anime style image. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel">&#127807; &#21560;&#21521;&#21147;&#21205;&#30059;&#39118;</option>
-        <option value="Generate a vibrant pop art style image, inspired by Andy Warhol. Bold colors, high contrast">&#128993; &#26222;&#26222;&#34354;&#34899;&#39118;</option>
-        <option value="Generate a cute chibi anime character illustration, big eyes, pastel colors, kawaii aesthetic">&#128049; Q&#29256;&#35484;&#31995;&#39118;</option>
+        <option value="Generate a high-quality 3D Pixar style cartoon character. Keep it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors">🎬 3D Pixar 動畫風</option>
+        <option value="Generate a beautiful watercolor painting. Soft edges, delicate washes of color, and an artistic, dreamlike quality">🎨 水彩藝術風</option>
+        <option value="Generate a cyberpunk style image. Neon lights, futuristic elements, high tech, dark and gritty atmosphere">🌆 賽博龐克風</option>
+        <option value="Generate a classic Studio Ghibli anime style image. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel">🌿 吉卜力動畫風</option>
+        <option value="Generate a vibrant pop art style image, inspired by Andy Warhol. Bold colors, high contrast">🟡 普普藝術風</option>
+        <option value="Generate a cute chibi anime character illustration, big eyes, pastel colors, kawaii aesthetic">🐱 Q版萌系風</option>
       </select>
-      <label class="lbl">&#39069;&#22806;&#25552;&#31034;&#65288;&#36984;&#22635;&#65289;</label>
+      <label class="lbl">額外提示（選填）</label>
       <textarea id="prmD" class="inp" rows="2" style="margin-bottom:10px;resize:none;"></textarea>
-      <button id="genD" class="btn btn-o"><i class="fas fa-cloud-arrow-up"></i> &#20256;&#36865;&#33267;&#38雲;&#31471;&#34389;&#29702;</button>
+      <button id="genD" class="btn btn-o"><i class="fas fa-cloud-arrow-up"></i> 傳送至雲端 AI 處理</button>
       <div id="ldBoxD" style="display:none;" class="pgwrap">
         <div class="pgbar"><div class="pgfill" id="pgD" style="width:10%;"></div></div>
-        <div class="pgmsg"><div class="spin"></div><span id="ldD">&#20934;&#20633;&#20013;...</span></div>
+        <div class="pgmsg"><div class="spin"></div><span id="ldD">準備中...</span></div>
       </div>
       <div id="resD" style="display:none;" class="rcard fu">
-        <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;"><i class="fas fa-circle-check"></i> &#29983;&#25104;&#25104;&#21151;</div>
-        <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span><a id="drD" href="#" target="_blank" class="rlink">Drive &#22294;&#29255;</a></div>
-        <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span><a id="flD" href="#" target="_blank" class="rlink">&#26085;&#26399;&#36039;&#26009;&#22841;</a></div>
+        <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;"><i class="fas fa-circle-check"></i> 生成成功</div>
+        <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span><a id="drD" href="#" target="_blank" class="rlink">Drive 查看圖片</a></div>
+        <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span><a id="flD" href="#" target="_blank" class="rlink">日期資料夾</a></div>
         <div id="ghRD" class="rrow" style="display:none;"><span class="rico"><i class="fab fa-github"></i></span><a id="ghD" href="#" target="_blank" class="rlink">GitHub</a></div>
         <div style="margin-top:5px;font-size:.68rem;color:var(--muted);line-height:1.5;border-top:1px solid var(--border);padding-top:6px;"><i class="fas fa-eye" style="margin-right:3px;"></i><span id="descD"></span></div>
       </div>
@@ -220,33 +220,33 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 
     <!-- Step 3 -->
     <div class="card">
-      <div class="card-hd"><i class="fas fa-sliders" style="color:#7c6af5;"></i>&#9314; &#24537;&#31456;&#25490;&#29256;</div>
+      <div class="card-hd"><i class="fas fa-sliders" style="color:#7c6af5;"></i>③ 徽章排版</div>
       <div style="display:flex;flex-direction:column;gap:9px;">
-        <div><label class="lbl">&#22294;&#20687;&#20358;&#28304;</label>
-          <select id="srcD" class="inp"><option value="original">&#21407;&#22987;&#22294;&#29255;</option><option value="ai" disabled>AI &#29983;&#25104;&#65288;&#23578;&#26410;&#29983;&#25104;&#65289;</option></select>
+        <div><label class="lbl">圖像來源</label>
+          <select id="srcD" class="inp"><option value="original">原始圖片</option><option value="ai" disabled>AI 生成圖（尚未生成）</option></select>
         </div>
-        <div><label class="lbl">&#24537;&#31456;&#24418;&#29366;</label>
+        <div><label class="lbl">徽章形狀</label>
           <div class="stabs">
-            <button class="stab on" data-shape="circle">&#22278;&#24418;</button>
-            <button class="stab" data-shape="square">&#26041;&#24418;</button>
-            <button class="stab" data-shape="rectangle">&#38263;&#26041;&#24418;</button>
-            <button class="stab" data-shape="heart">&#24859;&#24515;</button>
+            <button class="stab on" data-shape="circle">圓形</button>
+            <button class="stab" data-shape="square">方形</button>
+            <button class="stab" data-shape="rectangle">長方形</button>
+            <button class="stab" data-shape="heart">愛心</button>
           </div>
         </div>
-        <div><label class="lbl">&#38ển;&#31034;&#27169;&#24335;</label>
-          <select id="fitD" class="inp"><option value="cover">&#35069;&#20999;&#22577;&#28385;</option><option value="contain">&#23436;&#25972;&#38ển;&#31034;</option><option value="custom">&#33258;&#35686;&#32311;&#25918;</option></select>
+        <div><label class="lbl">顯示模式</label>
+          <select id="fitD" class="inp"><option value="cover">裁切填滿</option><option value="contain">完整顯示</option><option value="custom">自訂縮放</option></select>
         </div>
         <div id="scWD" style="display:none;">
-          <div class="slrow"><span style="color:var(--muted);">&#32311;&#25918;</span><span id="scVD" class="slval">100%</span></div>
+          <div class="slrow"><span style="color:var(--muted);">縮放</span><span id="scVD" class="slval">100%</span></div>
           <input type="range" id="scRD" min="10" max="300" value="100">
         </div>
         <div>
-          <div class="slrow"><span style="color:var(--muted);">&#23610;&#23544;</span><span id="szVD" class="slval">50mm</span></div>
+          <div class="slrow"><span style="color:var(--muted);">尺寸</span><span id="szVD" class="slval">50mm</span></div>
           <input type="range" id="szRD" min="30" max="80" value="50">
         </div>
         <div class="g2">
-          <button id="addD" class="btn btn-g"><i class="fas fa-plus"></i> &#26032;&#22686;</button>
-          <button id="clrD" class="btn btn-g" style="color:var(--red);border-color:rgba(245,54,92,.3);"><i class="fas fa-trash"></i> &#28165;&#38500;</button>
+          <button id="addD" class="btn btn-g"><i class="fas fa-plus"></i> 新增</button>
+          <button id="clrD" class="btn btn-g" style="color:var(--red);border-color:rgba(245,54,92,.3);"><i class="fas fa-trash"></i> 清除</button>
         </div>
       </div>
     </div>
@@ -254,7 +254,7 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 
   <div class="panel-c">
     <div id="a4D" class="a4">
-      <div class="no-print" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.03;pointer-events:none;user-select:none;"><span style="font-size:2.2rem;font-weight:900;transform:rotate(-30deg);white-space:nowrap;">A4 &#21015;&#21360;&#39044;&#35222;</span></div>
+      <div class="no-print" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.03;pointer-events:none;user-select:none;"><span style="font-size:2.2rem;font-weight:900;transform:rotate(-30deg);white-space:nowrap;">A4 列印預覽</span></div>
       <div id="bdgD" style="display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px;position:relative;z-index:1;"></div>
     </div>
     <canvas id="cvsD" style="display:none;"></canvas>
@@ -262,12 +262,12 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 
   <aside class="panel-r no-print" style="display:flex;flex-direction:column;gap:9px;max-height:calc(100vh - 60px);overflow-y:auto;padding-bottom:20px;">
     <div class="card">
-      <div class="card-hd"><i class="fas fa-server" style="color:var(--accent);"></i>&#24460;&#31471;&#29366;&#24907;</div>
+      <div class="card-hd"><i class="fas fa-server" style="color:var(--accent);"></i>後端狀態</div>
       <div id="stPnD"><div style="display:flex;justify-content:center;padding:8px;"><div class="spin"></div></div></div>
     </div>
     <div class="card" style="flex:1;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
-        <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:#7c6af5;"></i>&#19978;&#20256;&#32000;&#37636;</div>
+        <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:#7c6af5;"></i>上傳紀錄</div>
         <button onclick="loadRec('D')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
       </div>
       <div id="recD"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
@@ -279,48 +279,48 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 <div class="app-mobile mobile-only">
   <div id="offM" class="offbanner" style="margin:10px 14px 0;">
     <i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px;"></i>
-    <div style="flex:1;"><strong>&#24460;&#31471;&#26410;&#36899;&#32267;</strong><div style="font-size:.67rem;opacity:.8;margin-top:2px;" id="offMsgM">&#35531;&#30906;&#35469; GAS_URL &#24182;&#37325;&#26032;&#37096;&#32422;</div></div>
+    <div style="flex:1;"><strong>後端未連線</strong><div style="font-size:.67rem;opacity:.8;margin-top:2px;" id="offMsgM">請確認 GAS_URL 並重新部署</div></div>
     <button onclick="chkBackend()" class="btn btn-g" style="flex-shrink:0;padding:5px 9px;font-size:.68rem;"><i class="fas fa-rotate"></i></button>
   </div>
 
   <!-- M1: Camera -->
   <div class="mob-sec">
-    <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-camera-retro" style="color:var(--accent);"></i>&#9312; &#25308;&#29031; / &#19978;&#20傳;</div>
+    <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-camera-retro" style="color:var(--accent);"></i>① 拍照 / 上傳</div>
     <div class="mbox" style="aspect-ratio:4/3;">
       <video id="vidM" autoplay playsinline style="display:none;"></video>
       <img class="preview" id="prvM" style="display:none;" alt="">
-      <div id="phM" class="mph"><i class="fas fa-image"></i><p>&#25826;&#19979;&#26041;&#25309;&#37215;&#25308;&#29031;&#25110;&#19978;&#20傳;</p></div>
+      <div id="phM" class="mph"><i class="fas fa-image"></i><p>點下方按鈕拍照或上傳</p></div>
     </div>
     <div class="g2">
-      <label style="cursor:pointer;"><input type="file" id="camM" accept="image/*" capture="environment" style="display:none;"><div class="btn btn-g wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-camera"></i> &#25308;&#29031;</div></label>
-      <label style="cursor:pointer;"><input type="file" id="upM" accept="image/png,image/jpeg,image/webp" style="display:none;"><div class="btn btn-g wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-images"></i> &#30456;&#31807;</div></label>
+      <label style="cursor:pointer;"><input type="file" id="camM" accept="image/*" capture="user" style="display:none;"><div class="btn btn-g wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-camera"></i> 自拍</div></label>
+      <label style="cursor:pointer;"><input type="file" id="upM" accept="image/png,image/jpeg,image/webp" style="display:none;"><div class="btn btn-g wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-images"></i> 相簿</div></label>
     </div>
   </div>
 
   <!-- M2: Style & Generate -->
   <div class="mob-sec">
-    <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-wand-magic-sparkles" style="color:var(--amber);"></i>&#9313; &#36984;&#39118;&#26684; &amp; &#29983;&#25104;</div>
-    <label class="lbl">AI &#39118;&#26684;</label>
+    <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-wand-magic-sparkles" style="color:var(--amber);"></i>② 選風格 & 生成</div>
+    <label class="lbl">AI 風格</label>
     <select id="styM" class="inp" style="margin-bottom:8px;">
-      <option value="Generate a high-quality 3D Pixar style cartoon character. Keep it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors">&#127916; 3D Pixar &#21205;&#30059;&#39118;</option>
-      <option value="Generate a beautiful watercolor painting. Soft edges, delicate washes of color, and an artistic, dreamlike quality">&#127912; &#27700;&#24425;&#34354;&#34899;&#39118;</option>
-      <option value="Generate a cyberpunk style image. Neon lights, futuristic elements, high tech, dark and gritty atmosphere">&#127750; &#36064;&#20055;&#26379;&#20811;&#39118;</option>
-      <option value="Generate a classic Studio Ghibli anime style image. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel">&#127807; &#21560;&#21521;&#21147;&#21205;&#30059;&#39118;</option>
-      <option value="Generate a vibrant pop art style image, inspired by Andy Warhol. Bold colors, high contrast">&#128993; &#26222;&#26222;&#34354;&#34899;&#39118;</option>
-      <option value="Generate a cute chibi anime character illustration, big eyes, pastel colors, kawaii aesthetic">&#128049; Q&#29256;&#35484;&#31995;&#39118;</option>
+      <option value="Generate a high-quality 3D Pixar style cartoon character. Keep it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors">🎬 3D Pixar 動畫風</option>
+      <option value="Generate a beautiful watercolor painting. Soft edges, delicate washes of color, and an artistic, dreamlike quality">🎨 水彩藝術風</option>
+      <option value="Generate a cyberpunk style image. Neon lights, futuristic elements, high tech, dark and gritty atmosphere">🌆 賽博龐克風</option>
+      <option value="Generate a classic Studio Ghibli anime style image. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel">🌿 吉卜力動畫風</option>
+      <option value="Generate a vibrant pop art style image, inspired by Andy Warhol. Bold colors, high contrast">🟡 普普藝術風</option>
+      <option value="Generate a cute chibi anime character illustration, big eyes, pastel colors, kawaii aesthetic">🐱 Q版萌系風</option>
     </select>
-    <label class="lbl">&#39069;&#22806;&#25552;&#31034;&#65288;&#36984;&#22635;&#65289;</label>
+    <label class="lbl">額外提示（選填）</label>
     <textarea id="prmM" class="inp" rows="2" style="margin-bottom:12px;resize:none;"></textarea>
-    <button id="genM" class="btn btn-o"><i class="fas fa-cloud-arrow-up"></i> &#20256;&#36865;&#33267;&#38雲;&#31471; AI &#34389;&#29702;</button>
+    <button id="genM" class="btn btn-o"><i class="fas fa-cloud-arrow-up"></i> 傳送至雲端 AI 處理</button>
     <div id="ldBoxM" style="display:none;" class="pgwrap">
       <div class="pgbar"><div class="pgfill" id="pgM" style="width:10%;"></div></div>
-      <div class="pgmsg"><div class="spin"></div><span id="ldM">&#20934;&#20633;&#20013;...</span></div>
+      <div class="pgmsg"><div class="spin"></div><span id="ldM">準備中...</span></div>
     </div>
     <div id="aiResM" class="ai-res-wrap"><img id="aiImgM" src="" alt="AI"></div>
     <div id="resM" style="display:none;" class="rcard fu">
-      <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;"><i class="fas fa-circle-check"></i> &#29983;&#25104;&#25104;&#21151;&#65281;</div>
-      <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span><a id="drM" href="#" target="_blank" class="rlink">Drive &#26597;&#30475;&#22294;&#29255;</a></div>
-      <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span><a id="flM" href="#" target="_blank" class="rlink">&#26085;&#26399;&#36039;&#26009;&#22841;</a></div>
+      <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;"><i class="fas fa-circle-check"></i> 生成成功！</div>
+      <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span><a id="drM" href="#" target="_blank" class="rlink">Drive 查看圖片</a></div>
+      <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span><a id="flM" href="#" target="_blank" class="rlink">日期資料夾</a></div>
       <div id="ghRM" class="rrow" style="display:none;"><span class="rico"><i class="fab fa-github"></i></span><a id="ghM" href="#" target="_blank" class="rlink">GitHub</a></div>
     </div>
   </div>
@@ -328,7 +328,7 @@ input[type=range]{accent-color:var(--accent);width:100%;}
   <!-- M3: Records -->
   <div class="mob-sec" style="padding-bottom:24px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
-      <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:#7c6af5;"></i>&#19978;&#20256;&#32000;&#37636;</div>
+      <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:#7c6af5;"></i>上傳紀錄</div>
       <button onclick="loadRec('M')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
     </div>
     <div id="recM"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
@@ -341,7 +341,7 @@ input[type=range]{accent-color:var(--accent);width:100%;}
     <div id="mIcon" style="font-size:2rem;margin-bottom:9px;"></div>
     <div id="mTitle" style="font-size:.9rem;font-weight:700;margin-bottom:6px;"></div>
     <div id="mBody" style="font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.6;word-break:break-word;"></div>
-    <button onclick="closeMsg()" class="btn btn-p wfull">&#30906;&#35469;</button>
+    <button onclick="closeMsg()" class="btn btn-p wfull">確認</button>
   </div>
 </div>
 
@@ -388,7 +388,7 @@ async function gasGet(url) {
       delete window[cb];
       const el = document.getElementById(cb);
       if (el) el.remove();
-      rej(new Error('Connection timeout'));
+      rej(new Error('連線逾時'));
     }, 14000);
     window[cb] = d => {
       clearTimeout(tid);
@@ -404,7 +404,7 @@ async function gasGet(url) {
     s.onerror = () => {
       clearTimeout(tid);
       delete window[cb];
-      rej(new Error('Cannot reach backend - check GAS_URL'));
+      rej(new Error('無法連接後端，請確認 GAS_URL'));
     };
     document.head.appendChild(s);
   });
@@ -416,13 +416,13 @@ async function gasGet(url) {
 async function chkBackend() {
   const pill = $('sPill');
   pill.className='pill pill-a';
-  pill.innerHTML='<span class="dot da"></span>&#36899;&#32267;&#20013;';
+  pill.innerHTML='<span class="dot da"></span>連線中';
   ['D','M'].forEach(s => { const b=$('off'+s); if(b) b.classList.remove('show'); });
 
   try {
     const d = await gasGet(GAS_URL + '?action=getConfig');
     pill.className = d.hasGeminiKey ? 'pill pill-g' : 'pill pill-a';
-    pill.innerHTML = '<span class="dot '+(d.hasGeminiKey?'dg':'da')+'"></span>'+(d.hasGeminiKey?'&#24050;&#36899;&#32267;':'&#37096;&#20998;&#35373;&#23450;');
+    pill.innerHTML = '<span class="dot '+(d.hasGeminiKey?'dg':'da')+'"></span>'+(d.hasGeminiKey?'已連線':'部分設定');
 
     const mk = ok => '<span class="dot '+(ok?'dg':'dr')+'" style="display:inline-block;"></span>';
     const pD = $('stPnD');
@@ -432,25 +432,62 @@ async function chkBackend() {
       '<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;"><span style="color:var(--muted);">GitHub</span>'+mk(d.hasGitHub)+'</div>'+
       (d.hasFolderId?'<div style="font-size:.65rem;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:4px;word-break:break-all;"><i class="fas fa-folder-open" style="color:var(--amber);margin-right:3px;"></i><a href="'+d.folderUrl+'" target="_blank" style="color:var(--accent);text-decoration:none;">'+d.folderId+'</a></div>':'')+
       (d.hasGitHub?'<div style="font-size:.65rem;color:var(--muted);padding-top:3px;"><i class="fab fa-github" style="margin-right:3px;"></i>'+d.githubRepo+'</div>':'')+
-      '<button onclick="chkBackend()" class="btn btn-g" style="margin-top:7px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> &#37325;&#26032;&#20檢;&#28204;</button>';
+      '<button onclick="chkBackend()" class="btn btn-g" style="margin-top:7px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> 重新偵測</button>';
 
   } catch(e) {
     pill.className='pill pill-r';
-    pill.innerHTML='<span class="dot dr"></span>&#26410;&#36899;&#32267;';
+    pill.innerHTML='<span class="dot dr"></span>未連縋';
     const msg = e.message;
     ['D','M'].forEach(s => {
       const b=$('off'+s); if(b) b.classList.add('show');
       const m=$('offMsg'+s); if(m) m.textContent=msg;
     });
     const pD=$('stPnD');
-    if(pD) pD.innerHTML='<div style="color:var(--red);font-size:.73rem;padding:6px 0;text-align:center;"><i class="fas fa-triangle-exclamation"></i> &#36899;&#32267;&#22833;&#25215;</div><button onclick="chkBackend()" class="btn btn-g" style="margin-top:6px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> &#37325;&#26032;&#20檢;&#28204;</button>';
+    if(pD) pD.innerHTML='<div style="color:var(--red);font-size:.73rem;padding:6px 0;text-align:center;"><i class="fas fa-triangle-exclamation"></i> 連線失敗</div><button onclick="chkBackend()" class="btn btn-g" style="margin-top:6px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> 重新偵測</button>';
   }
 }
 
 // ================================================
 // IMAGE PROCESSING
 // ================================================
-function procFile(file, cvsId, onDone) {
+// ── Beauty filter: smooth skin using canvas blur + overlay ──
+function applyBeauty(ctx, w, h) {
+  // Step1: get image data
+  const imgData = ctx.getImageData(0, 0, w, h);
+  const d = imgData.data;
+  // Simple skin smoothing: reduce high-frequency noise by blending neighbours
+  // Apply a mild gaussian-like blur only on skin-tone pixels
+  const tmp = new Uint8ClampedArray(d);
+  for (let y = 1; y < h-1; y++) {
+    for (let x = 1; x < w-1; x++) {
+      const i = (y*w+x)*4;
+      const r=d[i], g=d[i+1], b=d[i+2];
+      // Detect rough skin tone range (R>100, R>G, R>B, not too bright)
+      if (r > 90 && r > g*0.85 && r > b*1.1 && r < 240) {
+        // 3x3 box blur for this pixel
+        let sr=0,sg=0,sb=0,cnt=0;
+        for(let dy=-1;dy<=1;dy++){for(let dx=-1;dx<=1;dx++){
+          const j=((y+dy)*w+(x+dx))*4;
+          sr+=d[j];sg+=d[j+1];sb+=d[j+2];cnt++;
+        }}
+        tmp[i]   = Math.round(r*0.4 + (sr/cnt)*0.6);
+        tmp[i+1] = Math.round(g*0.4 + (sg/cnt)*0.6);
+        tmp[i+2] = Math.round(b*0.4 + (sb/cnt)*0.6);
+      }
+    }
+  }
+  imgData.data.set(tmp);
+  ctx.putImageData(imgData, 0, 0);
+  // Step2: add slight brightness + contrast boost for glow effect
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 0.08;
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, w, h);
+  ctx.globalAlpha = 1.0;
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+function procFile(file, cvsId, onDone, mirror) {
   const c = $(cvsId), ctx = c.getContext('2d');
   const rd = new FileReader();
   rd.onload = ev => {
@@ -458,8 +495,15 @@ function procFile(file, cvsId, onDone) {
     img.onload = () => {
       c.width = c.height = 512;
       const sz = Math.min(img.width, img.height);
-      ctx.drawImage(img, (img.width-sz)/2, (img.height-sz)/2, sz, sz, 0,0,512,512);
-      c.toBlob(blob => onDone(URL.createObjectURL(blob), c.toDataURL('image/jpeg',.72)), 'image/jpeg',.72);
+      if (mirror) {
+        // Mirror horizontally for selfie camera
+        ctx.setTransform(-1, 0, 0, 1, 512, 0);
+      }
+      ctx.drawImage(img, (img.width-sz)/2, (img.height-sz)/2, sz, sz, 0, 0, 512, 512);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      // Apply beauty filter
+      applyBeauty(ctx, 512, 512);
+      c.toBlob(blob => onDone(URL.createObjectURL(blob), c.toDataURL('image/jpeg',.85)), 'image/jpeg',.85);
     };
     img.src = ev.target.result;
   };
@@ -471,7 +515,7 @@ $('webcamD').addEventListener('click', async () => {
   if (strmD) {
     strmD.getTracks().forEach(t=>t.stop()); strmD=null;
     $('vidD').style.display='none';
-    $('webcamD').innerHTML='<i class="fas fa-laptop"></i> &#38283;&#21551;&#32178;&#39023;&#30456;&#26426;';
+    $('webcamD').innerHTML='<i class="fas fa-laptop"></i> 開啟網頁相機 (PC)';
     $('capD').style.display='none';
     if (!origD) $('phD').style.display='';
     return;
@@ -480,9 +524,9 @@ $('webcamD').addEventListener('click', async () => {
     strmD = await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});
     $('vidD').srcObject=strmD; $('vidD').style.display='';
     $('prvD').style.display='none'; $('phD').style.display='none';
-    $('webcamD').innerHTML='<i class="fas fa-video-slash"></i> &#38989;&#38381;&#30456;&#26426;';
+    $('webcamD').innerHTML='<i class="fas fa-video-slash"></i> 額闭相机';
     $('capD').style.display='';
-  } catch(e){ showMsg('&#10060; &#30456;&#27231;&#21463;&#38480;','&#35531;&#25913;&#29992;&#19978;&#20傳;&#25309;&#37215;','error'); }
+  } catch(e){ showMsg('❌ 相機受限','請改用上傳拝酟','error'); }
 });
 $('capD').addEventListener('click', () => {
   const v=$('vidD'), c=$('cvsD'), ctx=c.getContext('2d');
@@ -500,45 +544,45 @@ $('capD').addEventListener('click', () => {
   },'image/jpeg',.72);
   strmD.getTracks().forEach(t=>t.stop()); strmD=null;
   $('vidD').style.display='none'; $('capD').style.display='none';
-  $('webcamD').innerHTML='<i class="fas fa-laptop"></i> &#38283;&#21551;&#32178;&#39023;&#30456;&#26426;';
+  $('webcamD').innerHTML='<i class="fas fa-laptop"></i> 開啟網頁相機 (PC)';
 });
 
-function onFileD(e) {
+function onFileD(e, mirror) {
   const f=e.target.files[0]; if(!f) return;
   if(strmD){strmD.getTracks().forEach(t=>t.stop());strmD=null;}
-  procFile(f,'cvsD',(url,data)=>{
+  procFile(f,'cvsD',(url,dat)=>{
     if(objD) URL.revokeObjectURL(objD);
-    objD=url; origD=data;
+    objD=url; origD=dat;
     $('prvD').src=url; $('prvD').style.display=''; $('phD').style.display='none';
     aiD=null; $('srcD').options[1].disabled=true; $('srcD').value='original'; $('resD').style.display='none';
     if(!$('bdgD').children.length) addBadge(); else refreshBadges();
-  });
+  }, mirror||false);
   e.target.value='';
 }
-$('upD').addEventListener('change',onFileD);
-$('camD').addEventListener('change',onFileD);
+$('upD').addEventListener('change', e => onFileD(e, false));
+$('camD').addEventListener('change', e => onFileD(e, true));
 
-function onFileM(e) {
+function onFileM(e, mirror) {
   const f=e.target.files[0]; if(!f) return;
-  procFile(f,'cvsM',(url,data)=>{
+  procFile(f,'cvsM',(url,dat)=>{
     if(objM) URL.revokeObjectURL(objM);
-    objM=url; origM=data;
+    objM=url; origM=dat;
     $('prvM').src=url; $('prvM').style.display=''; $('phM').style.display='none';
     aiM=null; $('resM').style.display='none'; $('aiResM').classList.remove('show');
-  });
+  }, mirror);
   e.target.value='';
 }
-$('upM').addEventListener('change',onFileM);
-$('camM').addEventListener('change',onFileM);
+$('upM').addEventListener('change', e => onFileM(e, false));
+$('camM').addEventListener('change', e => onFileM(e, true));
 
 // ================================================
 // AI GENERATE
 // ================================================
-const STEPS=[[15,'Gemini Vision &#20998;&#26512;&#22294;&#29255;&#20013;...'],[42,'Gemini &#22294;&#20687;&#29983;&#25104;&#20013;...'],[72,'&#20648;&#23384;&#33267; Google Drive...'],[88,'&#25512;&#36865;&#33267; GitHub...'],[95,'&#22238;&#20206;&#32080;&#26524;&#20013;...']];
+const STEPS=[[15,'Gemini Vision 分析圖片中...'],[42,'Gemini 圖像生成中...'],[72,'储存至 Google Drive...'],[88,'推送至 GitHub...'],[95,'回仮結果中...']];
 
 async function doGen(origData, sfx) {
   const btn=$('gen'+sfx), ldBox=$('ldBox'+sfx), pgFill=$('pg'+sfx), ldTxt=$('ld'+sfx), resBox=$('res'+sfx);
-  if (!origData){ showMsg('&#9888;&#65039; &#23578;&#26410;&#36664;&#20837;&#22294;&#29255;','&#35531;&#20808;&#25308;&#29031;&#25110;&#19978;&#20傳;&#22294;&#29255;','error'); return; }
+  if (!origData){ showMsg('⚠️ 尚未輸入圖片','請先拍照或上傳圖片','error'); return; }
   btn.disabled=true; ldBox.style.display=''; resBox.style.display='none';
   let si=0;
   const iv=setInterval(()=>{ if(si<STEPS.length){pgFill.style.width=STEPS[si][0]+'%';ldTxt.innerHTML=STEPS[si][1];si++;} },4500);
@@ -548,7 +592,7 @@ async function doGen(origData, sfx) {
     clearInterval(iv); pgFill.style.width='100%';
     if(!r.ok) throw new Error('HTTP '+r.status);
     const d = await r.json();
-    if(!d.success) throw new Error(d.error||'&#24460;&#31471;&#34389;&#29702;&#22833;&#25215;');
+    if(!d.success) throw new Error(d.error||'後端處理失承');
     const mime=d.aiImageMime||'image/png';
     const imgData='data:'+mime+';base64,'+d.aiImage;
     if (sfx==='D') {
@@ -556,7 +600,7 @@ async function doGen(origData, sfx) {
       $('srcD').options[1].disabled=false; $('srcD').value='ai'; refreshBadges();
       $('drD').href=d.aiImageUrl||'#';
       $('flD').href=d.folderUrl||'#';
-      $('flD').textContent='&#26085;&#26399;&#36039;&#26009;&#22841; ('+(d.dateStr||'')+')';
+      $('flD').textContent='日期資料夾 ('+(d.dateStr||'')+')';
       $('descD').textContent=d.description||'';
       if(d.githubUrl){$('ghD').href=d.githubUrl;$('ghRD').style.display='';}else{$('ghRD').style.display='none';}
     } else {
@@ -569,7 +613,7 @@ async function doGen(origData, sfx) {
     setTimeout(()=>loadRec(sfx),1500);
   } catch(err) {
     clearInterval(iv); pgFill.style.width='0%';
-    showMsg('&#10060; &#38雲;&#31471;&#34389;&#29702;&#22833;&#25215;', err.message, 'error');
+    showMsg('❌ 端處理失承', err.message, 'error');
   } finally {
     setTimeout(()=>{ldBox.style.display='none';pgFill.style.width='0%';},600);
     btn.disabled=false;
@@ -587,7 +631,7 @@ async function loadRec(sfx) {
   try {
     const d = await gasGet(GAS_URL+'?action=getRecords&limit=30');
     if(!d.success||!d.records.length){
-      panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted);font-size:.75rem;">&#23578;&#28102;&#19978;&#20256;&#32000;&#37636;</div>';
+      panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted);font-size:.75rem;">尚無上傳紀錄</div>';
       return;
     }
     const grp={};
@@ -609,25 +653,25 @@ async function loadRec(sfx) {
         html+='<div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center;">';
         if(r.aiImageUrl) html+='<a href="'+r.aiImageUrl+'" target="_blank" class="pill pill-b" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-google-drive"></i></a>';
         if(r.githubUrl)  html+='<a href="'+r.githubUrl+'" target="_blank" class="pill pill-g" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-github"></i></a>';
-        html+='<button onclick="delRec('+r.rowIndex+',\''+sfx+'\')" class="btn btn-del" style="margin-left:auto;" title="&#21024;&#38500;"><i class="fas fa-trash-can"></i></button>';
+        html+='<button onclick="delRec('+r.rowIndex+',\''+sfx+'\')" class="btn btn-del" style="margin-left:auto;" title="删除"><i class="fas fa-trash-can"></i></button>';
         html+='</div></div></div>';
       });
     });
-    html+='<div style="font-size:.65rem;color:var(--muted);text-align:center;padding-top:5px;">&#20849; '+d.total+' &#31558;</div>';
+    html+='<div style="font-size:.65rem;color:var(--muted);text-align:center;padding-top:5px;">共 '+d.total+' 筆</div>';
     panel.innerHTML=html;
   } catch(e) {
-    panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--red);font-size:.73rem;"><i class="fas fa-circle-xmark"></i> '+e.message+'</div>';
+    panel.innerHTML='<div style="text-align:center;padding:14px;color:var(--red);font-size:.73rem;"><i class="fas fa-circle-xmark"></i> 無法載入紀錄<br><span style="font-size:.65rem;opacity:.7;">'+e.message+'</span><br><button onclick="loadRec(\''+sfx+'\')" class="btn btn-g" style="margin-top:8px;font-size:.7rem;"><i class="fas fa-rotate"></i> 重試</button></div>';
   }
 }
 
 async function delRec(rowIndex, sfx) {
-  if(!confirm('&#30906;&#23450;&#21024;&#38500;&#27492;&#31558;&#32000;&#37636;&#65311;\nDrive &#27284;&#26684;&#19981;&#21463;&#24433;&#38911;')) return;
+  if(!confirm('確定删除此筆紀錄？\nDrive 檔格不受影響')) return;
   try {
     const d=await gasGet(GAS_URL+'?action=deleteRecord&rowIndex='+rowIndex);
     if(!d.success) throw new Error(d.error);
     const el=$('ri'+sfx+rowIndex);
     if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>el.remove(),300);}
-  } catch(e){ showMsg('&#10060; &#21024;&#38500;&#22833;&#25215;',e.message,'error'); }
+  } catch(e){ showMsg('❌ 删除失承',e.message,'error'); }
 }
 
 // ================================================
@@ -661,7 +705,7 @@ function refreshBadges(){
 }
 function addBadge(){
   const src=getSrc();
-  if(!src){showMsg('&#9888;&#65039; &#23578;&#26410;&#36664;&#20837;','&#35531;&#20808;&#25308;&#29031;&#25110;&#19978;&#20傳;','error');return;}
+  if(!src){showMsg('⚠️ 尚未輸入','請先拍照或上傳','error');return;}
   const w=document.createElement('div'); w.className='bwrap';
   const del=document.createElement('button');
   del.innerHTML='<i class="fas fa-xmark"></i>';
@@ -694,8 +738,8 @@ window.addEventListener('resize',rzA4);
 // UTILS
 // ================================================
 function showMsg(title,body,type){
-  const icons={success:'&#9989;',error:'&#10060;',info:'&#8505;&#65039;'};
-  $('mIcon').innerHTML=icons[type||'info']||'&#128172;';
+  const icons={success:'✅',error:'❌',info:'ℹ️'};
+  $('mIcon').innerHTML=icons[type||'info']||'💬';
   $('mTitle').textContent=title;
   $('mBody').innerHTML=body;
   $('msgModal').classList.add('open');
@@ -708,7 +752,9 @@ function closeMsg(){$('msgModal').classList.remove('open');}
 window.addEventListener('DOMContentLoaded',()=>{
   rzA4();
   chkBackend();
-  if(isMob()) loadRec('M'); else loadRec('D');
+  // Load records for current view; also load for other view lazily
+  loadRec('D');
+  loadRec('M');
 });
 </script>
 </body>
