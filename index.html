@@ -201,6 +201,19 @@ input[type=range]{accent-color:var(--accent);width:100%;}
   .mob-sec+.mob-sec{border-top:1px solid var(--border);}
   .mbox{aspect-ratio:4/3;}
 }
+/* 手機預覽框內：徽章尺寸縮小到 28%，讓預覽框能正確顯示 */
+#mPrintArea .bwrap{
+  --bsM:calc(var(--bs) * 0.28);
+  --bhM:calc(var(--bh) * 0.28);
+  margin:2px !important;
+}
+#mPrintArea .bface{
+  width:calc(var(--bs) * 0.28) !important;
+  height:calc(var(--bh) * 0.28) !important;
+}
+#mPrintArea .fold{
+  height:calc(var(--bh) * 0.28) !important;
+}
 @media(max-width:600px){
   .topbar{padding:0 12px;}
   .logo-name{font-size:.84rem;}
@@ -435,11 +448,15 @@ input[type=range]{accent-color:var(--accent);width:100%;}
       <button id="addM" class="btn btn-p"><i class="fas fa-plus"></i> 新增徽章</button>
       <button id="clrM" class="btn btn-del" style="padding:10px;"><i class="fas fa-trash"></i> 清除</button>
     </div>
-    <div style="font-size:.72rem;color:var(--text2);margin-bottom:7px;"><i class="fas fa-file-alt" style="margin-right:4px;color:var(--muted);"></i>列印預覽</div>
-    <div id="mPreviewWrap" style="background:#e8eaf0;border-radius:10px;overflow:auto;padding:10px;display:flex;justify-content:center;max-height:380px;">
-      <div id="mPrintArea" style="background:#fff;width:100%;max-width:360px;min-height:200px;padding:8px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.15);">
-        <div id="bdgM" style="display:flex;flex-wrap:wrap;align-content:flex-start;gap:3px;"></div>
-        <div class="no-print" style="padding:16px 0 8px;text-align:center;color:#94a3b8;font-size:.7rem;" id="bdgMPh">
+    <div style="font-size:.72rem;color:var(--text2);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;">
+      <span><i class="fas fa-file-alt" style="margin-right:4px;color:var(--muted);"></i>列印預覽</span>
+      <span style="font-size:.68rem;color:var(--muted);">縮小預覽，實際列印為 A4</span>
+    </div>
+    <!-- 預覽框：固定高度，徽章自動縮小顯示 -->
+    <div id="mPreviewWrap" style="background:#e8eaf0;border-radius:10px;overflow:hidden;padding:8px;display:flex;justify-content:center;height:220px;">
+      <div id="mPrintArea" style="background:#fff;width:100%;padding:6px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.15);overflow:hidden;">
+        <div id="bdgM" style="display:flex;flex-wrap:wrap;align-content:flex-start;"></div>
+        <div class="no-print" style="padding:20px 0;text-align:center;color:#94a3b8;font-size:.7rem;" id="bdgMPh">
           <i class="fas fa-stamp" style="font-size:1.2rem;display:block;margin-bottom:5px;"></i>按「新增徽章」加入圖片
         </div>
       </div>
@@ -449,13 +466,24 @@ input[type=range]{accent-color:var(--accent);width:100%;}
     </div>
   </div>
 
-  <!-- M3: Records -->
-  <div class="mob-sec" style="padding-bottom:24px;">
+  <!-- M3: Records with checkboxes -->
+  <div class="mob-sec" style="padding-bottom:80px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
       <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:var(--purple);"></i>上傳紀錄</div>
-      <button onclick="loadRec('M')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
+      <div style="display:flex;gap:5px;">
+        <button onclick="toggleAllRec('M')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;" title="全選/取消"><i class="fas fa-check-double"></i></button>
+        <button onclick="loadRec('M')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
+      </div>
     </div>
     <div id="recM"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
+    <!-- 手機版勾選列印列（固定在底部） -->
+    <div id="printBarM" class="print-bar" style="position:fixed;bottom:0;left:0;right:0;border-radius:0;z-index:200;padding:12px 16px;box-shadow:0 -4px 16px rgba(0,0,0,.15);">
+      <div class="print-bar-info">
+        已選 <strong id="selCountM">0</strong> 筆<br>
+        <span style="font-size:.65rem;opacity:.85;">A4 可放 <span id="a4CapacityM">0</span> 個 · 需 <span id="pageCountM">0</span> 頁</span>
+      </div>
+      <button class="btn-print-sel" onclick="printSelectedM()"><i class="fas fa-print"></i> 列印選取</button>
+    </div>
   </div>
 </div>
 
@@ -782,7 +810,8 @@ async function loadRec(sfx) {
     const d = await gasGet(GAS_URL+'?action=getRecords&limit=50');
     if(!d.success||!d.records.length){
       panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted);font-size:.75rem;"><i class="fas fa-inbox" style="font-size:1.2rem;display:block;margin-bottom:6px;"></i>尚無上傳紀錄</div>';
-      if(sfx==='D') updPrintBar();
+      if(sfx==='D') updPrintBarD();
+      if(sfx==='M') updPrintBarM();
       return;
     }
     const grp={};
@@ -801,8 +830,8 @@ async function loadRec(sfx) {
         const th = ghThumb || drThumb;
         const chkId=`chk${sfx}${r.rowIndex}`;
         html+=`<div class="rec-item fu" id="ri${sfx}${r.rowIndex}" style="align-items:flex-start;">`;
-        // 勾選框（僅桌面版顯示）— 同時存 github 和 drive URL
-        if(sfx==='D') html+=`<input type="checkbox" class="rec-chk" id="${chkId}" data-github="${r.githubUrl||''}" data-drive="${r.aiImageUrl||''}" data-rowindex="${r.rowIndex}" onchange="updPrintBar()" style="margin-top:14px;">`;
+        // 勾選框（桌面版 D 和 手機版 M 都顯示）
+        html+=`<input type="checkbox" class="rec-chk rec-chk-${sfx}" id="${chkId}" data-github="${r.githubUrl||''}" data-drive="${r.aiImageUrl||''}" data-rowindex="${r.rowIndex}" onchange="updPrintBar${sfx}()" style="margin-top:14px;width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;">`;
         html+=`<a href="${r.aiImageUrl||'#'}" target="_blank"><img class="rthumb" src="${th}" onerror="this.src='${drThumb}';this.onerror=null;" alt=""></a>`;
         html+=`<div class="rbody">`;
         html+=`<div style="font-size:.63rem;color:var(--muted);font-family:'DM Mono',monospace;">${r.timestamp}</div>`;
@@ -816,7 +845,8 @@ async function loadRec(sfx) {
     });
     html+=`<div style="font-size:.65rem;color:var(--muted);text-align:center;padding-top:5px;">共 ${d.total} 筆</div>`;
     panel.innerHTML=html;
-    if(sfx==='D') updPrintBar();
+    if(sfx==='D') updPrintBarD();
+    if(sfx==='M') updPrintBarM();
   } catch(e) {
     panel.innerHTML=`<div style="text-align:center;padding:14px;color:var(--red);font-size:.73rem;"><i class="fas fa-circle-xmark"></i> 無法載入紀錄<br><span style="font-size:.65rem;opacity:.7;">${e.message}</span><br><button onclick="loadRec('${sfx}')" class="btn btn-g" style="margin-top:8px;font-size:.7rem;"><i class="fas fa-rotate"></i> 重試</button></div>`;
   }
@@ -828,60 +858,72 @@ async function delRec(rowIndex, sfx) {
     const d=await gasGet(GAS_URL+'?action=deleteRecord&rowIndex='+rowIndex);
     if(!d.success) throw new Error(d.error);
     const el=$('ri'+sfx+rowIndex);
-    if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>{el.remove();updPrintBar();},300);}
+    if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>{el.remove();if(sfx==='D')updPrintBarD();else updPrintBarM();},300);}
   } catch(e){ showMsg('❌ 刪除失敗',e.message,'error'); }
 }
 
 // ================================================
 // 勾選列印相關
 // ================================================
-function getCheckedItems() {
-  return Array.from(document.querySelectorAll('.rec-chk:checked'))
+// ================================================
+// 勾選列印相關 — 桌面版(D) 和 手機版(M) 分開
+// ================================================
+function getCheckedItems(sfx) {
+  return Array.from(document.querySelectorAll('.rec-chk-'+(sfx||'D')+':checked'))
     .map(c => ({ github: c.dataset.github||'', drive: c.dataset.drive||'' }))
     .filter(item => item.github || item.drive);
 }
-// 舊介面相容
-function getCheckedUrls() {
-  return getCheckedItems().map(i => i.drive).filter(Boolean);
-}
+function getCheckedUrls() { return getCheckedItems('D').map(i=>i.drive).filter(Boolean); }
 
-function updPrintBar() {
-  const items = getCheckedItems();
-  const cnt   = items.length;
-  const bar   = $('printBar');
-  if (!bar) return;
+function calcCapacity() {
   const bw   = size * 2 + 12;
   const bh   = (shape==='rectangle' ? size*0.75 : size) + 6;
   const cols = Math.max(1, Math.floor(180 / bw));
   const rows = Math.max(1, Math.floor(267 / bh));
-  const cap  = cols * rows;
+  return cols * rows;
+}
+
+function updPrintBarD() {
+  const items = getCheckedItems('D');
+  const cnt   = items.length;
+  const bar   = $('printBar');
+  if (!bar) return;
+  const cap  = calcCapacity();
   const pages= cnt > 0 ? Math.ceil(cnt / cap) : 0;
-  $('selCount').textContent  = cnt;
-  $('a4Capacity').textContent= cap;
-  $('pageCount').textContent = pages;
+  $('selCount').textContent   = cnt;
+  $('a4Capacity').textContent = cap;
+  $('pageCount').textContent  = pages;
+  bar.classList.toggle('show', cnt > 0);
+}
+// 舊名相容
+function updPrintBar() { updPrintBarD(); }
+
+function updPrintBarM() {
+  const items = getCheckedItems('M');
+  const cnt   = items.length;
+  const bar   = $('printBarM');
+  if (!bar) return;
+  const cap  = calcCapacity();
+  const pages= cnt > 0 ? Math.ceil(cnt / cap) : 0;
+  $('selCountM').textContent   = cnt;
+  $('a4CapacityM').textContent = cap;
+  $('pageCountM').textContent  = pages;
   bar.classList.toggle('show', cnt > 0);
 }
 
-function toggleAllRec() {
-  const chks = document.querySelectorAll('.rec-chk');
+function toggleAllRec(sfx) {
+  sfx = sfx || 'D';
+  const chks = document.querySelectorAll('.rec-chk-'+sfx);
   const anyUnchecked = Array.from(chks).some(c => !c.checked);
   chks.forEach(c => c.checked = anyUnchecked);
-  updPrintBar();
+  if(sfx==='D') updPrintBarD(); else updPrintBarM();
 }
 
-function printSelected() {
-  const items = getCheckedItems();
-  if (!items.length) { showMsg('⚠️ 未選取','請先勾選要列印的紀錄','info'); return; }
-
-  const bdg = $('bdgD');
-  bdg.innerHTML = '';
-
+function buildPrintBadges(items, targetEl) {
+  targetEl.innerHTML = '';
   items.forEach(item => {
-    // 優先用 GitHub raw URL（公開，不需登入）
-    // 若沒有 GitHub 則 fallback 用 Drive 直連（需同帳號）
     const imgUrl = item.github || (item.drive ? item.drive.replace('/view','')+'=s1024' : '');
     if (!imgUrl) return;
-
     const w = document.createElement('div');
     w.className = 'bwrap';
     const mk = () => {
@@ -904,12 +946,26 @@ function printSelected() {
     del.style.cssText='position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;';
     del.onclick = ()=>{w.remove();updCnt();};
     w.append(del, mk(), fold, mk());
-    bdg.appendChild(w);
+    targetEl.appendChild(w);
   });
+}
 
+function printSelected() {
+  const items = getCheckedItems('D');
+  if (!items.length) { showMsg('⚠️ 未選取','請先勾選要列印的紀錄','info'); return; }
+  buildPrintBadges(items, $('bdgD'));
   updCnt();
-  // 等圖片載入後列印
   showMsg('✅ 已排版','A4 版面已更新，請等圖片載入完成後點列印按鈕（右上角）。','success');
+}
+
+function printSelectedM() {
+  const items = getCheckedItems('M');
+  if (!items.length) { showMsg('⚠️ 未選取','請先勾選要列印的紀錄','info'); return; }
+  // 手機版：填入 mPrintArea（手機列印用），同時填桌面 A4 版面（以防用桌面列印）
+  buildPrintBadges(items, $('bdgM'));
+  buildPrintBadges(items, $('bdgD'));
+  const ph = $('bdgMPh'); if(ph) ph.style.display='none';
+  showMsg('✅ 已排版','請點右上角 🖨 按鈕列印。','success');
 }
 
 // ================================================
@@ -918,10 +974,10 @@ function printSelected() {
 document.querySelectorAll('.stab').forEach(b=>{
   b.addEventListener('click',()=>{
     b.closest('.stabs').querySelectorAll('.stab').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on'); shape=b.dataset.shape; upCSS(); updPrintBar();
+    b.classList.add('on'); shape=b.dataset.shape; upCSS(); updPrintBarD(); updPrintBarM();
   });
 });
-$('szRD').addEventListener('input',e=>{size=+e.target.value;$('szVD').textContent=size+'mm';upCSS();updPrintBar();});
+$('szRD').addEventListener('input',e=>{size=+e.target.value;$('szVD').textContent=size+'mm';upCSS();updPrintBarD();updPrintBarM();});
 $('fitD').addEventListener('change',e=>{fit=e.target.value;$('scWD').style.display=fit==='custom'?'':'none';upCSS();});
 $('scRD').addEventListener('input',e=>{scale=+e.target.value;$('scVD').textContent=scale+'%';if(fit==='custom')upCSS();});
 $('srcD').addEventListener('change',()=>{refreshBadges();});
