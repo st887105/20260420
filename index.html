@@ -152,16 +152,23 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 .fu{animation:fu .22s ease forwards;}
 
 @media print{
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
   .no-print{display:none !important;}
-  body{background:#fff;}
-  .a4{box-shadow:none;margin:0;padding:10mm;width:100%;min-height:auto;transform:scale(1)!important;background:#fff;}
-  .bwrap{border-color:#94a3b8;}
-  .app-mobile{display:block !important;}
-  .mob-sec:not(#mobBadgeSec){display:none !important;}
+  body{background:#fff !important;}
+  /* Desktop print */
+  .app-desktop .panel-l,.app-desktop .panel-r{display:none !important;}
+  .app-desktop .panel-c{border:none !important;box-shadow:none !important;padding:0 !important;}
+  .a4{box-shadow:none !important;margin:0 !important;padding:10mm !important;width:210mm !important;min-height:297mm !important;transform:scale(1) !important;background:#fff !important;}
+  .bwrap{border-color:#94a3b8 !important;}
+  /* Mobile print - show only badge section */
+  .app-mobile .mob-sec:not(#mobBadgeSec){display:none !important;}
   #mobBadgeSec{display:block !important;padding:0 !important;}
-  #mobBadgeSec .card-hd,#mobBadgeSec label,#mobBadgeSec .stabs,#mobBadgeSec .slrow,#mobBadgeSec input,#mobBadgeSec .g2,#mobBadgeSec .btn-section,#mobBadgeSec>div:last-child{display:none !important;}
-  #mPreviewWrap{background:transparent !important;padding:0 !important;}
-  #mPrintArea{max-width:100% !important;width:210mm !important;min-height:297mm !important;padding:12mm !important;box-shadow:none !important;}
+  #mobBadgeSec>*:not(#mPreviewWrap){display:none !important;}
+  #mPreviewWrap{display:block !important;background:transparent !important;padding:0 !important;max-height:none !important;overflow:visible !important;}
+  #mPrintArea{max-width:100% !important;width:210mm !important;min-height:297mm !important;padding:12mm !important;box-shadow:none !important;background:#fff !important;}
+  /* Badge image must print */
+  .bface-img{display:block !important;width:100% !important;height:100% !important;object-fit:cover;}
+  .bface{background-image:none !important;}
 }
 
 /* SECTION DIVIDER */
@@ -169,6 +176,14 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 
 /* BADGE COUNT */
 .badge-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border-radius:11px;background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;padding:0 5px;}
+
+/* RECORD CHECKBOX */
+.rec-chk{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;margin-top:2px;}
+.print-bar{background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;border-radius:10px;padding:10px 12px;margin-top:8px;display:none;align-items:center;justify-content:space-between;gap:8px;}
+.print-bar.show{display:flex;}
+.print-bar-info{font-size:.73rem;line-height:1.4;}
+.btn-print-sel{background:#fff;color:var(--accent);border:none;border-radius:7px;padding:7px 12px;font-size:.75rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.btn-print-sel:hover{opacity:.9;}
 
 /* DESKTOP >= 961px */
 @media(min-width:961px){
@@ -336,9 +351,20 @@ input[type=range]{accent-color:var(--accent);width:100%;}
     <div class="card" style="flex:1;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
         <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:var(--purple);"></i>上傳紀錄</div>
-        <button onclick="loadRec('D')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
+        <div style="display:flex;gap:5px;">
+          <button onclick="toggleAllRec()" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;" id="selAllBtn" title="全選/取消"><i class="fas fa-check-double"></i></button>
+          <button onclick="loadRec('D')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
+        </div>
       </div>
       <div id="recD"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
+      <!-- 列印勾選列 -->
+      <div id="printBar" class="print-bar">
+        <div class="print-bar-info">
+          已選 <strong id="selCount">0</strong> 筆<br>
+          <span style="font-size:.65rem;opacity:.85;">A4 可放 <span id="a4Capacity">0</span> 個 · 需 <span id="pageCount">0</span> 頁</span>
+        </div>
+        <button class="btn-print-sel" onclick="printSelected()"><i class="fas fa-print"></i> 列印選取</button>
+      </div>
     </div>
   </aside>
 </div>
@@ -747,15 +773,16 @@ $('genD').addEventListener('click',()=>doGen(origD,'D'));
 $('genM').addEventListener('click',()=>doGen(origM,'M'));
 
 // ================================================
-// LOAD RECORDS
+// LOAD RECORDS — 含勾選框
 // ================================================
 async function loadRec(sfx) {
   const panel=$('rec'+sfx);
   panel.innerHTML='<div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div>';
   try {
-    const d = await gasGet(GAS_URL+'?action=getRecords&limit=30');
+    const d = await gasGet(GAS_URL+'?action=getRecords&limit=50');
     if(!d.success||!d.records.length){
       panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted);font-size:.75rem;"><i class="fas fa-inbox" style="font-size:1.2rem;display:block;margin-bottom:6px;"></i>尚無上傳紀錄</div>';
+      if(sfx==='D') updPrintBar();
       return;
     }
     const grp={};
@@ -769,7 +796,10 @@ async function loadRec(sfx) {
       html+=`<div class="date-grp"><i class="fas fa-calendar-day"></i>${dt} (${grp[dt].length})</div>`;
       grp[dt].forEach(r=>{
         const th=r.aiImageUrl?r.aiImageUrl.replace('/view','')+'=s80':'';
-        html+=`<div class="rec-item fu" id="ri${sfx}${r.rowIndex}">`;
+        const chkId=`chk${sfx}${r.rowIndex}`;
+        html+=`<div class="rec-item fu" id="ri${sfx}${r.rowIndex}" style="align-items:flex-start;">`;
+        // 勾選框（僅桌面版顯示）
+        if(sfx==='D') html+=`<input type="checkbox" class="rec-chk" id="${chkId}" data-url="${r.aiImageUrl||''}" data-rowindex="${r.rowIndex}" onchange="updPrintBar()" style="margin-top:14px;">`;
         html+=`<a href="${r.aiImageUrl||'#'}" target="_blank"><img class="rthumb" src="${th}" onerror="this.style.background='var(--border2)';this.removeAttribute('src');" alt=""></a>`;
         html+=`<div class="rbody">`;
         html+=`<div style="font-size:.63rem;color:var(--muted);font-family:'DM Mono',monospace;">${r.timestamp}</div>`;
@@ -783,6 +813,7 @@ async function loadRec(sfx) {
     });
     html+=`<div style="font-size:.65rem;color:var(--muted);text-align:center;padding-top:5px;">共 ${d.total} 筆</div>`;
     panel.innerHTML=html;
+    if(sfx==='D') updPrintBar();
   } catch(e) {
     panel.innerHTML=`<div style="text-align:center;padding:14px;color:var(--red);font-size:.73rem;"><i class="fas fa-circle-xmark"></i> 無法載入紀錄<br><span style="font-size:.65rem;opacity:.7;">${e.message}</span><br><button onclick="loadRec('${sfx}')" class="btn btn-g" style="margin-top:8px;font-size:.7rem;"><i class="fas fa-rotate"></i> 重試</button></div>`;
   }
@@ -794,8 +825,84 @@ async function delRec(rowIndex, sfx) {
     const d=await gasGet(GAS_URL+'?action=deleteRecord&rowIndex='+rowIndex);
     if(!d.success) throw new Error(d.error);
     const el=$('ri'+sfx+rowIndex);
-    if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>el.remove(),300);}
+    if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>{el.remove();updPrintBar();},300);}
   } catch(e){ showMsg('❌ 刪除失敗',e.message,'error'); }
+}
+
+// ================================================
+// 勾選列印相關
+// ================================================
+function getCheckedUrls() {
+  return Array.from(document.querySelectorAll('.rec-chk:checked'))
+    .map(c => c.dataset.url).filter(Boolean);
+}
+
+function updPrintBar() {
+  const urls = getCheckedUrls();
+  const cnt  = urls.length;
+  const bar  = $('printBar');
+  if (!bar) return;
+  // 計算 A4 容量：A4 = 210mm x 297mm，padding 15mm 四邊
+  // 可用：180mm x 267mm，每個 bwrap ≈ size*2 + 10mm (fold+gap)
+  const bw   = size * 2 + 12; // 寬：兩個徽章+折痕
+  const bh   = (shape==='rectangle' ? size*0.75 : size) + 6; // 高+gap
+  const cols = Math.max(1, Math.floor(180 / bw));
+  const rows = Math.max(1, Math.floor(267 / bh));
+  const cap  = cols * rows;
+  const pages= cnt > 0 ? Math.ceil(cnt / cap) : 0;
+  $('selCount').textContent  = cnt;
+  $('a4Capacity').textContent= cap;
+  $('pageCount').textContent = pages;
+  bar.classList.toggle('show', cnt > 0);
+}
+
+function toggleAllRec() {
+  const chks = document.querySelectorAll('.rec-chk');
+  const anyUnchecked = Array.from(chks).some(c => !c.checked);
+  chks.forEach(c => c.checked = anyUnchecked);
+  updPrintBar();
+}
+
+function printSelected() {
+  const urls = getCheckedUrls();
+  if (!urls.length) { showMsg('⚠️ 未選取','請先勾選要列印的紀錄','info'); return; }
+
+  // 清空 A4 版面，重新填入勾選的紀錄
+  const bdg = $('bdgD');
+  bdg.innerHTML = '';
+
+  urls.forEach(url => {
+    // 把 Drive 查看連結轉為直接圖片連結（=s512 高解析）
+    const imgUrl = url.replace('/view','') + '=s512';
+    const w = document.createElement('div');
+    w.className = 'bwrap';
+    const mk = () => {
+      const face = document.createElement('div');
+      face.className = 'bface';
+      // 用 <img> 子元素確保列印時能顯示
+      const img = document.createElement('img');
+      img.className = 'bface-img';
+      img.src = imgUrl;
+      img.style.cssText = `width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit;`;
+      face.style.backgroundImage = `url(${imgUrl})`;
+      face.appendChild(img);
+      if(shape==='heart') face.classList.add('heart');
+      return face;
+    };
+    const fold = document.createElement('div'); fold.className='fold';
+    const del  = document.createElement('button');
+    del.innerHTML = '<i class="fas fa-xmark"></i>';
+    del.className = 'no-print';
+    del.style.cssText='position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;';
+    del.onclick = ()=>{w.remove();updCnt();};
+    w.append(del, mk(), fold, mk());
+    bdg.appendChild(w);
+  });
+
+  updCnt();
+  // 給圖片一點時間載入再列印
+  showMsg('✅ 已排版','A4 版面已更新，2 秒後自動列印。請確認印表機設定。','success');
+  setTimeout(()=>{ closeMsg(); setTimeout(()=>window.print(), 400); }, 1800);
 }
 
 // ================================================
@@ -804,10 +911,10 @@ async function delRec(rowIndex, sfx) {
 document.querySelectorAll('.stab').forEach(b=>{
   b.addEventListener('click',()=>{
     b.closest('.stabs').querySelectorAll('.stab').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on'); shape=b.dataset.shape; upCSS();
+    b.classList.add('on'); shape=b.dataset.shape; upCSS(); updPrintBar();
   });
 });
-$('szRD').addEventListener('input',e=>{size=+e.target.value;$('szVD').textContent=size+'mm';upCSS();});
+$('szRD').addEventListener('input',e=>{size=+e.target.value;$('szVD').textContent=size+'mm';upCSS();updPrintBar();});
 $('fitD').addEventListener('change',e=>{fit=e.target.value;$('scWD').style.display=fit==='custom'?'':'none';upCSS();});
 $('scRD').addEventListener('input',e=>{scale=+e.target.value;$('scVD').textContent=scale+'%';if(fit==='custom')upCSS();});
 $('srcD').addEventListener('change',()=>{refreshBadges();});
@@ -843,12 +950,25 @@ function addBadge(customSrc){
   del.className='no-print';
   del.style.cssText='position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;';
   del.onclick=()=>{w.remove();updCnt();};
-  const mk=()=>{const d=document.createElement('div');d.className='bface';d.style.backgroundImage='url('+src+')';if(shape==='heart')d.classList.add('heart');return d;};
+  const mk=()=>{
+    const face=document.createElement('div');
+    face.className='bface';
+    face.style.backgroundImage='url('+src+')';
+    face.style.position='relative';
+    if(shape==='heart') face.classList.add('heart');
+    // <img> 確保列印時顯示
+    const img=document.createElement('img');
+    img.className='bface-img';
+    img.src=src;
+    img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;';
+    face.appendChild(img);
+    return face;
+  };
   const fold=document.createElement('div');fold.className='fold';
   w.append(del,mk(),fold,mk()); $('bdgD').appendChild(w); updCnt();
 }
 
-// Mobile badge
+// Mobile badge — 用 <img> 標籤確保列印時圖片可見
 function addBadgeM() {
   const src = aiM || objM || origM;
   if(!src){showMsg('⚠️ 尚未輸入影像','請先自拍或上傳圖片','error');return;}
@@ -861,11 +981,18 @@ function addBadgeM() {
   del.style.cssText = 'position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;';
   del.onclick = () => wrap.remove();
   const mk = () => {
-    const d = document.createElement('div');
-    d.className = 'bface';
-    d.style.backgroundImage = 'url('+src+')';
-    if (shape==='heart') d.classList.add('heart');
-    return d;
+    const face = document.createElement('div');
+    face.className = 'bface';
+    face.style.backgroundImage = 'url('+src+')';
+    if (shape==='heart') face.classList.add('heart');
+    // 加入 <img> 確保列印時顯示
+    const img = document.createElement('img');
+    img.className = 'bface-img';
+    img.src = src;
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;';
+    face.style.position = 'relative';
+    face.appendChild(img);
+    return face;
   };
   const fold = document.createElement('div'); fold.className='fold';
   wrap.append(del, mk(), fold, mk());
