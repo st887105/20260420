@@ -2,14 +2,14 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>車城國小｜AI 徽章拍貼機</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>&#36655;&#22478;&#22283;&#23567; AI &#24537;&#31456;&#25308;&#36149;&#26426;</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
 :root{
   --bg:#0d0f14;--surface:#13161e;--card:#1a1e2a;--border:#252a38;--border2:#2e3448;
-  --accent:#5b8dee;--accent2:#7c6af5;--amber:#f0a500;--green:#2dce89;--red:#f5365c;
+  --accent:#5b8dee;--amber:#f0a500;--green:#2dce89;--red:#f5365c;
   --text:#dde4f0;--muted:#556080;
   --bs:50mm;--bh:50mm;--br:50%;--bgs:cover;
 }
@@ -20,84 +20,14 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'No
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 
 /* TOPBAR */
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);
-  position:sticky;top:0;z-index:100;padding:0 16px;height:54px;
-  display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:10px;}
-.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;
-  display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;flex-shrink:0;}
-.logo-name{font-weight:700;font-size:.9rem;line-height:1.3;}
-.logo-ver{font-size:.62rem;color:var(--muted);font-family:'DM Mono',monospace;}
-.topbar-r{display:flex;align-items:center;gap:7px;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 14px;height:52px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:9px;}
+.logo-icon{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;flex-shrink:0;font-size:1rem;}
+.logo-name{font-weight:700;font-size:.88rem;line-height:1.3;}
+.logo-ver{font-size:.6rem;color:var(--muted);font-family:'DM Mono',monospace;}
 
-/* LAYOUT */
-.layout{display:grid;grid-template-columns:284px 1fr 254px;gap:10px;
-  padding:10px;max-width:1400px;margin:0 auto;}
-@media(max-width:960px){
-  .layout{grid-template-columns:1fr;}
-  .panel-l,.panel-r{max-height:none;overflow-y:visible;}
-  .panel-c{order:-1;}
-}
-.panel-l,.panel-r{display:flex;flex-direction:column;gap:9px;
-  max-height:calc(100vh - 62px);overflow-y:auto;padding-bottom:20px;}
-.panel-c{position:relative;}
-
-/* CARD */
-.card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:14px;}
-.card-hd{font-weight:700;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:11px;display:flex;align-items:center;gap:6px;}
-
-/* INPUTS */
-.inp{width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:8px;
-  padding:7px 10px;font-size:.8rem;color:var(--text);outline:none;
-  transition:border-color .2s;font-family:inherit;}
-.inp:focus{border-color:var(--accent);}
-.lbl{font-size:.72rem;color:var(--muted);display:block;margin-bottom:4px;}
-
-/* BUTTONS */
-.btn{border:none;border-radius:8px;cursor:pointer;font-weight:700;
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  transition:opacity .15s,transform .1s;font-family:inherit;}
-.btn:active{transform:scale(.97);}
-.btn:disabled{opacity:.35;cursor:not-allowed;}
-.btn-p{background:var(--accent);color:#fff;padding:8px 14px;font-size:.78rem;}
-.btn-p:hover{opacity:.82;}
-.btn-g{background:var(--surface);color:var(--text);border:1px solid var(--border2);padding:7px 11px;font-size:.76rem;}
-.btn-g:hover{background:var(--border);}
-.btn-o{background:linear-gradient(135deg,var(--amber),#d07000);color:#fff;
-  padding:10px;font-size:.88rem;width:100%;border-radius:9px;}
-.btn-o:hover{opacity:.87;}
-.btn-del{background:rgba(245,54,92,.1);color:var(--red);
-  border:1px solid rgba(245,54,92,.2);padding:4px 8px;font-size:.68rem;border-radius:6px;}
-.btn-del:hover{background:rgba(245,54,92,.2);}
-.wfull{width:100%;}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-
-/* SHAPE TABS */
-.shape-tabs{display:flex;background:var(--surface);border-radius:8px;padding:3px;gap:2px;}
-.stab{flex:1;padding:5px 2px;font-size:.68rem;font-weight:700;border-radius:6px;
-  border:1px solid transparent;cursor:pointer;background:transparent;color:var(--muted);transition:all .15s;}
-.stab.on{background:var(--accent);color:#fff;border-color:var(--accent);}
-
-/* MEDIA BOX */
-.mbox{width:100%;aspect-ratio:1;background:var(--surface);border-radius:10px;
-  overflow:hidden;border:2px dashed var(--border2);
-  position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:9px;}
-.mbox video,.mbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-.mph{text-align:center;color:var(--muted);}
-.mph i{font-size:1.7rem;}
-.mph p{font-size:.7rem;margin-top:5px;}
-
-/* PROGRESS */
-.pgwrap{margin-top:9px;}
-.pgbar{height:3px;background:var(--border2);border-radius:2px;overflow:hidden;}
-.pgfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
-  border-radius:2px;transition:width .4s;}
-.pgmsg{display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--muted);margin-top:5px;}
-
-/* PILL */
-.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;
-  border-radius:999px;font-size:.7rem;font-weight:700;}
+/* PILLS */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:.7rem;font-weight:700;}
 .pill-g{background:rgba(45,206,137,.1);color:var(--green);border:1px solid rgba(45,206,137,.25);}
 .pill-r{background:rgba(245,54,92,.1);color:var(--red);border:1px solid rgba(245,54,92,.25);}
 .pill-a{background:rgba(240,165,0,.1);color:var(--amber);border:1px solid rgba(240,165,0,.25);}
@@ -107,15 +37,57 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'No
 .dr{background:var(--red);box-shadow:0 0 5px var(--red);}
 .da{background:var(--amber);box-shadow:0 0 5px var(--amber);}
 
+/* BUTTONS */
+.btn{border:none;border-radius:8px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:opacity .15s,transform .1s;font-family:inherit;}
+.btn:active{transform:scale(.97);}
+.btn:disabled{opacity:.35;cursor:not-allowed;}
+.btn-p{background:var(--accent);color:#fff;padding:8px 14px;font-size:.8rem;}
+.btn-p:hover{opacity:.82;}
+.btn-g{background:var(--surface);color:var(--text);border:1px solid var(--border2);padding:7px 12px;font-size:.78rem;}
+.btn-g:hover{background:var(--border);}
+.btn-o{background:linear-gradient(135deg,var(--amber),#d07000);color:#fff;padding:12px;font-size:.92rem;width:100%;border-radius:10px;}
+.btn-o:hover{opacity:.87;}
+.btn-del{background:rgba(245,54,92,.1);color:var(--red);border:1px solid rgba(245,54,92,.2);padding:4px 8px;font-size:.68rem;border-radius:6px;}
+.btn-del:hover{background:rgba(245,54,92,.2);}
+.wfull{width:100%;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:14px;}
+.card-hd{font-weight:700;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:11px;display:flex;align-items:center;gap:6px;}
+.inp{width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:8px 11px;font-size:.82rem;color:var(--text);outline:none;transition:border-color .2s;font-family:inherit;}
+.inp:focus{border-color:var(--accent);}
+.lbl{font-size:.72rem;color:var(--muted);display:block;margin-bottom:4px;}
+
+/* SHAPE TABS */
+.stabs{display:flex;background:var(--surface);border-radius:8px;padding:3px;gap:2px;}
+.stab{flex:1;padding:6px 2px;font-size:.7rem;font-weight:700;border-radius:6px;border:1px solid transparent;cursor:pointer;background:transparent;color:var(--muted);transition:all .15s;}
+.stab.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* MEDIA BOX */
+.mbox{width:100%;aspect-ratio:1;background:var(--surface);border-radius:10px;overflow:hidden;border:2px dashed var(--border2);position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:9px;}
+.mbox video,.mbox img.preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.mph{text-align:center;color:var(--muted);}
+.mph i{font-size:1.8rem;}
+.mph p{font-size:.72rem;margin-top:6px;}
+
+/* AI RESULT (mobile) */
+.ai-res-wrap{width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--surface);border:1px solid var(--border2);display:none;margin-bottom:10px;}
+.ai-res-wrap.show{display:block;}
+.ai-res-wrap img{width:100%;height:100%;object-fit:cover;}
+
+/* PROGRESS */
+.pgwrap{margin-top:9px;}
+.pgbar{height:3px;background:var(--border2);border-radius:2px;overflow:hidden;}
+.pgfill{height:100%;background:linear-gradient(90deg,var(--accent),#7c6af5);border-radius:2px;transition:width .4s;}
+.pgmsg{display:flex;align-items:center;gap:7px;font-size:.73rem;color:var(--muted);margin-top:5px;}
+
 /* SPINNER */
-.spin{width:17px;height:17px;flex-shrink:0;
-  border:2px solid rgba(91,141,238,.18);border-top-color:var(--accent);
-  border-radius:50%;animation:rot .7s linear infinite;}
+.spin{width:17px;height:17px;flex-shrink:0;border:2px solid rgba(91,141,238,.18);border-top-color:var(--accent);border-radius:50%;animation:rot .7s linear infinite;}
 @keyframes rot{to{transform:rotate(360deg);}}
 
-/* RESULT */
-.rcard{background:linear-gradient(135deg,rgba(91,141,238,.07),rgba(124,106,245,.07));
-  border:1px solid rgba(91,141,238,.18);border-radius:10px;padding:11px;margin-top:9px;}
+/* RESULT CARD */
+.rcard{background:linear-gradient(135deg,rgba(91,141,238,.07),rgba(124,106,245,.07));border:1px solid rgba(91,141,238,.2);border-radius:10px;padding:11px;margin-top:9px;}
 .rrow{display:flex;align-items:center;gap:7px;font-size:.73rem;margin-bottom:5px;}
 .rrow:last-child{margin-bottom:0;}
 .rico{width:22px;text-align:center;color:var(--muted);flex-shrink:0;}
@@ -123,67 +95,56 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'No
 .rlink:hover{text-decoration:underline;}
 
 /* OFFLINE BANNER */
-.offbanner{display:none;background:rgba(245,54,92,.08);border:1px solid rgba(245,54,92,.25);
-  border-radius:10px;padding:9px 12px;font-size:.75rem;color:var(--red);
-  margin-bottom:9px;align-items:center;gap:8px;}
+.offbanner{display:none;background:rgba(245,54,92,.08);border:1px solid rgba(245,54,92,.3);border-radius:10px;padding:10px 12px;font-size:.75rem;color:var(--red);margin-bottom:9px;gap:8px;align-items:flex-start;}
 .offbanner.show{display:flex;}
 
-/* RECORD */
-.rec-item{background:var(--surface);border:1px solid var(--border);border-radius:9px;
-  padding:9px;display:flex;gap:8px;margin-bottom:6px;}
+/* RECORDS */
+.rec-item{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px;display:flex;gap:8px;margin-bottom:6px;}
 .rthumb{width:44px;height:44px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--border2);}
 .rbody{flex:1;min-width:0;}
-.date-grp{font-size:.66rem;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;
-  letter-spacing:.05em;padding:5px 0 4px;border-bottom:1px solid var(--border);margin-bottom:5px;
-  display:flex;align-items:center;gap:5px;}
-
-/* A4 */
-.a4{width:210mm;min-height:297mm;background:#fff;color:#1e293b;
-  box-shadow:0 0 0 1px rgba(255,255,255,.04),0 18px 50px rgba(0,0,0,.55);
-  margin:0 auto;padding:18mm;transform-origin:top center;}
-.bwrap{display:inline-flex;flex-direction:row;align-items:center;margin:7px;
-  border:1px dashed #cbd5e1;padding:4px;border-radius:6px;background:#f8fafc;position:relative;}
-.bface{width:var(--bs);height:var(--bh);border-radius:var(--br);
-  background-size:var(--bgs);background-position:center;background-repeat:no-repeat;
-  border:1px solid #e2e8f0;box-shadow:inset 0 0 0 2px white;flex-shrink:0;}
-.bface.heart{
-  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");
-  -webkit-mask-size:100% 100%;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");
-  mask-size:100% 100%;border:none;box-shadow:none;}
-.fold{width:2px;height:var(--bh);
-  background-image:linear-gradient(to bottom,#94a3b8 50%,transparent 50%);
-  background-size:2px 7px;background-repeat:repeat-y;margin:0 3px;flex-shrink:0;}
-
-/* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
-  backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:16px;}
-.modal-bg.open{display:flex;}
-.mbox2{background:var(--card);border:1px solid var(--border2);border-radius:15px;
-  padding:22px;max-width:340px;width:100%;box-shadow:0 30px 60px rgba(0,0,0,.6);text-align:center;}
+.date-grp{font-size:.66rem;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace;letter-spacing:.04em;padding:5px 0 4px;border-bottom:1px solid var(--border);margin-bottom:5px;display:flex;align-items:center;gap:5px;}
 
 /* SLIDER */
 input[type=range]{accent-color:var(--accent);width:100%;}
 .slrow{display:flex;justify-content:space-between;font-size:.72rem;margin-bottom:3px;}
 .slval{color:var(--accent);font-weight:700;font-family:'DM Mono',monospace;}
 
-/* FADE */
+/* A4 BADGE */
+.a4{width:210mm;min-height:297mm;background:#fff;color:#1e293b;box-shadow:0 0 0 1px rgba(255,255,255,.04),0 16px 48px rgba(0,0,0,.55);margin:0 auto;padding:18mm;transform-origin:top center;}
+.bwrap{display:inline-flex;flex-direction:row;align-items:center;margin:7px;border:1px dashed #cbd5e1;padding:4px;border-radius:6px;background:#f8fafc;position:relative;}
+.bface{width:var(--bs);height:var(--bh);border-radius:var(--br);background-size:var(--bgs);background-position:center;background-repeat:no-repeat;border:1px solid #e2e8f0;box-shadow:inset 0 0 0 2px white;flex-shrink:0;}
+.bface.heart{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");-webkit-mask-size:100% 100%;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E");mask-size:100% 100%;border:none;box-shadow:none;}
+.fold{width:2px;height:var(--bh);background-image:linear-gradient(to bottom,#94a3b8 50%,transparent 50%);background-size:2px 7px;background-repeat:repeat-y;margin:0 3px;flex-shrink:0;}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:16px;}
+.modal-bg.open{display:flex;}
+.mbox2{background:var(--card);border:1px solid var(--border2);border-radius:15px;padding:22px;max-width:340px;width:100%;box-shadow:0 30px 60px rgba(0,0,0,.6);text-align:center;}
+
 @keyframes fu{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 .fu{animation:fu .22s ease forwards;}
 
-/* PRINT */
-@media print{
-  .no-print{display:none !important;}
-  body{background:#fff;color:#1e293b;}
-  .a4{box-shadow:none;margin:0;padding:10mm;width:100%;min-height:auto;transform:scale(1)!important;background:#fff;}
-  .bwrap{border-color:#94a3b8;}
+@media print{.no-print{display:none !important;}body{background:#fff;color:#1e293b;}.a4{box-shadow:none;margin:0;padding:10mm;width:100%;min-height:auto;transform:scale(1)!important;background:#fff;}.bwrap{border-color:#94a3b8;}}
+
+/* DESKTOP >= 961px */
+@media(min-width:961px){
+  .app-desktop{display:grid;grid-template-columns:284px 1fr 254px;gap:10px;padding:10px;max-width:1400px;margin:0 auto;}
+  .panel-l,.panel-r{display:flex;flex-direction:column;gap:9px;max-height:calc(100vh - 60px);overflow-y:auto;padding-bottom:20px;}
+  .panel-c{background:var(--surface);border:1px solid var(--border);border-radius:13px;overflow:hidden;display:flex;justify-content:center;padding:18px;align-items:flex-start;}
+  .mobile-only{display:none !important;}
 }
 
-/* MOBILE TWEAKS */
+/* MOBILE <= 960px */
+@media(max-width:960px){
+  .desktop-only{display:none !important;}
+  .app-mobile{display:flex;flex-direction:column;gap:0;}
+  .mob-sec{padding:12px 14px;}
+  .mob-sec+.mob-sec{border-top:1px solid var(--border);}
+  .mbox{aspect-ratio:4/3;}
+}
 @media(max-width:600px){
   .topbar{padding:0 10px;}
-  .logo-name{font-size:.8rem;}
-  .layout{padding:8px;gap:8px;}
-  .card{padding:12px;}
+  .logo-name{font-size:.82rem;}
 }
 </style>
 </head>
@@ -192,498 +153,563 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 <!-- TOPBAR -->
 <header class="topbar no-print">
   <div class="logo">
-    <div class="logo-icon">車</div>
+    <div class="logo-icon">&#36655;</div>
     <div>
-      <div class="logo-name">車城國小｜AI 徽章拍貼機</div>
-      <div class="logo-ver">v2.3 · Gemini 2.5 Flash</div>
+      <div class="logo-name">&#36655;&#22478;&#22283;&#23567;&#65288;AI &#24537;&#31456;&#25308;&#36149;&#26426;&#65289;</div>
+      <div class="logo-ver">v2.3 &middot; Gemini 2.5 Flash</div>
     </div>
   </div>
-  <div class="topbar-r">
-    <div id="statusPill" class="pill pill-a"><span class="dot da"></span>連線中</div>
-    <button onclick="window.print()" class="btn btn-p"><i class="fas fa-print"></i></button>
+  <div style="display:flex;align-items:center;gap:7px;">
+    <div id="sPill" class="pill pill-a"><span class="dot da"></span>&#36899;&#32267;&#20013;</div>
+    <button onclick="window.print()" class="btn btn-p no-print" style="padding:7px 12px;"><i class="fas fa-print"></i></button>
   </div>
 </header>
 
-<!-- LAYOUT -->
-<div class="layout">
-
-  <!-- LEFT -->
+<!-- ===== DESKTOP ===== -->
+<div class="app-desktop desktop-only">
   <aside class="panel-l no-print">
-
-    <!-- 離線提示 -->
-    <div id="offBanner" class="offbanner">
-      <i class="fas fa-triangle-exclamation" style="flex-shrink:0;"></i>
-      <div style="flex:1;">
-        <strong>後端未連線</strong><br>
-        <span style="font-size:.67rem;opacity:.8;">請確認 GAS_URL 設定並重新部署</span>
-      </div>
-      <button onclick="checkBackend()" class="btn btn-g" style="white-space:nowrap;padding:5px 9px;font-size:.68rem;flex-shrink:0;">
-        <i class="fas fa-rotate"></i> 重試
-      </button>
+    <div id="offD" class="offbanner">
+      <i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px;"></i>
+      <div style="flex:1;"><strong>&#24460;&#31471;&#26410;&#36899;&#32267;</strong><br><span style="font-size:.67rem;opacity:.8;" id="offMsgD">&#35531;&#30906;&#35469; GAS_URL &#24182;&#37325;&#26032;&#37096;&#32422;</span></div>
+      <button onclick="chkBackend()" class="btn btn-g" style="flex-shrink:0;padding:5px 9px;font-size:.68rem;"><i class="fas fa-rotate"></i></button>
     </div>
 
-    <!-- ① 影像輸入 -->
+    <!-- Step 1 -->
     <div class="card">
-      <div class="card-hd"><i class="fas fa-camera-retro" style="color:var(--accent);"></i>① 影像輸入</div>
+      <div class="card-hd"><i class="fas fa-camera-retro" style="color:var(--accent);"></i>&#9312; &#24433;&#20687;&#36664;&#20837;</div>
       <div class="mbox">
-        <video id="videoEl" autoplay playsinline style="display:none;"></video>
-        <img id="prevImg" style="display:none;" alt="">
-        <div id="mediaPh" class="mph"><i class="fas fa-image"></i><p>拍照或上傳圖片</p></div>
+        <video id="vidD" autoplay playsinline style="display:none;"></video>
+        <img class="preview" id="prvD" style="display:none;" alt="">
+        <div id="phD" class="mph"><i class="fas fa-image"></i><p>&#25308;&#29031;&#25110;&#19978;&#20傳;&#22294;&#29255;</p></div>
       </div>
       <div class="g2" style="margin-bottom:7px;">
-        <label style="cursor:pointer;">
-          <input type="file" id="mobCam" accept="image/*" capture="environment" style="display:none;">
-          <div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;">
-            <i class="fas fa-mobile-screen-button"></i> 手機拍照
-          </div>
-        </label>
-        <label style="cursor:pointer;">
-          <input type="file" id="fileUp" accept="image/png,image/jpeg,image/webp" style="display:none;">
-          <div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;">
-            <i class="fas fa-upload"></i> 相簿上傳
-          </div>
-        </label>
+        <label style="cursor:pointer;"><input type="file" id="camD" accept="image/*" capture="environment" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-mobile-screen-button"></i> &#25163;&#27231;&#25308;&#29031;</div></label>
+        <label style="cursor:pointer;"><input type="file" id="upD" accept="image/png,image/jpeg,image/webp" style="display:none;"><div class="btn btn-g wfull" style="padding:8px 4px;font-size:.72rem;"><i class="fas fa-upload"></i> &#30456;&#31807;&#19978;&#20傳;</div></label>
       </div>
-      <button id="camBtn" class="btn btn-g wfull" style="font-size:.72rem;">
-        <i class="fas fa-laptop"></i> 開啟網頁相機 (PC)
-      </button>
-      <button id="capBtn" class="btn btn-p wfull" style="margin-top:7px;display:none;">
-        <i class="fas fa-camera"></i> 擷取畫面
-      </button>
+      <button id="webcamD" class="btn btn-g wfull" style="font-size:.72rem;"><i class="fas fa-laptop"></i> &#38283;&#21551;&#32178;&#39023;&#30456;&#26426;</button>
+      <button id="capD" class="btn btn-p wfull" style="margin-top:7px;display:none;"><i class="fas fa-camera"></i> &#25308;&#21462;&#30011;&#38754;</button>
     </div>
 
-    <!-- ② AI 生成 -->
+    <!-- Step 2 -->
     <div class="card">
-      <div class="card-hd"><i class="fas fa-wand-magic-sparkles" style="color:var(--amber);"></i>② 雲端 AI 生成</div>
-      <label class="lbl">選擇風格</label>
-      <select id="aiStyle" class="inp" style="margin-bottom:8px;">
-        <option value="Generate a high-quality 3D Pixar style cartoon character. Keep it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors">🎬 3D Pixar 動畫風</option>
-        <option value="Generate a beautiful watercolor painting. Soft edges, delicate washes of color, and an artistic, dreamlike quality">🎨 水彩藝術風</option>
-        <option value="Generate a cyberpunk style image. Neon lights, futuristic elements, high tech, dark and gritty atmosphere">🌆 賽博龐克風</option>
-        <option value="Generate a classic Studio Ghibli anime style image. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel">🌿 吉卜力動畫風</option>
-        <option value="Generate a vibrant pop art style image, inspired by Andy Warhol. Bold colors, high contrast">🟡 普普藝術風</option>
-        <option value="Generate a cute chibi anime character illustration, big eyes, pastel colors, kawaii aesthetic">🐱 Q版萌系風</option>
+      <div class="card-hd"><i class="fas fa-wand-magic-sparkles" style="color:var(--amber);"></i>&#9313; AI &#29983;&#25104;</div>
+      <label class="lbl">&#39118;&#26684;</label>
+      <select id="styD" class="inp" style="margin-bottom:8px;">
+        <option value="Generate a high-quality 3D Pixar style cartoon character. Keep it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors">&#127916; 3D Pixar &#21205;&#30059;&#39118;</option>
+        <option value="Generate a beautiful watercolor painting. Soft edges, delicate washes of color, and an artistic, dreamlike quality">&#127912; &#27700;&#24425;&#34354;&#34899;&#39118;</option>
+        <option value="Generate a cyberpunk style image. Neon lights, futuristic elements, high tech, dark and gritty atmosphere">&#127750; &#36064;&#20055;&#26379;&#20811;&#39118;</option>
+        <option value="Generate a classic Studio Ghibli anime style image. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel">&#127807; &#21560;&#21521;&#21147;&#21205;&#30059;&#39118;</option>
+        <option value="Generate a vibrant pop art style image, inspired by Andy Warhol. Bold colors, high contrast">&#128993; &#26222;&#26222;&#34354;&#34899;&#39118;</option>
+        <option value="Generate a cute chibi anime character illustration, big eyes, pastel colors, kawaii aesthetic">&#128049; Q&#29256;&#35484;&#31995;&#39118;</option>
       </select>
-      <label class="lbl">額外提示（選填）</label>
-      <textarea id="aiPrompt" class="inp" rows="2" placeholder="例如：加上車城洋蔥、海洋背景..." style="margin-bottom:10px;resize:none;"></textarea>
-      <button id="genBtn" class="btn btn-o"><i class="fas fa-cloud-arrow-up"></i> 傳送至雲端處理</button>
-      <div id="loadBox" style="display:none;" class="pgwrap">
-        <div class="pgbar"><div class="pgfill" id="pgFill" style="width:10%;"></div></div>
-        <div class="pgmsg"><div class="spin"></div><span id="ldMsg">準備中...</span></div>
+      <label class="lbl">&#39069;&#22806;&#25552;&#31034;&#65288;&#36984;&#22635;&#65289;</label>
+      <textarea id="prmD" class="inp" rows="2" style="margin-bottom:10px;resize:none;"></textarea>
+      <button id="genD" class="btn btn-o"><i class="fas fa-cloud-arrow-up"></i> &#20256;&#36865;&#33267;&#38雲;&#31471;&#34389;&#29702;</button>
+      <div id="ldBoxD" style="display:none;" class="pgwrap">
+        <div class="pgbar"><div class="pgfill" id="pgD" style="width:10%;"></div></div>
+        <div class="pgmsg"><div class="spin"></div><span id="ldD">&#20934;&#20633;&#20013;...</span></div>
       </div>
-      <div id="resBox" style="display:none;" class="rcard fu">
-        <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;">
-          <i class="fas fa-circle-check"></i> 生成成功
-        </div>
-        <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span>
-          <a id="driveLink" href="#" target="_blank" class="rlink">查看 Drive 圖片</a></div>
-        <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span>
-          <a id="folderLink" href="#" target="_blank" class="rlink">開啟日期資料夾</a></div>
-        <div id="ghRow" class="rrow" style="display:none;"><span class="rico"><i class="fab fa-github"></i></span>
-          <a id="ghLink" href="#" target="_blank" class="rlink">GitHub Raw</a></div>
-        <div id="descRow" style="margin-top:5px;font-size:.68rem;color:var(--muted);line-height:1.5;border-top:1px solid var(--border);padding-top:6px;">
-          <i class="fas fa-eye" style="margin-right:3px;"></i><span id="descTxt"></span>
-        </div>
+      <div id="resD" style="display:none;" class="rcard fu">
+        <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;"><i class="fas fa-circle-check"></i> &#29983;&#25104;&#25104;&#21151;</div>
+        <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span><a id="drD" href="#" target="_blank" class="rlink">Drive &#22294;&#29255;</a></div>
+        <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span><a id="flD" href="#" target="_blank" class="rlink">&#26085;&#26399;&#36039;&#26009;&#22841;</a></div>
+        <div id="ghRD" class="rrow" style="display:none;"><span class="rico"><i class="fab fa-github"></i></span><a id="ghD" href="#" target="_blank" class="rlink">GitHub</a></div>
+        <div style="margin-top:5px;font-size:.68rem;color:var(--muted);line-height:1.5;border-top:1px solid var(--border);padding-top:6px;"><i class="fas fa-eye" style="margin-right:3px;"></i><span id="descD"></span></div>
       </div>
     </div>
 
-    <!-- ③ 徽章排版 -->
+    <!-- Step 3 -->
     <div class="card">
-      <div class="card-hd"><i class="fas fa-sliders" style="color:var(--accent2);"></i>③ 徽章排版</div>
+      <div class="card-hd"><i class="fas fa-sliders" style="color:#7c6af5;"></i>&#9314; &#24537;&#31456;&#25490;&#29256;</div>
       <div style="display:flex;flex-direction:column;gap:9px;">
-        <div>
-          <label class="lbl">圖像來源</label>
-          <select id="imgSrc" class="inp">
-            <option value="original">原始圖片</option>
-            <option value="ai" disabled>AI 生成圖片（尚未生成）</option>
-          </select>
+        <div><label class="lbl">&#22294;&#20687;&#20358;&#28304;</label>
+          <select id="srcD" class="inp"><option value="original">&#21407;&#22987;&#22294;&#29255;</option><option value="ai" disabled>AI &#29983;&#25104;&#65288;&#23578;&#26410;&#29983;&#25104;&#65289;</option></select>
         </div>
-        <div>
-          <label class="lbl">徽章形狀</label>
-          <div class="shape-tabs">
-            <button class="stab on" data-shape="circle">圓形</button>
-            <button class="stab" data-shape="square">方形</button>
-            <button class="stab" data-shape="rectangle">長方形</button>
-            <button class="stab" data-shape="heart">愛心</button>
+        <div><label class="lbl">&#24537;&#31456;&#24418;&#29366;</label>
+          <div class="stabs">
+            <button class="stab on" data-shape="circle">&#22278;&#24418;</button>
+            <button class="stab" data-shape="square">&#26041;&#24418;</button>
+            <button class="stab" data-shape="rectangle">&#38263;&#26041;&#24418;</button>
+            <button class="stab" data-shape="heart">&#24859;&#24515;</button>
           </div>
         </div>
-        <div>
-          <label class="lbl">顯示模式</label>
-          <select id="fitMode" class="inp">
-            <option value="cover">裁切填滿</option>
-            <option value="contain">完整顯示</option>
-            <option value="custom">自訂縮放</option>
-          </select>
+        <div><label class="lbl">&#38ển;&#31034;&#27169;&#24335;</label>
+          <select id="fitD" class="inp"><option value="cover">&#35069;&#20999;&#22577;&#28385;</option><option value="contain">&#23436;&#25972;&#38ển;&#31034;</option><option value="custom">&#33258;&#35686;&#32311;&#25918;</option></select>
         </div>
-        <div id="scaleWrap" style="display:none;">
-          <div class="slrow"><span style="color:var(--muted);">縮放</span><span id="scaleV" class="slval">100%</span></div>
-          <input type="range" id="scaleR" min="10" max="300" value="100">
+        <div id="scWD" style="display:none;">
+          <div class="slrow"><span style="color:var(--muted);">&#32311;&#25918;</span><span id="scVD" class="slval">100%</span></div>
+          <input type="range" id="scRD" min="10" max="300" value="100">
         </div>
         <div>
-          <div class="slrow"><span style="color:var(--muted);">尺寸</span><span id="sizeV" class="slval">50mm</span></div>
-          <input type="range" id="sizeR" min="30" max="80" value="50">
+          <div class="slrow"><span style="color:var(--muted);">&#23610;&#23544;</span><span id="szVD" class="slval">50mm</span></div>
+          <input type="range" id="szRD" min="30" max="80" value="50">
         </div>
         <div class="g2">
-          <button id="addBtn" class="btn btn-g"><i class="fas fa-plus"></i> 新增</button>
-          <button id="clrBtn" class="btn btn-g" style="color:var(--red);border-color:rgba(245,54,92,.3);">
-            <i class="fas fa-trash"></i> 清除
-          </button>
+          <button id="addD" class="btn btn-g"><i class="fas fa-plus"></i> &#26032;&#22686;</button>
+          <button id="clrD" class="btn btn-g" style="color:var(--red);border-color:rgba(245,54,92,.3);"><i class="fas fa-trash"></i> &#28165;&#38500;</button>
         </div>
       </div>
     </div>
-
   </aside>
 
-  <!-- CENTER -->
-  <div class="panel-c" id="previewWrap" style="background:var(--surface);border:1px solid var(--border);border-radius:13px;overflow:hidden;display:flex;justify-content:center;padding:18px;align-items:flex-start;">
-    <div id="printArea" class="a4">
-      <div class="no-print" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.03;pointer-events:none;user-select:none;">
-        <span style="font-size:2.2rem;font-weight:900;transform:rotate(-30deg);white-space:nowrap;">A4 列印預覽</span>
-      </div>
-      <div id="badges" style="display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px;position:relative;z-index:1;"></div>
+  <div class="panel-c">
+    <div id="a4D" class="a4">
+      <div class="no-print" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:.03;pointer-events:none;user-select:none;"><span style="font-size:2.2rem;font-weight:900;transform:rotate(-30deg);white-space:nowrap;">A4 &#21015;&#21360;&#39044;&#35222;</span></div>
+      <div id="bdgD" style="display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px;position:relative;z-index:1;"></div>
     </div>
-    <canvas id="cvs" style="display:none;"></canvas>
+    <canvas id="cvsD" style="display:none;"></canvas>
   </div>
 
-  <!-- RIGHT -->
-  <aside class="panel-r no-print" style="display:flex;flex-direction:column;gap:9px;max-height:calc(100vh - 62px);overflow-y:auto;padding-bottom:20px;">
-
-    <!-- 後端狀態 -->
+  <aside class="panel-r no-print" style="display:flex;flex-direction:column;gap:9px;max-height:calc(100vh - 60px);overflow-y:auto;padding-bottom:20px;">
     <div class="card">
-      <div class="card-hd"><i class="fas fa-server" style="color:var(--accent);"></i>後端狀態</div>
-      <div id="statusPanel">
-        <div style="display:flex;justify-content:center;padding:8px;"><div class="spin"></div></div>
-      </div>
+      <div class="card-hd"><i class="fas fa-server" style="color:var(--accent);"></i>&#24460;&#31471;&#29366;&#24907;</div>
+      <div id="stPnD"><div style="display:flex;justify-content:center;padding:8px;"><div class="spin"></div></div></div>
     </div>
-
-    <!-- 上傳紀錄 -->
     <div class="card" style="flex:1;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
-        <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:var(--accent2);"></i>上傳紀錄</div>
-        <button onclick="loadRecords()" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;">
-          <i class="fas fa-sync"></i>
-        </button>
+        <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:#7c6af5;"></i>&#19978;&#20256;&#32000;&#37636;</div>
+        <button onclick="loadRec('D')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
       </div>
-      <div id="recPanel">
-        <div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div>
-      </div>
+      <div id="recD"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
     </div>
-
   </aside>
+</div>
 
+<!-- ===== MOBILE ===== -->
+<div class="app-mobile mobile-only">
+  <div id="offM" class="offbanner" style="margin:10px 14px 0;">
+    <i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px;"></i>
+    <div style="flex:1;"><strong>&#24460;&#31471;&#26410;&#36899;&#32267;</strong><div style="font-size:.67rem;opacity:.8;margin-top:2px;" id="offMsgM">&#35531;&#30906;&#35469; GAS_URL &#24182;&#37325;&#26032;&#37096;&#32422;</div></div>
+    <button onclick="chkBackend()" class="btn btn-g" style="flex-shrink:0;padding:5px 9px;font-size:.68rem;"><i class="fas fa-rotate"></i></button>
+  </div>
+
+  <!-- M1: Camera -->
+  <div class="mob-sec">
+    <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-camera-retro" style="color:var(--accent);"></i>&#9312; &#25308;&#29031; / &#19978;&#20傳;</div>
+    <div class="mbox" style="aspect-ratio:4/3;">
+      <video id="vidM" autoplay playsinline style="display:none;"></video>
+      <img class="preview" id="prvM" style="display:none;" alt="">
+      <div id="phM" class="mph"><i class="fas fa-image"></i><p>&#25826;&#19979;&#26041;&#25309;&#37215;&#25308;&#29031;&#25110;&#19978;&#20傳;</p></div>
+    </div>
+    <div class="g2">
+      <label style="cursor:pointer;"><input type="file" id="camM" accept="image/*" capture="environment" style="display:none;"><div class="btn btn-g wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-camera"></i> &#25308;&#29031;</div></label>
+      <label style="cursor:pointer;"><input type="file" id="upM" accept="image/png,image/jpeg,image/webp" style="display:none;"><div class="btn btn-g wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-images"></i> &#30456;&#31807;</div></label>
+    </div>
+  </div>
+
+  <!-- M2: Style & Generate -->
+  <div class="mob-sec">
+    <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-wand-magic-sparkles" style="color:var(--amber);"></i>&#9313; &#36984;&#39118;&#26684; &amp; &#29983;&#25104;</div>
+    <label class="lbl">AI &#39118;&#26684;</label>
+    <select id="styM" class="inp" style="margin-bottom:8px;">
+      <option value="Generate a high-quality 3D Pixar style cartoon character. Keep it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors">&#127916; 3D Pixar &#21205;&#30059;&#39118;</option>
+      <option value="Generate a beautiful watercolor painting. Soft edges, delicate washes of color, and an artistic, dreamlike quality">&#127912; &#27700;&#24425;&#34354;&#34899;&#39118;</option>
+      <option value="Generate a cyberpunk style image. Neon lights, futuristic elements, high tech, dark and gritty atmosphere">&#127750; &#36064;&#20055;&#26379;&#20811;&#39118;</option>
+      <option value="Generate a classic Studio Ghibli anime style image. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel">&#127807; &#21560;&#21521;&#21147;&#21205;&#30059;&#39118;</option>
+      <option value="Generate a vibrant pop art style image, inspired by Andy Warhol. Bold colors, high contrast">&#128993; &#26222;&#26222;&#34354;&#34899;&#39118;</option>
+      <option value="Generate a cute chibi anime character illustration, big eyes, pastel colors, kawaii aesthetic">&#128049; Q&#29256;&#35484;&#31995;&#39118;</option>
+    </select>
+    <label class="lbl">&#39069;&#22806;&#25552;&#31034;&#65288;&#36984;&#22635;&#65289;</label>
+    <textarea id="prmM" class="inp" rows="2" style="margin-bottom:12px;resize:none;"></textarea>
+    <button id="genM" class="btn btn-o"><i class="fas fa-cloud-arrow-up"></i> &#20256;&#36865;&#33267;&#38雲;&#31471; AI &#34389;&#29702;</button>
+    <div id="ldBoxM" style="display:none;" class="pgwrap">
+      <div class="pgbar"><div class="pgfill" id="pgM" style="width:10%;"></div></div>
+      <div class="pgmsg"><div class="spin"></div><span id="ldM">&#20934;&#20633;&#20013;...</span></div>
+    </div>
+    <div id="aiResM" class="ai-res-wrap"><img id="aiImgM" src="" alt="AI"></div>
+    <div id="resM" style="display:none;" class="rcard fu">
+      <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;"><i class="fas fa-circle-check"></i> &#29983;&#25104;&#25104;&#21151;&#65281;</div>
+      <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span><a id="drM" href="#" target="_blank" class="rlink">Drive &#26597;&#30475;&#22294;&#29255;</a></div>
+      <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span><a id="flM" href="#" target="_blank" class="rlink">&#26085;&#26399;&#36039;&#26009;&#22841;</a></div>
+      <div id="ghRM" class="rrow" style="display:none;"><span class="rico"><i class="fab fa-github"></i></span><a id="ghM" href="#" target="_blank" class="rlink">GitHub</a></div>
+    </div>
+  </div>
+
+  <!-- M3: Records -->
+  <div class="mob-sec" style="padding-bottom:24px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
+      <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:#7c6af5;"></i>&#19978;&#20256;&#32000;&#37636;</div>
+      <button onclick="loadRec('M')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
+    </div>
+    <div id="recM"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
+  </div>
 </div>
 
 <!-- MSG MODAL -->
 <div id="msgModal" class="modal-bg">
   <div class="mbox2">
-    <div id="msgIcon" style="font-size:2rem;margin-bottom:9px;"></div>
-    <div id="msgTitle" style="font-size:.9rem;font-weight:700;margin-bottom:6px;"></div>
-    <div id="msgBody" style="font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.6;word-break:break-word;"></div>
-    <button onclick="closeMsg()" class="btn btn-p wfull">確認</button>
+    <div id="mIcon" style="font-size:2rem;margin-bottom:9px;"></div>
+    <div id="mTitle" style="font-size:.9rem;font-weight:700;margin-bottom:6px;"></div>
+    <div id="mBody" style="font-size:.78rem;color:var(--muted);margin-bottom:16px;line-height:1.6;word-break:break-word;"></div>
+    <button onclick="closeMsg()" class="btn btn-p wfull">&#30906;&#35469;</button>
   </div>
 </div>
 
+<canvas id="cvsM" style="display:none;"></canvas>
+
 <script>
-// ════════════════════════════════════════
-// ★ 直接綁定 GAS Web App 網址（改這裡）★
-// ════════════════════════════════════════
+// ================================================
+// STAR  GAS Web App URL - change this line  STAR
+// ================================================
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxKFwj84mf4eVvlflEkHusYghFPfXe9zJ-QQkNnMaUrOasc43WDDRvMY87dn2QglCo/exec';
-// ════════════════════════════════════════
+// ================================================
 
-let origData=null,aiData=null,objURL=null,stream=null;
-let curShape='circle',curSize=50,curFit='cover',curScale=100;
-const sessId='sess_'+Date.now();
+const isMob = () => window.innerWidth <= 960;
+const $ = id => document.getElementById(id);
 
-const $=id=>document.getElementById(id);
-const videoEl=$('videoEl'),prevImg=$('prevImg'),mediaPh=$('mediaPh');
-const camBtn=$('camBtn'),capBtn=$('capBtn');
-const fileUp=$('fileUp'),mobCam=$('mobCam');
-const cvs=$('cvs'),ctx=cvs.getContext('2d');
-const genBtn=$('genBtn'),loadBox=$('loadBox'),pgFill=$('pgFill'),ldMsg=$('ldMsg');
-const imgSrc=$('imgSrc'),fitMode=$('fitMode'),scaleR=$('scaleR'),sizeR=$('sizeR');
-const badges=$('badges'),recPanel=$('recPanel'),resBox=$('resBox');
+let origD=null,aiD=null,objD=null,strmD=null;
+let origM=null,aiM=null,objM=null;
+let shape='circle',size=50,fit='cover',scale=100;
+const sid='sess_'+Date.now();
 
-window.addEventListener('DOMContentLoaded',()=>{ resizeA4(); checkBackend(); loadRecords(); });
-window.addEventListener('resize',resizeA4);
+// ================================================
+// CONNECTION: fetch first, JSONP fallback
+// This solves mobile Chrome blocking dynamic scripts
+// ================================================
+async function gasGet(url) {
+  // Try fetch first (works on mobile, no CORS issue for GET to GAS)
+  try {
+    const ctrl = new AbortController();
+    const tid  = setTimeout(() => ctrl.abort(), 14000);
+    const r    = await fetch(url, { signal: ctrl.signal });
+    clearTimeout(tid);
+    if (r.ok) {
+      const txt = await r.text();
+      // GAS may return JSONP wrapped or plain JSON
+      const clean = txt.replace(/^[^(]+\(/, '').replace(/\)\s*$/, '');
+      return JSON.parse(clean);
+    }
+  } catch(e) {}
 
-/* ── JSONP ── */
-function jsonpGet(url){
-  return new Promise((res,rej)=>{
-    const cb='_cb_'+Date.now()+'_'+(Math.random()*9999|0);
-    const t=setTimeout(()=>{ cleanup(); rej(new Error('連線逾時，請稍後再試')); },18000);
-    function cleanup(){ delete window[cb]; const e=document.getElementById(cb); if(e)e.remove(); clearTimeout(t); }
-    window[cb]=d=>{ cleanup(); res(d); };
-    const sep=url.includes('?')?'&':'?';
-    const s=document.createElement('script');
-    s.id=cb; s.src=`${url}${sep}callback=${cb}`;
-    s.onerror=()=>{ cleanup(); rej(new Error('無法連接後端，請確認 GAS_URL')); };
+  // JSONP fallback for desktop CORS redirect cases
+  return new Promise((res, rej) => {
+    const cb  = '_cb_' + Date.now() + '_' + Math.floor(Math.random()*9999);
+    const tid = setTimeout(() => {
+      delete window[cb];
+      const el = document.getElementById(cb);
+      if (el) el.remove();
+      rej(new Error('Connection timeout'));
+    }, 14000);
+    window[cb] = d => {
+      clearTimeout(tid);
+      delete window[cb];
+      const el = document.getElementById(cb);
+      if (el) el.remove();
+      res(d);
+    };
+    const sep = url.includes('?') ? '&' : '?';
+    const s   = document.createElement('script');
+    s.id      = cb;
+    s.src     = url + sep + 'callback=' + cb;
+    s.onerror = () => {
+      clearTimeout(tid);
+      delete window[cb];
+      rej(new Error('Cannot reach backend - check GAS_URL'));
+    };
     document.head.appendChild(s);
   });
 }
 
-/* ── 後端狀態 ── */
-async function checkBackend(){
-  const banner=$('offBanner'),pill=$('statusPill'),panel=$('statusPanel');
-  try{
-    const d=await jsonpGet(GAS_URL+'?action=getConfig');
-    banner.classList.remove('show');
-    pill.className=d.hasGeminiKey?'pill pill-g':'pill pill-a';
-    pill.innerHTML=`<span class="dot ${d.hasGeminiKey?'dg':'da'}"></span>${d.hasGeminiKey?'已連線':'部分設定'}`;
-    const mk=ok=>`<span class="dot ${ok?'dg':'dr'}" style="display:inline-block;"></span>`;
-    panel.innerHTML=`
-      <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;">
-        <span style="color:var(--muted);">Gemini API</span>${mk(d.hasGeminiKey)}
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;">
-        <span style="color:var(--muted);">Google Drive</span>${mk(d.hasFolderId)}
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;">
-        <span style="color:var(--muted);">GitHub</span>${mk(d.hasGitHub)}
-      </div>
-      ${d.hasFolderId?`<div style="font-size:.65rem;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:4px;word-break:break-all;">
-        <i class="fas fa-folder-open" style="color:var(--amber);margin-right:3px;"></i>
-        <a href="${d.folderUrl}" target="_blank" style="color:var(--accent);text-decoration:none;">${d.folderId}</a>
-      </div>`:''}
-      ${d.hasGitHub?`<div style="font-size:.65rem;color:var(--muted);padding-top:3px;"><i class="fab fa-github" style="margin-right:3px;"></i>${d.githubRepo}</div>`:''}
-      <button onclick="checkBackend()" class="btn btn-g" style="margin-top:7px;width:100%;font-size:.7rem;">
-        <i class="fas fa-rotate"></i> 重新檢測
-      </button>`;
-  }catch(e){
-    banner.classList.add('show');
+// ================================================
+// BACKEND STATUS CHECK
+// ================================================
+async function chkBackend() {
+  const pill = $('sPill');
+  pill.className='pill pill-a';
+  pill.innerHTML='<span class="dot da"></span>&#36899;&#32267;&#20013;';
+  ['D','M'].forEach(s => { const b=$('off'+s); if(b) b.classList.remove('show'); });
+
+  try {
+    const d = await gasGet(GAS_URL + '?action=getConfig');
+    pill.className = d.hasGeminiKey ? 'pill pill-g' : 'pill pill-a';
+    pill.innerHTML = '<span class="dot '+(d.hasGeminiKey?'dg':'da')+'"></span>'+(d.hasGeminiKey?'&#24050;&#36899;&#32267;':'&#37096;&#20998;&#35373;&#23450;');
+
+    const mk = ok => '<span class="dot '+(ok?'dg':'dr')+'" style="display:inline-block;"></span>';
+    const pD = $('stPnD');
+    if (pD) pD.innerHTML =
+      '<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;"><span style="color:var(--muted);">Gemini API</span>'+mk(d.hasGeminiKey)+'</div>'+
+      '<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;"><span style="color:var(--muted);">Google Drive</span>'+mk(d.hasFolderId)+'</div>'+
+      '<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:.73rem;"><span style="color:var(--muted);">GitHub</span>'+mk(d.hasGitHub)+'</div>'+
+      (d.hasFolderId?'<div style="font-size:.65rem;color:var(--muted);border-top:1px solid var(--border);padding-top:6px;margin-top:4px;word-break:break-all;"><i class="fas fa-folder-open" style="color:var(--amber);margin-right:3px;"></i><a href="'+d.folderUrl+'" target="_blank" style="color:var(--accent);text-decoration:none;">'+d.folderId+'</a></div>':'')+
+      (d.hasGitHub?'<div style="font-size:.65rem;color:var(--muted);padding-top:3px;"><i class="fab fa-github" style="margin-right:3px;"></i>'+d.githubRepo+'</div>':'')+
+      '<button onclick="chkBackend()" class="btn btn-g" style="margin-top:7px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> &#37325;&#26032;&#20檢;&#28204;</button>';
+
+  } catch(e) {
     pill.className='pill pill-r';
-    pill.innerHTML='<span class="dot dr"></span>未連線';
-    panel.innerHTML=`<div style="text-align:center;color:var(--red);font-size:.73rem;padding:6px 0;">
-      <i class="fas fa-triangle-exclamation"></i> 無法連接後端<br>
-      <span style="font-size:.65rem;opacity:.7;">${e.message}</span>
-    </div>
-    <button onclick="checkBackend()" class="btn btn-g" style="margin-top:6px;width:100%;font-size:.7rem;">
-      <i class="fas fa-rotate"></i> 重新檢測
-    </button>`;
-  }
-}
-
-/* ── 相機 ── */
-camBtn.addEventListener('click',async()=>{
-  if(stream){stopCam();return;}
-  try{
-    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});
-    videoEl.srcObject=stream; videoEl.style.display='';
-    prevImg.style.display='none'; mediaPh.style.display='none';
-    camBtn.innerHTML='<i class="fas fa-video-slash"></i> 關閉相機';
-    capBtn.style.display='';
-  }catch(e){ showMsg('❌ 相機受限','請改用手機拍照按鈕或上傳圖片','error'); }
-});
-function stopCam(){
-  if(!stream)return;
-  stream.getTracks().forEach(t=>t.stop()); stream=null;
-  videoEl.style.display='none';
-  camBtn.innerHTML='<i class="fas fa-laptop"></i> 開啟網頁相機 (PC)';
-  capBtn.style.display='none';
-  if(!origData)mediaPh.style.display='';
-}
-capBtn.addEventListener('click',()=>{
-  if(!stream)return;
-  cvs.width=cvs.height=512;
-  const vw=videoEl.videoWidth,vh=videoEl.videoHeight,sz=Math.min(vw,vh);
-  ctx.setTransform(-1,0,0,1,512,0);
-  ctx.drawImage(videoEl,(vw-sz)/2,(vh-sz)/2,sz,sz,0,0,512,512);
-  ctx.setTransform(1,0,0,1,0,0);
-  commitCvs(); stopCam();
-});
-function handleFile(e){
-  const file=e.target.files[0]; if(!file)return;
-  if(stream)stopCam();
-  const rd=new FileReader();
-  rd.onload=ev=>{
-    const img=new Image();
-    img.onload=()=>{
-      cvs.width=cvs.height=512;
-      const sz=Math.min(img.width,img.height);
-      ctx.drawImage(img,(img.width-sz)/2,(img.height-sz)/2,sz,sz,0,0,512,512);
-      commitCvs();
-    };
-    img.src=ev.target.result;
-  };
-  rd.readAsDataURL(file); e.target.value='';
-}
-fileUp.addEventListener('change',handleFile);
-mobCam.addEventListener('change',handleFile);
-function commitCvs(){
-  if(objURL)URL.revokeObjectURL(objURL);
-  cvs.toBlob(blob=>{
-    objURL=URL.createObjectURL(blob);
-    origData=cvs.toDataURL('image/jpeg',.72);
-    prevImg.src=objURL; prevImg.style.display=''; mediaPh.style.display='none';
-    aiData=null; imgSrc.options[1].disabled=true; imgSrc.value='original';
-    resBox.style.display='none';
-    if(!badges.children.length)addBadge(); else refreshBadges();
-  },'image/jpeg',.72);
-}
-
-/* ── AI 生成 ── */
-const STEPS=[[15,'Gemini Vision 分析圖片中...'],[40,'Gemini 圖像生成中...'],[70,'儲存至 Google Drive...'],[88,'推送至 GitHub...'],[95,'回傳結果中...']];
-genBtn.addEventListener('click',async()=>{
-  if(!origData){showMsg('⚠️ 尚未輸入圖片','請先拍照或上傳圖片','error');return;}
-  genBtn.disabled=true; loadBox.style.display=''; resBox.style.display='none';
-  let si=0;
-  const iv=setInterval(()=>{ if(si<STEPS.length){pgFill.style.width=STEPS[si][0]+'%';ldMsg.textContent=STEPS[si][1];si++;} },4500);
-  try{
-    const prompt=[$('aiStyle').value,$('aiPrompt').value.trim()].filter(Boolean).join('. Additional: ');
-    const r=await fetch(GAS_URL,{
-      method:'POST',
-      body:JSON.stringify({prompt,image:origData.split(',')[1],sessionId:sessId}),
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      redirect:'follow'
+    pill.innerHTML='<span class="dot dr"></span>&#26410;&#36899;&#32267;';
+    const msg = e.message;
+    ['D','M'].forEach(s => {
+      const b=$('off'+s); if(b) b.classList.add('show');
+      const m=$('offMsg'+s); if(m) m.textContent=msg;
     });
-    clearInterval(iv); pgFill.style.width='100%';
-    if(!r.ok)throw new Error(`HTTP ${r.status}`);
-    const d=await r.json();
-    if(!d.success)throw new Error(d.error||'後端處理失敗');
-
-    aiData=`data:${d.aiImageMime||'image/png'};base64,${d.aiImage}`;
-    prevImg.src=aiData;
-    imgSrc.options[1].disabled=false; imgSrc.value='ai'; refreshBadges();
-
-    $('driveLink').href=d.aiImageUrl||'#';
-    $('folderLink').href=d.folderUrl||'#';
-    $('folderLink').textContent=`開啟日期資料夾（${d.dateStr||''}）`;
-    $('descTxt').textContent=d.description||'';
-    if(d.githubUrl){$('ghLink').href=d.githubUrl;$('ghRow').style.display='';}
-    else{$('ghRow').style.display='none';}
-    resBox.style.display='';
-    setTimeout(loadRecords,1500);
-  }catch(err){
-    clearInterval(iv); pgFill.style.width='0%';
-    showMsg('❌ 雲端處理失敗',`${err.message}`,'error');
-  }finally{
-    setTimeout(()=>{loadBox.style.display='none';pgFill.style.width='0%';},600);
-    genBtn.disabled=false;
+    const pD=$('stPnD');
+    if(pD) pD.innerHTML='<div style="color:var(--red);font-size:.73rem;padding:6px 0;text-align:center;"><i class="fas fa-triangle-exclamation"></i> &#36899;&#32267;&#22833;&#25215;</div><button onclick="chkBackend()" class="btn btn-g" style="margin-top:6px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> &#37325;&#26032;&#20檢;&#28204;</button>';
   }
+}
+
+// ================================================
+// IMAGE PROCESSING
+// ================================================
+function procFile(file, cvsId, onDone) {
+  const c = $(cvsId), ctx = c.getContext('2d');
+  const rd = new FileReader();
+  rd.onload = ev => {
+    const img = new Image();
+    img.onload = () => {
+      c.width = c.height = 512;
+      const sz = Math.min(img.width, img.height);
+      ctx.drawImage(img, (img.width-sz)/2, (img.height-sz)/2, sz, sz, 0,0,512,512);
+      c.toBlob(blob => onDone(URL.createObjectURL(blob), c.toDataURL('image/jpeg',.72)), 'image/jpeg',.72);
+    };
+    img.src = ev.target.result;
+  };
+  rd.readAsDataURL(file);
+}
+
+// DESKTOP camera
+$('webcamD').addEventListener('click', async () => {
+  if (strmD) {
+    strmD.getTracks().forEach(t=>t.stop()); strmD=null;
+    $('vidD').style.display='none';
+    $('webcamD').innerHTML='<i class="fas fa-laptop"></i> &#38283;&#21551;&#32178;&#39023;&#30456;&#26426;';
+    $('capD').style.display='none';
+    if (!origD) $('phD').style.display='';
+    return;
+  }
+  try {
+    strmD = await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});
+    $('vidD').srcObject=strmD; $('vidD').style.display='';
+    $('prvD').style.display='none'; $('phD').style.display='none';
+    $('webcamD').innerHTML='<i class="fas fa-video-slash"></i> &#38989;&#38381;&#30456;&#26426;';
+    $('capD').style.display='';
+  } catch(e){ showMsg('&#10060; &#30456;&#27231;&#21463;&#38480;','&#35531;&#25913;&#29992;&#19978;&#20傳;&#25309;&#37215;','error'); }
+});
+$('capD').addEventListener('click', () => {
+  const v=$('vidD'), c=$('cvsD'), ctx=c.getContext('2d');
+  c.width=c.height=512;
+  const vw=v.videoWidth, vh=v.videoHeight, sz=Math.min(vw,vh);
+  ctx.setTransform(-1,0,0,1,512,0);
+  ctx.drawImage(v,(vw-sz)/2,(vh-sz)/2,sz,sz,0,0,512,512);
+  ctx.setTransform(1,0,0,1,0,0);
+  c.toBlob(blob => {
+    if(objD) URL.revokeObjectURL(objD);
+    objD=URL.createObjectURL(blob); origD=c.toDataURL('image/jpeg',.72);
+    $('prvD').src=objD; $('prvD').style.display=''; $('phD').style.display='none';
+    aiD=null; $('srcD').options[1].disabled=true; $('srcD').value='original'; $('resD').style.display='none';
+    if(!$('bdgD').children.length) addBadge(); else refreshBadges();
+  },'image/jpeg',.72);
+  strmD.getTracks().forEach(t=>t.stop()); strmD=null;
+  $('vidD').style.display='none'; $('capD').style.display='none';
+  $('webcamD').innerHTML='<i class="fas fa-laptop"></i> &#38283;&#21551;&#32178;&#39023;&#30456;&#26426;';
 });
 
-/* ── 上傳紀錄（日期分組 + 刪除）── */
-async function loadRecords(){
-  recPanel.innerHTML=`<div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div>`;
-  try{
-    const d=await jsonpGet(GAS_URL+'?action=getRecords&limit=30');
+function onFileD(e) {
+  const f=e.target.files[0]; if(!f) return;
+  if(strmD){strmD.getTracks().forEach(t=>t.stop());strmD=null;}
+  procFile(f,'cvsD',(url,data)=>{
+    if(objD) URL.revokeObjectURL(objD);
+    objD=url; origD=data;
+    $('prvD').src=url; $('prvD').style.display=''; $('phD').style.display='none';
+    aiD=null; $('srcD').options[1].disabled=true; $('srcD').value='original'; $('resD').style.display='none';
+    if(!$('bdgD').children.length) addBadge(); else refreshBadges();
+  });
+  e.target.value='';
+}
+$('upD').addEventListener('change',onFileD);
+$('camD').addEventListener('change',onFileD);
+
+function onFileM(e) {
+  const f=e.target.files[0]; if(!f) return;
+  procFile(f,'cvsM',(url,data)=>{
+    if(objM) URL.revokeObjectURL(objM);
+    objM=url; origM=data;
+    $('prvM').src=url; $('prvM').style.display=''; $('phM').style.display='none';
+    aiM=null; $('resM').style.display='none'; $('aiResM').classList.remove('show');
+  });
+  e.target.value='';
+}
+$('upM').addEventListener('change',onFileM);
+$('camM').addEventListener('change',onFileM);
+
+// ================================================
+// AI GENERATE
+// ================================================
+const STEPS=[[15,'Gemini Vision &#20998;&#26512;&#22294;&#29255;&#20013;...'],[42,'Gemini &#22294;&#20687;&#29983;&#25104;&#20013;...'],[72,'&#20648;&#23384;&#33267; Google Drive...'],[88,'&#25512;&#36865;&#33267; GitHub...'],[95,'&#22238;&#20206;&#32080;&#26524;&#20013;...']];
+
+async function doGen(origData, sfx) {
+  const btn=$('gen'+sfx), ldBox=$('ldBox'+sfx), pgFill=$('pg'+sfx), ldTxt=$('ld'+sfx), resBox=$('res'+sfx);
+  if (!origData){ showMsg('&#9888;&#65039; &#23578;&#26410;&#36664;&#20837;&#22294;&#29255;','&#35531;&#20808;&#25308;&#29031;&#25110;&#19978;&#20傳;&#22294;&#29255;','error'); return; }
+  btn.disabled=true; ldBox.style.display=''; resBox.style.display='none';
+  let si=0;
+  const iv=setInterval(()=>{ if(si<STEPS.length){pgFill.style.width=STEPS[si][0]+'%';ldTxt.innerHTML=STEPS[si][1];si++;} },4500);
+  try {
+    const prompt = [$('sty'+sfx).value, $('prm'+sfx).value.trim()].filter(Boolean).join('. Additional: ');
+    const r = await fetch(GAS_URL,{method:'POST',body:JSON.stringify({prompt,image:origData.split(',')[1],sessionId:sid}),headers:{'Content-Type':'text/plain;charset=utf-8'},redirect:'follow'});
+    clearInterval(iv); pgFill.style.width='100%';
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d = await r.json();
+    if(!d.success) throw new Error(d.error||'&#24460;&#31471;&#34389;&#29702;&#22833;&#25215;');
+    const mime=d.aiImageMime||'image/png';
+    const imgData='data:'+mime+';base64,'+d.aiImage;
+    if (sfx==='D') {
+      aiD=imgData; $('prvD').src=imgData;
+      $('srcD').options[1].disabled=false; $('srcD').value='ai'; refreshBadges();
+      $('drD').href=d.aiImageUrl||'#';
+      $('flD').href=d.folderUrl||'#';
+      $('flD').textContent='&#26085;&#26399;&#36039;&#26009;&#22841; ('+(d.dateStr||'')+')';
+      $('descD').textContent=d.description||'';
+      if(d.githubUrl){$('ghD').href=d.githubUrl;$('ghRD').style.display='';}else{$('ghRD').style.display='none';}
+    } else {
+      aiM=imgData; $('aiImgM').src=imgData; $('aiResM').classList.add('show');
+      $('drM').href=d.aiImageUrl||'#';
+      $('flM').href=d.folderUrl||'#';
+      if(d.githubUrl){$('ghM').href=d.githubUrl;$('ghRM').style.display='';}else{$('ghRM').style.display='none';}
+    }
+    resBox.style.display='';
+    setTimeout(()=>loadRec(sfx),1500);
+  } catch(err) {
+    clearInterval(iv); pgFill.style.width='0%';
+    showMsg('&#10060; &#38雲;&#31471;&#34389;&#29702;&#22833;&#25215;', err.message, 'error');
+  } finally {
+    setTimeout(()=>{ldBox.style.display='none';pgFill.style.width='0%';},600);
+    btn.disabled=false;
+  }
+}
+$('genD').addEventListener('click',()=>doGen(origD,'D'));
+$('genM').addEventListener('click',()=>doGen(origM,'M'));
+
+// ================================================
+// LOAD RECORDS
+// ================================================
+async function loadRec(sfx) {
+  const panel=$('rec'+sfx);
+  panel.innerHTML='<div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div>';
+  try {
+    const d = await gasGet(GAS_URL+'?action=getRecords&limit=30');
     if(!d.success||!d.records.length){
-      recPanel.innerHTML=`<div style="text-align:center;padding:16px;color:var(--muted);font-size:.75rem;">尚無上傳紀錄</div>`;
+      panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted);font-size:.75rem;">&#23578;&#28102;&#19978;&#20256;&#32000;&#37636;</div>';
       return;
     }
-    // 依日期分組
     const grp={};
     d.records.forEach(r=>{
-      const dt=r.dateStr||(r.timestamp?r.timestamp.substring(0,10):'未知日期');
+      const dt=r.dateStr||(r.timestamp?r.timestamp.substring(0,10):'?');
       if(!grp[dt])grp[dt]=[];
       grp[dt].push(r);
     });
     let html='';
     Object.keys(grp).sort().reverse().forEach(dt=>{
-      html+=`<div class="date-grp"><i class="fas fa-calendar-day"></i>${dt}（${grp[dt].length} 筆）</div>`;
+      html+='<div class="date-grp"><i class="fas fa-calendar-day"></i>'+dt+' ('+grp[dt].length+')</div>';
       grp[dt].forEach(r=>{
         const th=r.aiImageUrl?r.aiImageUrl.replace('/view','')+'=s80':'';
-        html+=`<div class="rec-item fu" id="ri${r.rowIndex}">
-          <a href="${r.aiImageUrl||'#'}" target="_blank">
-            <img class="rthumb" src="${th}" onerror="this.style.background='var(--border2)';this.removeAttribute('src');" alt="">
-          </a>
-          <div class="rbody">
-            <div style="font-size:.63rem;color:var(--muted);font-family:'DM Mono',monospace;">${r.timestamp}</div>
-            <div style="font-size:.72rem;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${r.stylePrompt}">${r.stylePrompt}</div>
-            <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center;">
-              ${r.aiImageUrl?`<a href="${r.aiImageUrl}" target="_blank" class="pill pill-b" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-google-drive"></i></a>`:''}
-              ${r.githubUrl?`<a href="${r.githubUrl}" target="_blank" class="pill pill-g" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-github"></i></a>`:''}
-              <button onclick="delRec(${r.rowIndex})" class="btn btn-del" style="margin-left:auto;" title="刪除紀錄">
-                <i class="fas fa-trash-can"></i>
-              </button>
-            </div>
-          </div>
-        </div>`;
+        html+='<div class="rec-item fu" id="ri'+sfx+r.rowIndex+'">';
+        html+='<a href="'+(r.aiImageUrl||'#')+'" target="_blank"><img class="rthumb" src="'+th+'" onerror="this.style.background=\'var(--border2)\';this.removeAttribute(\'src\');" alt=""></a>';
+        html+='<div class="rbody">';
+        html+='<div style="font-size:.63rem;color:var(--muted);font-family:\'DM Mono\',monospace;">'+r.timestamp+'</div>';
+        html+='<div style="font-size:.72rem;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="'+r.stylePrompt+'">'+r.stylePrompt+'</div>';
+        html+='<div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center;">';
+        if(r.aiImageUrl) html+='<a href="'+r.aiImageUrl+'" target="_blank" class="pill pill-b" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-google-drive"></i></a>';
+        if(r.githubUrl)  html+='<a href="'+r.githubUrl+'" target="_blank" class="pill pill-g" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-github"></i></a>';
+        html+='<button onclick="delRec('+r.rowIndex+',\''+sfx+'\')" class="btn btn-del" style="margin-left:auto;" title="&#21024;&#38500;"><i class="fas fa-trash-can"></i></button>';
+        html+='</div></div></div>';
       });
     });
-    html+=`<div style="font-size:.65rem;color:var(--muted);text-align:center;padding-top:5px;">共 ${d.total} 筆紀錄</div>`;
-    recPanel.innerHTML=html;
-  }catch(e){
-    recPanel.innerHTML=`<div style="text-align:center;padding:16px;color:var(--red);font-size:.73rem;"><i class="fas fa-circle-xmark"></i> 載入失敗：${e.message}</div>`;
+    html+='<div style="font-size:.65rem;color:var(--muted);text-align:center;padding-top:5px;">&#20849; '+d.total+' &#31558;</div>';
+    panel.innerHTML=html;
+  } catch(e) {
+    panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--red);font-size:.73rem;"><i class="fas fa-circle-xmark"></i> '+e.message+'</div>';
   }
 }
 
-async function delRec(rowIndex){
-  if(!confirm('確定刪除此筆紀錄？\n（僅刪除試算表紀錄，Drive 檔案不受影響）'))return;
-  try{
-    const d=await jsonpGet(`${GAS_URL}?action=deleteRecord&rowIndex=${rowIndex}`);
-    if(!d.success)throw new Error(d.error);
-    const el=document.getElementById('ri'+rowIndex);
+async function delRec(rowIndex, sfx) {
+  if(!confirm('&#30906;&#23450;&#21024;&#38500;&#27492;&#31558;&#32000;&#37636;&#65311;\nDrive &#27284;&#26684;&#19981;&#21463;&#24433;&#38911;')) return;
+  try {
+    const d=await gasGet(GAS_URL+'?action=deleteRecord&rowIndex='+rowIndex);
+    if(!d.success) throw new Error(d.error);
+    const el=$('ri'+sfx+rowIndex);
     if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>el.remove(),300);}
-  }catch(e){ showMsg('❌ 刪除失敗',e.message,'error'); }
+  } catch(e){ showMsg('&#10060; &#21024;&#38500;&#22833;&#25215;',e.message,'error'); }
 }
 
-/* ── 徽章排版 ── */
+// ================================================
+// BADGE LAYOUT (desktop only)
+// ================================================
 document.querySelectorAll('.stab').forEach(b=>{
   b.addEventListener('click',()=>{
     document.querySelectorAll('.stab').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on'); curShape=b.dataset.shape; updateCSS();
+    b.classList.add('on'); shape=b.dataset.shape; upCSS();
   });
 });
-sizeR.addEventListener('input',e=>{ curSize=+e.target.value; $('sizeV').textContent=curSize+'mm'; updateCSS(); });
-fitMode.addEventListener('change',e=>{
-  curFit=e.target.value;
-  $('scaleWrap').style.display=curFit==='custom'?'':'none'; updateCSS();
-});
-scaleR.addEventListener('input',e=>{ curScale=+e.target.value; $('scaleV').textContent=curScale+'%'; if(curFit==='custom')updateCSS(); });
-imgSrc.addEventListener('change',()=>{ prevImg.src=getActiveSrc(); refreshBadges(); });
-$('addBtn').addEventListener('click',addBadge);
-$('clrBtn').addEventListener('click',()=>{ badges.innerHTML=''; });
+$('szRD').addEventListener('input',e=>{size=+e.target.value;$('szVD').textContent=size+'mm';upCSS();});
+$('fitD').addEventListener('change',e=>{fit=e.target.value;$('scWD').style.display=fit==='custom'?'':'none';upCSS();});
+$('scRD').addEventListener('input',e=>{scale=+e.target.value;$('scVD').textContent=scale+'%';if(fit==='custom')upCSS();});
+$('srcD').addEventListener('change',()=>{refreshBadges();});
+$('addD').addEventListener('click',addBadge);
+$('clrD').addEventListener('click',()=>{$('bdgD').innerHTML='';});
 
-function getActiveSrc(){ return(imgSrc.value==='ai'&&aiData)?aiData:(objURL||origData); }
-function updateCSS(){
+function getSrc(){return($('srcD').value==='ai'&&aiD)?aiD:(objD||origD);}
+function upCSS(){
   const r=document.documentElement;
-  r.style.setProperty('--bs',curSize+'mm');
-  r.style.setProperty('--bh',curShape==='rectangle'?(curSize*.75)+'mm':curSize+'mm');
-  r.style.setProperty('--br',curShape==='circle'?'50%':curShape==='rectangle'?'10px':curShape==='heart'?'0':'12px');
-  r.style.setProperty('--bgs',curFit==='custom'?curScale+'%':curFit);
-  badges.querySelectorAll('.bface').forEach(f=>{ curShape==='heart'?f.classList.add('heart'):f.classList.remove('heart'); });
+  r.style.setProperty('--bs',size+'mm');
+  r.style.setProperty('--bh',shape==='rectangle'?(size*.75)+'mm':size+'mm');
+  r.style.setProperty('--br',shape==='circle'?'50%':shape==='rectangle'?'10px':shape==='heart'?'0':'12px');
+  r.style.setProperty('--bgs',fit==='custom'?scale+'%':fit);
+  $('bdgD').querySelectorAll('.bface').forEach(f=>{shape==='heart'?f.classList.add('heart'):f.classList.remove('heart');});
 }
 function refreshBadges(){
-  const src=getActiveSrc(); if(!src)return;
-  badges.querySelectorAll('.bface').forEach(f=>{ f.style.backgroundImage=`url(${src})`; });
+  const src=getSrc(); if(!src)return;
+  $('bdgD').querySelectorAll('.bface').forEach(f=>{f.style.backgroundImage='url('+src+')';});
 }
 function addBadge(){
-  const src=getActiveSrc();
-  if(!src){showMsg('⚠️ 尚未輸入影像','請先拍照或上傳圖片','error');return;}
-  const wrap=document.createElement('div'); wrap.className='bwrap';
+  const src=getSrc();
+  if(!src){showMsg('&#9888;&#65039; &#23578;&#26410;&#36664;&#20837;','&#35531;&#20808;&#25308;&#29031;&#25110;&#19978;&#20傳;','error');return;}
+  const w=document.createElement('div'); w.className='bwrap';
   const del=document.createElement('button');
   del.innerHTML='<i class="fas fa-xmark"></i>';
   del.className='no-print';
   del.style.cssText='position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;';
-  del.onclick=()=>wrap.remove();
-  const mk=()=>{ const d=document.createElement('div'); d.className='bface'; d.style.backgroundImage=`url(${src})`; if(curShape==='heart')d.classList.add('heart'); return d; };
-  const fold=document.createElement('div'); fold.className='fold';
-  wrap.append(del,mk(),fold,mk()); badges.appendChild(wrap);
+  del.onclick=()=>w.remove();
+  const mk=()=>{const d=document.createElement('div');d.className='bface';d.style.backgroundImage='url('+src+')';if(shape==='heart')d.classList.add('heart');return d;};
+  const fold=document.createElement('div');fold.className='fold';
+  w.append(del,mk(),fold,mk()); $('bdgD').appendChild(w);
 }
 
-/* ── Utils ── */
-function showMsg(title,body,type='info'){
-  const icons={success:'✅',error:'❌',info:'ℹ️'};
-  $('msgIcon').textContent=icons[type]||'💬';
-  $('msgTitle').textContent=title;
-  $('msgBody').innerHTML=body;
-  $('msgModal').classList.add('open');
-}
-function closeMsg(){ $('msgModal').classList.remove('open'); }
-
+// ================================================
+// A4 RESIZE
+// ================================================
 let rzT;
-function resizeA4(){
+function rzA4(){
   clearTimeout(rzT); rzT=setTimeout(()=>{
-    const wrap=$('previewWrap'),area=$('printArea');
+    const wrap=document.querySelector('.panel-c'), area=$('a4D');
     if(!wrap||!area)return;
-    const w=wrap.clientWidth-36;
-    const a4=210*3.7795;
+    const w=wrap.clientWidth-36, a4=210*3.7795;
     const sc=w<a4?w/a4:1;
-    area.style.transform=`scale(${sc.toFixed(4)})`;
+    area.style.transform='scale('+sc.toFixed(4)+')';
     area.style.transformOrigin='top center';
     wrap.style.minHeight=(297*3.7795*sc+36)+'px';
   },80);
 }
+window.addEventListener('resize',rzA4);
+
+// ================================================
+// UTILS
+// ================================================
+function showMsg(title,body,type){
+  const icons={success:'&#9989;',error:'&#10060;',info:'&#8505;&#65039;'};
+  $('mIcon').innerHTML=icons[type||'info']||'&#128172;';
+  $('mTitle').textContent=title;
+  $('mBody').innerHTML=body;
+  $('msgModal').classList.add('open');
+}
+function closeMsg(){$('msgModal').classList.remove('open');}
+
+// ================================================
+// INIT
+// ================================================
+window.addEventListener('DOMContentLoaded',()=>{
+  rzA4();
+  chkBackend();
+  if(isMob()) loadRec('M'); else loadRec('D');
+});
 </script>
 </body>
 </html>
