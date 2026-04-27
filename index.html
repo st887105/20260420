@@ -26,8 +26,8 @@
   --shadow-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06);
   --shadow-lg:0 10px 15px rgba(0,0,0,.08),0 4px 6px rgba(0,0,0,.05);
   --bs:50mm;--bh:50mm;--br:50%;--bgs:cover;
-  /* 裁切工具 */
   --crop-accent:#00e5c8;
+  --oai:#10a37f;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-size:14px;}
@@ -49,9 +49,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'No
 .pill-a{background:#fef3c7;color:var(--amber);border:1px solid #fde68a;}
 .pill-b{background:#dbeafe;color:var(--accent);border:1px solid #bfdbfe;}
 .dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0;}
-.dg{background:var(--green);}
-.dr{background:var(--red);}
-.da{background:var(--amber);}
+.dg{background:var(--green);}.dr{background:var(--red);}.da{background:var(--amber);}
 
 /* BUTTONS */
 .btn{border:none;border-radius:8px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;font-family:inherit;}
@@ -60,9 +58,9 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'No
 .btn-p{background:var(--accent);color:#fff;padding:8px 14px;font-size:.8rem;box-shadow:0 1px 3px rgba(37,99,235,.3);}
 .btn-p:hover:not(:disabled){background:var(--accent2);}
 .btn-g{background:var(--surface);color:var(--text2);border:1px solid var(--border2);padding:7px 12px;font-size:.78rem;}
-.btn-g:hover:not(:disabled){background:var(--bg);border-color:var(--border2);}
-.btn-o{background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;padding:12px;font-size:.92rem;width:100%;border-radius:10px;box-shadow:0 2px 8px rgba(37,99,235,.3);}
-.btn-o:hover:not(:disabled){opacity:.9;box-shadow:0 4px 12px rgba(37,99,235,.4);}
+.btn-g:hover:not(:disabled){background:var(--bg);}
+.btn-o{background:linear-gradient(135deg,#10a37f,#059669);color:#fff;padding:12px;font-size:.92rem;width:100%;border-radius:10px;box-shadow:0 2px 8px rgba(16,163,127,.3);}
+.btn-o:hover:not(:disabled){opacity:.9;}
 .btn-del{background:#fee2e2;color:var(--red);border:1px solid #fecaca;padding:4px 8px;font-size:.68rem;border-radius:6px;}
 .btn-del:hover{background:#fecaca;}
 .btn-green{background:#dcfce7;color:var(--green);border:1px solid #bbf7d0;padding:7px 12px;font-size:.78rem;}
@@ -78,6 +76,14 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'No
 .inp{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:8px 11px;font-size:.82rem;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;font-family:inherit;}
 .inp:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12);}
 .lbl{font-size:.72rem;color:var(--text2);display:block;margin-bottom:4px;font-weight:500;}
+
+/* API KEY BOX */
+.api-key-wrap{background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #6ee7b7;border-radius:10px;padding:12px;margin-bottom:6px;}
+.api-key-row{display:flex;gap:6px;align-items:center;}
+.api-key-row .inp{font-family:'DM Mono',monospace;font-size:.75rem;flex:1;}
+.api-key-status{font-size:.68rem;margin-top:5px;font-weight:600;}
+.api-key-status.ok{color:var(--green);}
+.api-key-status.err{color:var(--red);}
 
 /* SHAPE TABS */
 .stabs{display:flex;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:3px;gap:2px;}
@@ -99,20 +105,22 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'No
 /* PROGRESS */
 .pgwrap{margin-top:9px;}
 .pgbar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
-.pgfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:2px;transition:width .4s;}
+.pgfill{height:100%;background:linear-gradient(90deg,#10a37f,#059669);border-radius:2px;transition:width .4s;}
 .pgmsg{display:flex;align-items:center;gap:7px;font-size:.73rem;color:var(--text2);margin-top:5px;}
-
-/* SPINNER */
-.spin{width:17px;height:17px;flex-shrink:0;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:rot .7s linear infinite;}
+.spin{width:17px;height:17px;flex-shrink:0;border:2px solid var(--border);border-top-color:var(--oai);border-radius:50%;animation:rot .7s linear infinite;}
 @keyframes rot{to{transform:rotate(360deg);}}
 
 /* RESULT CARD */
-.rcard{background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:1px solid #bfdbfe;border-radius:10px;padding:12px;margin-top:9px;}
+.rcard{background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #6ee7b7;border-radius:10px;padding:12px;margin-top:9px;}
 .rrow{display:flex;align-items:center;gap:7px;font-size:.73rem;margin-bottom:5px;}
 .rrow:last-child{margin-bottom:0;}
 .rico{width:22px;text-align:center;color:var(--muted);flex-shrink:0;}
 .rlink{color:var(--accent);text-decoration:none;word-break:break-all;}
 .rlink:hover{text-decoration:underline;}
+
+/* COST BOX */
+.costbox{font-size:.7rem;color:var(--muted);background:var(--bg);padding:7px 10px;border-radius:7px;margin-bottom:8px;line-height:1.5;}
+.costbox strong{color:var(--text);}
 
 /* STATUS */
 .stat-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:.73rem;border-bottom:1px solid var(--border);}
@@ -152,121 +160,39 @@ input[type=range]{accent-color:var(--accent);width:100%;}
 .modal-bg.open{display:flex;}
 .mbox2{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:360px;width:100%;box-shadow:var(--shadow-lg);text-align:center;}
 
-/* ================================================
-   圓形裁切 Modal
-   ================================================ */
+/* CROP MODAL */
 #cropModal{z-index:400;}
-#cropModal .crop-modal-inner{
-  background:#0f1923;
-  border:1px solid #1e3a4a;
-  border-radius:18px;
-  padding:0;
-  max-width:620px;
-  width:100%;
-  box-shadow:0 24px 60px rgba(0,0,0,.6);
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  max-height:92vh;
-}
-.crop-modal-header{
-  background:linear-gradient(135deg,#0e2233,#112e40);
-  padding:14px 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid #1e3a4a;
-  flex-shrink:0;
-}
-.crop-modal-title{
-  font-weight:700;font-size:.9rem;color:#e2f0ff;
-  display:flex;align-items:center;gap:8px;
-}
+#cropModal .crop-modal-inner{background:#0f1923;border:1px solid #1e3a4a;border-radius:18px;padding:0;max-width:620px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.6);overflow:hidden;display:flex;flex-direction:column;max-height:92vh;}
+.crop-modal-header{background:linear-gradient(135deg,#0e2233,#112e40);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1e3a4a;flex-shrink:0;}
+.crop-modal-title{font-weight:700;font-size:.9rem;color:#e2f0ff;display:flex;align-items:center;gap:8px;}
 .crop-modal-title i{color:var(--crop-accent);}
-.crop-modal-body{
-  padding:16px 18px;
-  overflow-y:auto;
-  flex:1;
-}
-/* 選項列 */
-.crop-opt-row{
-  display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;
-}
-.crop-opt-card{
-  flex:1;min-width:140px;
-  background:#0e2233;
-  border:1.5px solid #1e3a4a;
-  border-radius:10px;
-  padding:10px 12px;
-  display:flex;align-items:center;gap:8px;
-  cursor:pointer;transition:border-color .2s;
-  position:relative;
-}
+.crop-modal-body{padding:16px 18px;overflow-y:auto;flex:1;}
+.crop-opt-row{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.crop-opt-card{flex:1;min-width:140px;background:#0e2233;border:1.5px solid #1e3a4a;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:border-color .2s;position:relative;}
 .crop-opt-card.active{border-color:var(--crop-accent);}
-.crop-opt-card input[type=checkbox]{
-  accent-color:var(--crop-accent);
-  width:16px;height:16px;flex-shrink:0;cursor:pointer;
-}
+.crop-opt-card input[type=checkbox]{accent-color:var(--crop-accent);width:16px;height:16px;flex-shrink:0;cursor:pointer;}
 .crop-opt-text{font-size:.75rem;color:#9ec0d8;line-height:1.4;}
 .crop-opt-text strong{color:#e2f0ff;display:block;font-size:.8rem;}
-/* Canvas 預覽區 */
-.crop-canvas-wrap{
-  position:relative;
-  border-radius:10px;
-  overflow:visible;
-  background:#000;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:12px;
-  min-height:200px;
-}
-#cropPreviewCanvas{
-  display:block;
-  max-width:100%;
-  border-radius:8px;
-}
-#cropSvgOverlay{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  overflow:visible;
-}
+.crop-canvas-wrap{position:relative;border-radius:10px;overflow:visible;background:#000;display:flex;align-items:center;justify-content:center;margin-bottom:12px;min-height:200px;}
+#cropPreviewCanvas{display:block;max-width:100%;border-radius:8px;}
+#cropSvgOverlay{position:absolute;inset:0;pointer-events:none;overflow:visible;}
 #cropSvgOverlay .drag-enabled{pointer-events:all;}
-/* 滑桿 */
-.crop-slider-row{
-  display:flex;align-items:center;gap:10px;margin-bottom:10px;
-}
+.crop-slider-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .crop-slider-label{font-size:.72rem;color:#9ec0d8;white-space:nowrap;display:flex;align-items:center;gap:4px;}
-.crop-slider-val{
-  font-size:.72rem;font-weight:700;color:var(--crop-accent);
-  font-family:'DM Mono',monospace;white-space:nowrap;min-width:64px;text-align:right;
-}
-input.crop-slider{
-  flex:1;
-  accent-color:var(--crop-accent);
-  height:4px;cursor:pointer;
-}
+.crop-slider-val{font-size:.72rem;font-weight:700;color:var(--crop-accent);font-family:'DM Mono',monospace;white-space:nowrap;min-width:64px;text-align:right;}
+input.crop-slider{flex:1;accent-color:var(--crop-accent);height:4px;cursor:pointer;}
 .crop-hint{font-size:.68rem;color:#5a8aaa;text-align:center;margin-bottom:10px;}
-/* Footer 按鈕 */
-.crop-modal-footer{
-  padding:12px 18px;
-  background:#0e2233;
-  border-top:1px solid #1e3a4a;
-  display:flex;gap:10px;
-  flex-shrink:0;
-}
-.crop-modal-footer .btn-skip{
-  background:transparent;border:1px solid #1e3a4a;color:#5a8aaa;
-  padding:10px 18px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;
-  display:flex;align-items:center;gap:5px;
-}
+.crop-modal-footer{padding:12px 18px;background:#0e2233;border-top:1px solid #1e3a4a;display:flex;gap:10px;flex-shrink:0;}
+.crop-modal-footer .btn-skip{background:transparent;border:1px solid #1e3a4a;color:#5a8aaa;padding:10px 18px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;}
 .crop-modal-footer .btn-skip:hover{border-color:#5a8aaa;color:#9ec0d8;}
-/* 處理好的圖片標籤 */
-.processed-badge{
-  display:inline-flex;align-items:center;gap:4px;
-  background:#064e3b;border:1px solid #059669;color:#6ee7b7;
-  border-radius:999px;padding:2px 8px;font-size:.65rem;font-weight:700;
-  margin-left:6px;
-}
+.processed-badge{display:inline-flex;align-items:center;gap:4px;background:#064e3b;border:1px solid #059669;color:#6ee7b7;border-radius:999px;padding:2px 8px;font-size:.65rem;font-weight:700;margin-left:6px;}
+
+/* PIKMIN TAG */
+.pikmin-tag{display:inline-flex;align-items:center;gap:3px;background:#dcfce7;border:1px solid #86efac;color:#166534;border-radius:999px;padding:2px 8px;font-size:.65rem;font-weight:700;}
+
+/* NAME PREVIEW */
+.name-preview-wrap{background:#0e2233;border:1px solid #1e3a4a;border-radius:8px;padding:10px 12px;margin-bottom:8px;}
+.name-preview-canvas{display:block;margin:0 auto;border-radius:6px;background:#1a2e3a;}
 
 @keyframes fu{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 .fu{animation:fu .22s ease forwards;}
@@ -288,7 +214,6 @@ input.crop-slider{
   .bface{background-image:none !important;}
 }
 
-.sec-divider{height:1px;background:var(--border);margin:4px 0;}
 .badge-count{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border-radius:11px;background:var(--accent);color:#fff;font-size:.65rem;font-weight:700;padding:0 5px;}
 .rec-chk{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;margin-top:2px;}
 .print-bar{background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;border-radius:10px;padding:10px 12px;margin-top:8px;display:none;align-items:center;justify-content:space-between;gap:8px;}
@@ -298,7 +223,7 @@ input.crop-slider{
 .btn-print-sel:hover{opacity:.9;}
 
 @media(min-width:961px){
-  .app-desktop{display:grid;grid-template-columns:290px 1fr 270px;gap:12px;padding:12px;max-width:1440px;margin:0 auto;}
+  .app-desktop{display:grid;grid-template-columns:300px 1fr 270px;gap:12px;padding:12px;max-width:1440px;margin:0 auto;}
   .panel-l,.panel-r{display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 68px);overflow-y:auto;padding-bottom:20px;}
   .panel-c{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;justify-content:center;padding:20px;align-items:flex-start;box-shadow:var(--shadow);}
   .mobile-only{display:none !important;}
@@ -314,10 +239,7 @@ input.crop-slider{
 #mPrintArea .bwrap{margin:2px !important;}
 #mPrintArea .bface{width:calc(var(--bs) * 0.28) !important;height:calc(var(--bh) * 0.28) !important;}
 #mPrintArea .fold{height:calc(var(--bh) * 0.28) !important;}
-@media(max-width:600px){
-  .topbar{padding:0 12px;}
-  .logo-name{font-size:.84rem;}
-}
+@media(max-width:600px){.topbar{padding:0 12px;}.logo-name{font-size:.84rem;}}
 </style>
 </head>
 <body>
@@ -328,60 +250,37 @@ input.crop-slider{
     <div class="logo-icon"><i class="fas fa-stamp" style="font-size:.85rem;"></i></div>
     <div>
       <div class="logo-name">車城國小｜AI 徽章拍貼機</div>
-      <div class="logo-ver">v4.0 · Gemini 2.5 Flash · 圓形裁切整合版</div>
+      <div class="logo-ver">v5.0 · GPT-Image-2 · 皮克敏合照版</div>
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:8px;">
-    <div id="sPill" class="pill pill-a"><span class="dot da"></span>連線中</div>
+    <div id="sPill" class="pill pill-g"><span class="dot dg"></span>前端生成</div>
     <button onclick="window.print()" class="btn btn-p no-print" style="padding:7px 12px;"><i class="fas fa-print"></i></button>
   </div>
 </header>
 
-<!-- ================================================
-     圓形裁切 & 浮水印去除 Modal
-     ================================================ -->
+<!-- CROP MODAL -->
 <div id="cropModal" class="modal-bg">
   <div class="crop-modal-inner">
-    <!-- Header -->
     <div class="crop-modal-header">
-      <div class="crop-modal-title">
-        <i class="fas fa-crop-simple"></i>
-        圖片前處理
-      </div>
+      <div class="crop-modal-title"><i class="fas fa-crop-simple"></i>圖片前處理</div>
       <div style="font-size:.68rem;color:#5a8aaa;">上傳後可選擇裁切 / 去除浮水印</div>
     </div>
-
-    <!-- Body -->
     <div class="crop-modal-body">
-
-      <!-- 選項 -->
       <div class="crop-opt-row">
         <label class="crop-opt-card" id="optCardWM">
           <input type="checkbox" id="cropOptWatermark">
-          <div class="crop-opt-text">
-            <strong><i class="fas fa-eraser" style="color:var(--crop-accent);margin-right:4px;"></i>去除 Gemini 浮水印</strong>
-            修復右下角 AI 生圖浮水印區域
-          </div>
+          <div class="crop-opt-text"><strong><i class="fas fa-eraser" style="color:var(--crop-accent);margin-right:4px;"></i>去除浮水印</strong>修復右下角 AI 生圖浮水印區域</div>
         </label>
         <label class="crop-opt-card active" id="optCardCircle">
           <input type="checkbox" id="cropOptCircle" checked>
-          <div class="crop-opt-text">
-            <strong><i class="fas fa-circle" style="color:var(--crop-accent);margin-right:4px;"></i>裁切成圓形</strong>
-            透明背景 PNG，適合頭像 / 徽章
-          </div>
+          <div class="crop-opt-text"><strong><i class="fas fa-circle" style="color:var(--crop-accent);margin-right:4px;"></i>裁切成圓形</strong>透明背景 PNG，適合頭像 / 徽章</div>
         </label>
       </div>
-
-      <!-- Canvas 預覽 -->
       <div class="crop-canvas-wrap" id="cropCanvasWrap">
         <canvas id="cropPreviewCanvas"></canvas>
         <svg id="cropSvgOverlay" xmlns="http://www.w3.org/2000/svg" style="display:none;">
-          <defs>
-            <mask id="cMask">
-              <rect width="100%" height="100%" fill="white"/>
-              <circle id="cMaskCircle" fill="black"/>
-            </mask>
-          </defs>
+          <defs><mask id="cMask"><rect width="100%" height="100%" fill="white"/><circle id="cMaskCircle" fill="black"/></mask></defs>
           <rect id="cDimRect" width="100%" height="100%" fill="rgba(0,0,0,0.6)" mask="url(#cMask)"/>
           <circle id="cRing" fill="none" stroke="#00e5c8" stroke-width="2" stroke-dasharray="6 3"/>
           <circle id="cDragHandle" class="drag-enabled" r="20" fill="rgba(0,229,200,0.12)" stroke="#00e5c8" stroke-width="1.5" style="cursor:move"/>
@@ -389,13 +288,9 @@ input.crop-slider{
           <text id="cSizeLabel" fill="#00e5c8" font-size="11" font-family="DM Mono,monospace" font-weight="700" text-anchor="middle" style="pointer-events:none;user-select:none"/>
         </svg>
       </div>
-
-      <!-- 浮水印標記區域預覽（勾選時顯示紅框提示） -->
       <div id="cropWMNote" style="display:none;background:#1a0a0a;border:1px solid #7f1d1d;border-radius:8px;padding:8px 12px;font-size:.72rem;color:#fca5a5;margin-bottom:10px;">
-        <i class="fas fa-triangle-exclamation" style="margin-right:5px;"></i>將修復右下角約 14%×8% 的浮水印區域（Canvas 像素補插法）
+        <i class="fas fa-triangle-exclamation" style="margin-right:5px;"></i>將修復右下角約 14%×8% 的浮水印區域
       </div>
-
-      <!-- 圓形大小控制 -->
       <div id="cropCircleCtrl" style="background:#0e2233;border-radius:10px;padding:12px;margin-bottom:10px;">
         <div class="crop-slider-row">
           <span class="crop-slider-label"><i class="fas fa-circle-dot" style="color:var(--crop-accent);"></i>圓形大小</span>
@@ -404,24 +299,14 @@ input.crop-slider{
         </div>
         <p class="crop-hint"><i class="fas fa-hand-pointer" style="margin-right:3px;"></i>拖動圓框中心移動位置 · 拖動右側把手縮放大小</p>
       </div>
-
     </div>
-
-    <!-- Footer -->
     <div class="crop-modal-footer">
-      <button class="btn-skip" onclick="cropSkip()">
-        <i class="fas fa-forward"></i>略過
-      </button>
-      <!-- 下載按鈕：套用後才出現 -->
-      <button id="btnDownloadCrop" onclick="downloadCroppedImage()"
-        style="display:none;background:#064e3b;border:1px solid #059669;color:#6ee7b7;padding:9px 14px;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;display:none;align-items:center;gap:5px;transition:all .15s;"
-        onmouseover="this.style.background='#065f46'" onmouseout="this.style.background='#064e3b'">
+      <button class="btn-skip" onclick="cropSkip()"><i class="fas fa-forward"></i>略過</button>
+      <button id="btnDownloadCrop" onclick="downloadCroppedImage()" style="display:none;background:#064e3b;border:1px solid #059669;color:#6ee7b7;padding:9px 14px;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;align-items:center;gap:5px;transition:all .15s;">
         <i class="fas fa-download"></i>下載圖片
       </button>
       <div style="flex:1;"></div>
-      <button class="btn-teal" onclick="cropConfirm()">
-        <i class="fas fa-check"></i>確認並套用
-      </button>
+      <button class="btn-teal" onclick="cropConfirm()"><i class="fas fa-check"></i>確認並套用</button>
     </div>
   </div>
 </div>
@@ -429,13 +314,7 @@ input.crop-slider{
 <!-- ===== DESKTOP ===== -->
 <div class="app-desktop desktop-only">
   <aside class="panel-l no-print">
-    <div id="offD" class="offbanner">
-      <i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px;"></i>
-      <div style="flex:1;"><strong>後端未連線</strong><br><span style="font-size:.67rem;" id="offMsgD">請確認 GAS_URL 並重新部署</span></div>
-      <button onclick="chkBackend()" class="btn btn-g" style="flex-shrink:0;padding:5px 9px;font-size:.68rem;"><i class="fas fa-rotate"></i></button>
-    </div>
-
-    <!-- Step 1 -->
+    <!-- Step 1: Camera -->
     <div class="card">
       <div class="card-hd"><i class="fas fa-camera-retro" style="color:var(--accent);"></i>① 影像輸入</div>
       <div class="mbox">
@@ -443,7 +322,6 @@ input.crop-slider{
         <img class="preview" id="prvD" style="display:none;" alt="">
         <div id="phD" class="mph"><i class="fas fa-image" style="color:var(--muted);"></i><p>拍照或上傳圖片</p></div>
       </div>
-      <!-- 已處理標籤 -->
       <div id="processedTagD" style="display:none;margin-bottom:8px;">
         <span class="processed-badge"><i class="fas fa-scissors"></i><span id="processedTextD">已裁切</span></span>
       </div>
@@ -453,41 +331,71 @@ input.crop-slider{
       </div>
       <button id="webcamD" class="btn btn-g wfull" style="font-size:.72rem;"><i class="fas fa-laptop" style="color:var(--accent);"></i> 開啟網頁相機 (PC)</button>
       <button id="capD" class="btn btn-p wfull" style="margin-top:7px;display:none;"><i class="fas fa-camera"></i> 擷取畫面</button>
-      <!-- 重新裁切按鈕 -->
       <button id="reCropD" class="btn btn-g wfull" style="margin-top:7px;display:none;font-size:.72rem;" onclick="openCropModal('D')">
         <i class="fas fa-crop-simple" style="color:var(--crop-accent);"></i> 重新裁切 / 去浮水印
       </button>
     </div>
 
-    <!-- Step 2 -->
+    <!-- Step 2: AI Generate -->
     <div class="card">
       <div class="card-hd"><i class="fas fa-wand-magic-sparkles" style="color:var(--amber);"></i>② AI 生成</div>
+
+      <!-- OpenAI API Key -->
+      <div class="api-key-wrap">
+        <div style="font-size:.72rem;color:#166534;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:5px;">
+          <i class="fas fa-key"></i> OpenAI API Key
+        </div>
+        <div class="api-key-row">
+          <input type="password" id="oaiKeyD" class="inp" placeholder="sk-..." autocomplete="off" oninput="checkOaiKey(this,'D')">
+          <button onclick="toggleOaiKey('oaiKeyD')" class="btn btn-g" style="padding:6px 8px;flex-shrink:0;"><i class="fas fa-eye" id="eyeD"></i></button>
+        </div>
+        <div class="api-key-status" id="oaiKeyStatusD"></div>
+      </div>
+
       <label class="lbl">風格</label>
       <select id="styD" class="inp" style="margin-bottom:8px;">
-        <option value="Generate a high-quality 3D Pixar style cartoon character. Keep it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors">🎬 3D Pixar 動畫風</option>
-        <option value="Generate a beautiful watercolor painting. Soft edges, delicate washes of color, and an artistic, dreamlike quality">🎨 水彩藝術風</option>
-        <option value="Generate a cyberpunk style image. Neon lights, futuristic elements, high tech, dark and gritty atmosphere">🌆 賽博龐克風</option>
-        <option value="Generate a classic Studio Ghibli anime style image. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel">🌿 吉卜力動畫風</option>
-        <option value="Generate a vibrant pop art style image, inspired by Andy Warhol. Bold colors, high contrast">🟡 普普藝術風</option>
-        <option value="Generate a cute chibi anime character illustration, big eyes, pastel colors, kawaii aesthetic">🐱 Q版萌系風</option>
+        <option value="pixar">🎬 3D Pixar 動畫風</option>
+        <option value="watercolor">🎨 水彩藝術風</option>
+        <option value="cyberpunk">🌆 賽博龐克風</option>
+        <option value="ghibli">🌿 吉卜力動畫風</option>
+        <option value="popart">🟡 普普藝術風</option>
+        <option value="chibi">🐱 Q版萌系風</option>
+        <option value="pikmin">🌱 皮克敏合照風</option>
       </select>
+
+      <!-- 姓名欄位 -->
+      <label class="lbl" style="display:flex;align-items:center;gap:5px;">
+        <i class="fas fa-signature" style="color:var(--accent);"></i>
+        姓名（圓弧文字，圖片底部）
+      </label>
+      <input type="text" id="nameD" class="inp" placeholder="例：王小明" maxlength="10" style="margin-bottom:4px;" oninput="updateNamePreview('D')">
+      <div style="font-size:.65rem;color:var(--muted);margin-bottom:10px;">名字會以弧形顯示在圖片中央最下方，使用繁體中文</div>
+
       <label class="lbl">額外提示（選填）</label>
-      <textarea id="prmD" class="inp" rows="2" style="margin-bottom:10px;resize:none;"></textarea>
-      <button id="genD" class="btn btn-o"><i class="fas fa-cloud-arrow-up"></i> 傳送至雲端 AI 處理</button>
+      <textarea id="prmD" class="inp" rows="2" style="margin-bottom:8px;resize:none;"></textarea>
+
+      <!-- 費用估算 -->
+      <div class="costbox" id="costD">預估費用：<strong>~NT$0.3</strong>（low 品質）</div>
+
+      <label class="lbl">品質</label>
+      <select id="qualD" class="inp" style="margin-bottom:10px;" onchange="updateCost('D')">
+        <option value="low">low（便宜，~NT$0.3）</option>
+        <option value="medium">medium（一般，~NT$1.3）</option>
+        <option value="high">high（精緻，~NT$5.5）</option>
+      </select>
+
+      <button id="genD" class="btn btn-o"><i class="fas fa-sparkles"></i> 使用 GPT-Image-2 生成</button>
       <div id="ldBoxD" style="display:none;" class="pgwrap">
         <div class="pgbar"><div class="pgfill" id="pgD" style="width:10%;"></div></div>
         <div class="pgmsg"><div class="spin"></div><span id="ldD">準備中...</span></div>
       </div>
       <div id="resD" style="display:none;" class="rcard fu">
-        <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;"><i class="fas fa-circle-check"></i> 生成成功</div>
-        <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span><a id="drD" href="#" target="_blank" class="rlink">Drive 查看圖片</a></div>
-        <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span><a id="flD" href="#" target="_blank" class="rlink">日期資料夾</a></div>
-        <div id="ghRD" class="rrow" style="display:none;"><span class="rico"><i class="fab fa-github"></i></span><a id="ghD" href="#" target="_blank" class="rlink">GitHub</a></div>
-        <div style="margin-top:5px;font-size:.68rem;color:var(--text2);line-height:1.5;border-top:1px solid var(--border);padding-top:6px;"><i class="fas fa-eye" style="margin-right:3px;color:var(--muted);"></i><span id="descD"></span></div>
+        <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;"><i class="fas fa-circle-check"></i> 生成成功！</div>
+        <div class="rrow"><span class="rico"><i class="fas fa-download" style="color:var(--oai);"></i></span><a id="dlD" href="#" download="badge.png" class="rlink">下載 AI 圖片</a></div>
       </div>
     </div>
 
-    <!-- Step 3 -->
+    <!-- Step 3: Layout -->
     <div class="card">
       <div class="card-hd"><i class="fas fa-sliders" style="color:var(--purple);"></i>③ 徽章排版</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
@@ -517,9 +425,7 @@ input.crop-slider{
           <button id="addD" class="btn btn-p"><i class="fas fa-plus"></i> 新增</button>
           <button id="clrD" class="btn btn-del" style="padding:8px;"><i class="fas fa-trash"></i> 清除</button>
         </div>
-        <div style="font-size:.7rem;color:var(--muted);text-align:center;">
-          A4 已放 <span id="cntD" class="badge-count">0</span> 個徽章
-        </div>
+        <div style="font-size:.7rem;color:var(--muted);text-align:center;">A4 已放 <span id="cntD" class="badge-count">0</span> 個徽章</div>
       </div>
     </div>
   </aside>
@@ -535,41 +441,33 @@ input.crop-slider{
 
   <!-- RIGHT PANEL -->
   <aside class="panel-r no-print" style="display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 68px);overflow-y:auto;padding-bottom:20px;">
-    <!-- 多人管理 -->
+    <!-- 多人批次 -->
     <div class="card">
       <div class="card-hd"><i class="fas fa-users" style="color:var(--green);"></i>多人批次列印</div>
-      <div style="font-size:.72rem;color:var(--text2);margin-bottom:10px;line-height:1.6;">
-        上傳多位同學照片，依序生成徽章並排版在同一張 A4，一次列印節省資源。
-      </div>
+      <div style="font-size:.72rem;color:var(--text2);margin-bottom:10px;line-height:1.6;">上傳多位同學照片，依序排版在同一張 A4，一次列印節省資源。</div>
       <div id="personList" style="margin-bottom:8px;"></div>
       <label style="cursor:pointer;">
         <input type="file" id="multiUp" accept="image/png,image/jpeg,image/webp" multiple style="display:none;">
-        <div class="btn btn-green wfull" style="padding:9px;font-size:.78rem;">
-          <i class="fas fa-users"></i> 批次上傳多人照片
-        </div>
+        <div class="btn btn-green wfull" style="padding:9px;font-size:.78rem;"><i class="fas fa-users"></i> 批次上傳多人照片</div>
       </label>
       <div style="font-size:.68rem;color:var(--muted);text-align:center;margin-top:6px;">可一次選取多張照片（不開啟裁切視窗）</div>
     </div>
 
-    <!-- Status -->
+    <!-- 使用說明 -->
     <div class="card">
-      <div class="card-hd"><i class="fas fa-server" style="color:var(--accent);"></i>後端狀態</div>
-      <div id="stPnD"><div style="display:flex;justify-content:center;padding:8px;"><div class="spin"></div></div></div>
-    </div>
-
-    <!-- Records -->
-    <div class="card" style="flex:1;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
-        <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:var(--purple);"></i>上傳紀錄</div>
-        <div style="display:flex;gap:5px;">
-          <button onclick="toggleAllRec()" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;" id="selAllBtn" title="全選/取消"><i class="fas fa-check-double"></i></button>
-          <button onclick="loadRec('D')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
+      <div class="card-hd"><i class="fas fa-circle-info" style="color:var(--accent);"></i>使用說明</div>
+      <div style="font-size:.72rem;color:var(--text2);line-height:1.8;">
+        <div>🔑 需準備 OpenAI API Key（sk-...）</div>
+        <div>📸 上傳照片 → 選風格 → 填姓名</div>
+        <div>🌱 選「皮克敏合照風」讓皮克敏入鏡！</div>
+        <div>✍️ 姓名會以弧形文字燒入圖片底部</div>
+        <div>🖨️ 新增徽章後點右上角列印</div>
+        <div style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border);">
+          <strong>費用參考：</strong><br>
+          low ≈ NT$0.3／張<br>
+          medium ≈ NT$1.3／張<br>
+          high ≈ NT$5.5／張
         </div>
-      </div>
-      <div id="recD"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
-      <div id="printBar" class="print-bar">
-        <div class="print-bar-info">已選 <strong id="selCount">0</strong> 筆<br><span style="font-size:.65rem;opacity:.85;">A4 可放 <span id="a4Capacity">0</span> 個 · 需 <span id="pageCount">0</span> 頁</span></div>
-        <button class="btn-print-sel" onclick="printSelected()"><i class="fas fa-print"></i> 列印選取</button>
       </div>
     </div>
   </aside>
@@ -577,12 +475,6 @@ input.crop-slider{
 
 <!-- ===== MOBILE ===== -->
 <div class="app-mobile mobile-only">
-  <div id="offM" class="offbanner" style="margin:10px 14px 0;">
-    <i class="fas fa-triangle-exclamation" style="flex-shrink:0;margin-top:2px;"></i>
-    <div style="flex:1;"><strong>後端未連線</strong><div style="font-size:.67rem;margin-top:2px;" id="offMsgM">請確認 GAS_URL 並重新部署</div></div>
-    <button onclick="chkBackend()" class="btn btn-g" style="flex-shrink:0;padding:5px 9px;font-size:.68rem;"><i class="fas fa-rotate"></i></button>
-  </div>
-
   <!-- M1: Camera -->
   <div class="mob-sec">
     <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-camera-retro" style="color:var(--accent);"></i>① 拍照 / 上傳</div>
@@ -591,12 +483,9 @@ input.crop-slider{
       <img class="preview" id="prvM" style="display:none;" alt="">
       <div id="phM" class="mph"><i class="fas fa-image" style="color:var(--muted);"></i><p>點下方按鈕拍照或上傳</p></div>
     </div>
-    <!-- 已處理標籤 -->
     <div id="processedTagM" style="display:none;margin-bottom:8px;">
       <span class="processed-badge"><i class="fas fa-scissors"></i><span id="processedTextM">已裁切</span></span>
-      <button class="btn btn-g" style="margin-left:6px;padding:2px 9px;font-size:.68rem;" onclick="openCropModal('M')">
-        <i class="fas fa-crop-simple" style="color:var(--crop-accent);"></i> 重新裁切
-      </button>
+      <button class="btn btn-g" style="margin-left:6px;padding:2px 9px;font-size:.68rem;" onclick="openCropModal('M')"><i class="fas fa-crop-simple" style="color:var(--crop-accent);"></i> 重新裁切</button>
     </div>
     <div class="g2">
       <label style="cursor:pointer;"><input type="file" id="camM" accept="image/*" capture="user" style="display:none;"><div class="btn btn-p wfull" style="padding:11px 4px;font-size:.85rem;"><i class="fas fa-camera"></i> 自拍</div></label>
@@ -604,21 +493,48 @@ input.crop-slider{
     </div>
   </div>
 
-  <!-- M2: Style & Generate -->
+  <!-- M2: Generate -->
   <div class="mob-sec">
     <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-wand-magic-sparkles" style="color:var(--amber);"></i>② 選風格 & 生成</div>
+
+    <!-- API Key Mobile -->
+    <div class="api-key-wrap" style="margin-bottom:12px;">
+      <div style="font-size:.72rem;color:#166534;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:5px;"><i class="fas fa-key"></i> OpenAI API Key</div>
+      <div class="api-key-row">
+        <input type="password" id="oaiKeyM" class="inp" placeholder="sk-..." autocomplete="off" oninput="checkOaiKey(this,'M')">
+        <button onclick="toggleOaiKey('oaiKeyM')" class="btn btn-g" style="padding:6px 8px;flex-shrink:0;"><i class="fas fa-eye" id="eyeM"></i></button>
+      </div>
+      <div class="api-key-status" id="oaiKeyStatusM"></div>
+    </div>
+
     <label class="lbl">AI 風格</label>
     <select id="styM" class="inp" style="margin-bottom:8px;">
-      <option value="Generate a high-quality 3D Pixar style cartoon character. Keep it incredibly cute, well-lit with cinematic 3D lighting, and vibrant colors">🎬 3D Pixar 動畫風</option>
-      <option value="Generate a beautiful watercolor painting. Soft edges, delicate washes of color, and an artistic, dreamlike quality">🎨 水彩藝術風</option>
-      <option value="Generate a cyberpunk style image. Neon lights, futuristic elements, high tech, dark and gritty atmosphere">🌆 賽博龐克風</option>
-      <option value="Generate a classic Studio Ghibli anime style image. Detailed backgrounds, soft lighting, expressive characters, and a nostalgic feel">🌿 吉卜力動畫風</option>
-      <option value="Generate a vibrant pop art style image, inspired by Andy Warhol. Bold colors, high contrast">🟡 普普藝術風</option>
-      <option value="Generate a cute chibi anime character illustration, big eyes, pastel colors, kawaii aesthetic">🐱 Q版萌系風</option>
+      <option value="pixar">🎬 3D Pixar 動畫風</option>
+      <option value="watercolor">🎨 水彩藝術風</option>
+      <option value="cyberpunk">🌆 賽博龐克風</option>
+      <option value="ghibli">🌿 吉卜力動畫風</option>
+      <option value="popart">🟡 普普藝術風</option>
+      <option value="chibi">🐱 Q版萌系風</option>
+      <option value="pikmin">🌱 皮克敏合照風</option>
     </select>
+
+    <!-- 姓名 Mobile -->
+    <label class="lbl" style="display:flex;align-items:center;gap:5px;"><i class="fas fa-signature" style="color:var(--accent);"></i>姓名（圓弧文字，圖片底部）</label>
+    <input type="text" id="nameM" class="inp" placeholder="例：王小明" maxlength="10" style="margin-bottom:4px;" oninput="updateNamePreview('M')">
+    <div style="font-size:.65rem;color:var(--muted);margin-bottom:10px;">名字會以弧形顯示在圖片中央最下方，使用繁體中文</div>
+
     <label class="lbl">額外提示（選填）</label>
-    <textarea id="prmM" class="inp" rows="2" style="margin-bottom:12px;resize:none;"></textarea>
-    <button id="genM" class="btn btn-o"><i class="fas fa-cloud-arrow-up"></i> 傳送至雲端 AI 處理</button>
+    <textarea id="prmM" class="inp" rows="2" style="margin-bottom:8px;resize:none;"></textarea>
+
+    <div class="costbox" id="costM">預估費用：<strong>~NT$0.3</strong>（low 品質）</div>
+    <label class="lbl">品質</label>
+    <select id="qualM" class="inp" style="margin-bottom:12px;" onchange="updateCost('M')">
+      <option value="low">low（便宜，~NT$0.3）</option>
+      <option value="medium">medium（一般，~NT$1.3）</option>
+      <option value="high">high（精緻，~NT$5.5）</option>
+    </select>
+
+    <button id="genM" class="btn btn-o"><i class="fas fa-sparkles"></i> 使用 GPT-Image-2 生成</button>
     <div id="ldBoxM" style="display:none;" class="pgwrap">
       <div class="pgbar"><div class="pgfill" id="pgM" style="width:10%;"></div></div>
       <div class="pgmsg"><div class="spin"></div><span id="ldM">準備中...</span></div>
@@ -626,13 +542,11 @@ input.crop-slider{
     <div id="aiResM" class="ai-res-wrap"><img id="aiImgM" src="" alt="AI"></div>
     <div id="resM" style="display:none;" class="rcard fu">
       <div style="font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:7px;"><i class="fas fa-circle-check"></i> 生成成功！</div>
-      <div class="rrow"><span class="rico"><i class="fab fa-google-drive" style="color:#4285f4;"></i></span><a id="drM" href="#" target="_blank" class="rlink">Drive 查看圖片</a></div>
-      <div class="rrow"><span class="rico"><i class="fas fa-folder-open" style="color:var(--amber);"></i></span><a id="flM" href="#" target="_blank" class="rlink">日期資料夾</a></div>
-      <div id="ghRM" class="rrow" style="display:none;"><span class="rico"><i class="fab fa-github"></i></span><a id="ghM" href="#" target="_blank" class="rlink">GitHub</a></div>
+      <div class="rrow"><span class="rico"><i class="fas fa-download" style="color:var(--oai);"></i></span><a id="dlM" href="#" download="badge.png" class="rlink">下載 AI 圖片</a></div>
     </div>
   </div>
 
-  <!-- M2b: Badge Layout -->
+  <!-- M3: Badge Layout -->
   <div class="mob-sec" id="mobBadgeSec">
     <div class="card-hd" style="margin-bottom:10px;"><i class="fas fa-stamp" style="color:var(--purple);"></i>③ 徽章排版設定</div>
     <label class="lbl" style="margin-bottom:5px;">徽章形狀</label>
@@ -660,25 +574,7 @@ input.crop-slider{
         </div>
       </div>
     </div>
-    <div style="font-size:.7rem;color:var(--muted);text-align:center;margin-top:6px;">
-      <i class="fas fa-info-circle" style="margin-right:3px;"></i>點右上角 <i class="fas fa-print"></i> 列印按鈕輸出 A4
-    </div>
-  </div>
-
-  <!-- M3: Records with checkboxes -->
-  <div class="mob-sec" style="padding-bottom:80px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
-      <div class="card-hd" style="margin:0;"><i class="fas fa-clock-rotate-left" style="color:var(--purple);"></i>上傳紀錄</div>
-      <div style="display:flex;gap:5px;">
-        <button onclick="toggleAllRec('M')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;" title="全選/取消"><i class="fas fa-check-double"></i></button>
-        <button onclick="loadRec('M')" class="btn btn-g" style="padding:4px 9px;font-size:.68rem;"><i class="fas fa-sync"></i></button>
-      </div>
-    </div>
-    <div id="recM"><div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div></div>
-    <div id="printBarM" class="print-bar" style="position:fixed;bottom:0;left:0;right:0;border-radius:0;z-index:200;padding:12px 16px;box-shadow:0 -4px 16px rgba(0,0,0,.15);">
-      <div class="print-bar-info">已選 <strong id="selCountM">0</strong> 筆<br><span style="font-size:.65rem;opacity:.85;">A4 可放 <span id="a4CapacityM">0</span> 個 · 需 <span id="pageCountM">0</span> 頁</span></div>
-      <button class="btn-print-sel" onclick="printSelectedM()"><i class="fas fa-print"></i> 列印選取</button>
-    </div>
+    <div style="font-size:.7rem;color:var(--muted);text-align:center;margin-top:6px;"><i class="fas fa-info-circle" style="margin-right:3px;"></i>點右上角 <i class="fas fa-print"></i> 列印按鈕輸出 A4</div>
   </div>
 </div>
 
@@ -693,47 +589,178 @@ input.crop-slider{
 </div>
 
 <canvas id="cvsM" style="display:none;"></canvas>
+<!-- 合成用隱藏 canvas -->
+<canvas id="compositeCanvas" style="display:none;"></canvas>
 
 <script>
 // ================================================
-// ★ GAS Web App URL
+// 風格 Prompt 對照表（包含皮克敏）
 // ================================================
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxKFwj84mf4eVvlflEkHusYghFPfXe9zJ-QQkNnMaUrOasc43WDDRvMY87dn2QglCo/exec';
-// ================================================
+const STYLE_PROMPTS = {
+  pixar:      'Transform this person into a high-quality 3D Pixar style cartoon character. Keep incredibly cute, well-lit with cinematic 3D lighting, vibrant colors, round expressive eyes, smooth skin texture.',
+  watercolor: 'Transform this person into a beautiful watercolor painting portrait. Soft edges, delicate washes of color, artistic dreamlike quality, loose brushstrokes.',
+  cyberpunk:  'Transform this person into a cyberpunk style portrait. Neon lights, futuristic elements, high tech, dark gritty atmosphere, glowing accents.',
+  ghibli:     'Transform this person into a classic Studio Ghibli anime style portrait. Detailed soft lighting, expressive Ghibli-style eyes, nostalgic warm feel, hand-drawn aesthetic.',
+  popart:     'Transform this person into vibrant pop art style, inspired by Andy Warhol. Bold colors, high contrast, halftone dots, graphic outlines.',
+  chibi:      'Transform this person into a cute chibi anime character illustration. Big sparkly eyes, tiny body, pastel colors, kawaii aesthetic, super adorable.',
+  pikmin:     'Transform this person into a 3D Pixar-style cute portrait, and add 3-5 colorful Pikmin characters (red, yellow, blue, purple, white Pikmin from the Nintendo game) around the person, as if they are taking a group photo together. The Pikmin should be hugging the person, sitting on their shoulders, or waving happily. Bright cheerful lighting, vibrant colors, playful and warm atmosphere.'
+};
+
+const COST_MAP = { low: 0.3, medium: 1.3, high: 5.5 };
 
 const $ = id => document.getElementById(id);
-let origD=null,aiD=null,objD=null,strmD=null;
-let origM=null,aiM=null,objM=null;
-// 原始圖片暫存（給重新裁切用）
+let origD=null, aiD=null, objD=null, strmD=null;
+let origM=null, aiM=null, objM=null;
 let rawOrigD=null, rawOrigM=null;
-let cropTarget='D'; // 'D' or 'M'
+let cropTarget='D';
 
-let shape='circle',size=50,fit='cover',scale=100;
-const sid='sess_'+Date.now();
+let shape='circle', size=50, fit='cover', scale=100;
 
 // ================================================
-// 圓形裁切工具 — 狀態
+// OpenAI API Key 管理
 // ================================================
-let cropImg = null; // 當前載入到裁切 modal 的 Image 物件
-const cs = { cx:0, cy:0, r:0 }; // canvas 座標單位
-let cW=0, cH=0; // cropPreviewCanvas 尺寸
-let cropOrigNW=0, cropOrigNH=0; // 原始圖片自然尺寸
+function checkOaiKey(input, sfx) {
+  const v = input.value.trim();
+  const el = $('oaiKeyStatus'+sfx);
+  localStorage.setItem('oai_badge_key', v);
+  // 同步到另一個面板
+  const otherSfx = sfx==='D' ? 'M' : 'D';
+  const other = $('oaiKey'+otherSfx);
+  if (other && other.value !== v) other.value = v;
+
+  if (!v) { el.textContent=''; return; }
+  const ok = v.startsWith('sk-') && v.length > 20;
+  el.textContent = ok ? '✓ 格式正確' : '⚠ 應為 sk-... 開頭';
+  el.className = 'api-key-status ' + (ok ? 'ok' : 'err');
+}
+
+function toggleOaiKey(id) {
+  const inp = $(id);
+  inp.type = inp.type==='password' ? 'text' : 'password';
+}
+
+function getOaiKey() {
+  return ($('oaiKeyD').value || $('oaiKeyM').value || '').trim();
+}
+
+function updateCost(sfx) {
+  const q = $('qual'+sfx).value;
+  $('cost'+sfx).innerHTML = `預估費用：<strong>~NT$${COST_MAP[q].toFixed(1)}</strong>（${q} 品質）`;
+}
+
+// ================================================
+// 姓名弧形文字繪製（Canvas）
+// ================================================
+/**
+ * 在指定 Canvas 上，沿圓弧在底部中央繪製姓名
+ * @param {CanvasRenderingContext2D} ctx
+ * @param {string} name
+ * @param {number} w  canvas 寬
+ * @param {number} h  canvas 高
+ */
+function drawArcName(ctx, name, w, h) {
+  if (!name || !name.trim()) return;
+  const text = name.trim();
+  const cx = w / 2;
+  const cy = h / 2;
+  // 圓弧半徑：圖片短邊的 42%
+  const r = Math.min(w, h) * 0.42;
+  // 字體大小
+  const fontSize = Math.max(18, Math.min(w * 0.072, 56));
+  ctx.save();
+  ctx.font = `bold ${fontSize}px 'Noto Sans TC', sans-serif`;
+  ctx.fillStyle = '#ffffff';
+  ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+  ctx.lineWidth = Math.max(3, fontSize * 0.12);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  // 弧形：從底部中心開始，字符沿下半圓排列
+  // 總弧度：讓文字佔底部約 120 度
+  const totalArc = Math.min(Math.PI * 0.7, text.length * 0.22);
+  const startAngle = Math.PI / 2 + totalArc / 2; // 從左側起，往右
+  const angleStep = totalArc / Math.max(text.length - 1, 1);
+  // 如果只有1個字
+  if (text.length === 1) {
+    const angle = Math.PI / 2; // 正底部
+    const tx = cx + r * Math.cos(angle);
+    const ty = cy + r * Math.sin(angle);
+    ctx.save();
+    ctx.translate(tx, ty);
+    ctx.rotate(angle - Math.PI / 2);
+    ctx.strokeText(text, 0, 0);
+    ctx.fillText(text, 0, 0);
+    ctx.restore();
+  } else {
+    for (let i = 0; i < text.length; i++) {
+      const angle = startAngle - i * angleStep;
+      const tx = cx + r * Math.cos(angle);
+      const ty = cy + r * Math.sin(angle);
+      ctx.save();
+      ctx.translate(tx, ty);
+      // 字符旋轉：沿弧方向
+      ctx.rotate(angle - Math.PI / 2);
+      ctx.strokeText(text[i], 0, 0);
+      ctx.fillText(text[i], 0, 0);
+      ctx.restore();
+    }
+  }
+  ctx.restore();
+}
+
+/**
+ * 合成：原圖 + 圓形遮罩 + 弧形姓名
+ * 回傳 dataURL (PNG)
+ */
+function compositeWithName(imgSrc, name) {
+  return new Promise(res => {
+    if (!imgSrc) { res(null); return; }
+    const img = new Image();
+    img.onload = () => {
+      const sz = Math.min(img.width, img.height, 1024);
+      const cvs = $('compositeCanvas');
+      cvs.width = sz; cvs.height = sz;
+      const ctx = cvs.getContext('2d');
+      // 圓形裁切
+      ctx.clearRect(0, 0, sz, sz);
+      ctx.beginPath();
+      ctx.arc(sz/2, sz/2, sz/2, 0, Math.PI*2);
+      ctx.clip();
+      // 繪製圖片（置中裁切）
+      const srcSz = Math.min(img.width, img.height);
+      const sx = (img.width - srcSz) / 2;
+      const sy = (img.height - srcSz) / 2;
+      ctx.drawImage(img, sx, sy, srcSz, srcSz, 0, 0, sz, sz);
+      // 繪製弧形名字
+      if (name && name.trim()) {
+        drawArcName(ctx, name, sz, sz);
+      }
+      res(cvs.toDataURL('image/png'));
+    };
+    img.onerror = () => res(null);
+    img.src = imgSrc;
+  });
+}
+
+// ================================================
+// 裁切工具
+// ================================================
+let cropImg = null;
+const cs = { cx:0, cy:0, r:0 };
+let cW=0, cH=0, cropOrigNW=0, cropOrigNH=0;
 let isDragMove=false, isDragResize=false;
 let dStartX=0, dStartY=0, dStartCx=0, dStartCy=0, dStartR=0;
+let lastCroppedDataURL='', lastCroppedMime='image/png';
 
 function openCropModal(target) {
-  // 重置下載按鈕
   const dlBtn = $('btnDownloadCrop');
-  if (dlBtn) dlBtn.style.display = 'none';
-  lastCroppedDataURL = '';
+  if (dlBtn) dlBtn.style.display='none';
+  lastCroppedDataURL='';
   const rawSrc = (target==='D') ? rawOrigD : rawOrigM;
   if (!rawSrc) return;
   cropTarget = target;
   const img = new Image();
   img.onload = () => {
-    cropImg = img;
-    cropOrigNW = img.naturalWidth;
-    cropOrigNH = img.naturalHeight;
+    cropImg=img; cropOrigNW=img.naturalWidth; cropOrigNH=img.naturalHeight;
     drawCropPreview(img);
     $('cropModal').classList.add('open');
   };
@@ -744,504 +771,226 @@ function drawCropPreview(img) {
   const canvas = $('cropPreviewCanvas');
   const wrapW = Math.min($('cropCanvasWrap').clientWidth || 500, 500);
   const MAX = Math.min(wrapW, 480);
-  let w = img.naturalWidth, h = img.naturalHeight;
-  if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
-  if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; }
-
-  canvas.width = w; canvas.height = h; cW = w; cH = h;
-  const ctx = canvas.getContext('2d');
+  let w=img.naturalWidth, h=img.naturalHeight;
+  if(w>MAX){h=Math.round(h*MAX/w);w=MAX;}
+  if(h>MAX){w=Math.round(w*MAX/h);h=MAX;}
+  canvas.width=w; canvas.height=h; cW=w; cH=h;
+  const ctx=canvas.getContext('2d');
   ctx.clearRect(0,0,w,h);
-  ctx.drawImage(img, 0, 0, w, h);
-
-  if ($('cropOptWatermark').checked) markWatermark(ctx, w, h);
-
-  // 初始最大內切圓
-  cs.cx = w/2; cs.cy = h/2;
-  cs.r  = Math.min(w, h)/2 - 1;
-
-  // 更新滑桿
-  const shortSide = Math.min(img.naturalWidth, img.naturalHeight);
-  $('cropSizeSlider').min   = 100;
-  $('cropSizeSlider').max   = shortSide;
-  $('cropSizeSlider').value = shortSide;
-  $('cropSizeSlider').step  = Math.max(1, Math.round(shortSide/200));
-  $('cropSizeVal').textContent = shortSide + ' px';
-
+  ctx.drawImage(img,0,0,w,h);
+  if($('cropOptWatermark').checked) markWatermark(ctx,w,h);
+  cs.cx=w/2; cs.cy=h/2; cs.r=Math.min(w,h)/2-1;
+  const shortSide=Math.min(img.naturalWidth,img.naturalHeight);
+  $('cropSizeSlider').min=100; $('cropSizeSlider').max=shortSide;
+  $('cropSizeSlider').value=shortSide;
+  $('cropSizeSlider').step=Math.max(1,Math.round(shortSide/200));
+  $('cropSizeVal').textContent=shortSide+' px';
   syncCropSvg();
 }
 
-function markWatermark(ctx, w, h) {
-  const mw=Math.round(w*0.14), mh=Math.round(h*0.08);
-  const mx=w-mw-2, my=h-mh-2;
-  ctx.save();
-  ctx.strokeStyle='rgba(255,77,109,0.85)';
-  ctx.lineWidth=2; ctx.setLineDash([4,3]);
-  ctx.strokeRect(mx,my,mw,mh);
-  ctx.fillStyle='rgba(255,77,109,0.18)';
-  ctx.fillRect(mx,my,mw,mh);
-  ctx.setLineDash([]);
-  ctx.font=`bold ${Math.max(9,Math.round(w*0.022))}px 'Noto Sans TC',sans-serif`;
-  ctx.fillStyle='rgba(255,77,109,.9)';
-  ctx.textAlign='right';
-  ctx.fillText('浮水印',mx+mw-3,my+Math.round(mh*0.72));
-  ctx.restore();
+function markWatermark(ctx,w,h){
+  const mw=Math.round(w*.14),mh=Math.round(h*.08),mx=w-mw-2,my=h-mh-2;
+  ctx.save();ctx.strokeStyle='rgba(255,77,109,0.85)';ctx.lineWidth=2;ctx.setLineDash([4,3]);
+  ctx.strokeRect(mx,my,mw,mh);ctx.fillStyle='rgba(255,77,109,0.18)';ctx.fillRect(mx,my,mw,mh);
+  ctx.setLineDash([]);ctx.font=`bold ${Math.max(9,Math.round(w*.022))}px 'Noto Sans TC',sans-serif`;
+  ctx.fillStyle='rgba(255,77,109,.9)';ctx.textAlign='right';ctx.fillText('浮水印',mx+mw-3,my+Math.round(mh*.72));ctx.restore();
 }
 
-// SVG overlay
-function syncCropSvg() {
-  const showCircle = $('cropOptCircle').checked;
-  const svg = $('cropSvgOverlay');
-
-  if (!showCircle) { svg.style.display='none'; return; }
-
-  svg.setAttribute('viewBox', `0 0 ${cW} ${cH}`);
-  svg.style.cssText = `position:absolute;inset:0;width:100%;height:100%;overflow:visible;display:block;`;
-
-  const {cx,cy,r} = cs;
-  $('cMaskCircle').setAttribute('cx',cx);
-  $('cMaskCircle').setAttribute('cy',cy);
-  $('cMaskCircle').setAttribute('r', r);
-  $('cDimRect').setAttribute('width', cW);
-  $('cDimRect').setAttribute('height', cH);
-  $('cRing').setAttribute('cx',cx);
-  $('cRing').setAttribute('cy',cy);
-  $('cRing').setAttribute('r', r);
-  $('cDragHandle').setAttribute('cx',cx);
-  $('cDragHandle').setAttribute('cy',cy);
-  $('cResizeHandle').setAttribute('cx',cx+r);
-  $('cResizeHandle').setAttribute('cy',cy);
-  const origDiam = Math.round(r/cW * cropOrigNW * 2);
-  $('cSizeLabel').setAttribute('x', cx);
-  $('cSizeLabel').setAttribute('y', cy+r+16);
-  $('cSizeLabel').textContent = `⌀ ${origDiam} px`;
-  $('cropSizeVal').textContent = origDiam + ' px';
-  $('cropSizeSlider').value = Math.min(parseInt($('cropSizeSlider').max),origDiam);
+function syncCropSvg(){
+  const showCircle=$('cropOptCircle').checked, svg=$('cropSvgOverlay');
+  if(!showCircle){svg.style.display='none';return;}
+  svg.setAttribute('viewBox',`0 0 ${cW} ${cH}`);
+  svg.style.cssText=`position:absolute;inset:0;width:100%;height:100%;overflow:visible;display:block;`;
+  const {cx,cy,r}=cs;
+  $('cMaskCircle').setAttribute('cx',cx);$('cMaskCircle').setAttribute('cy',cy);$('cMaskCircle').setAttribute('r',r);
+  $('cDimRect').setAttribute('width',cW);$('cDimRect').setAttribute('height',cH);
+  $('cRing').setAttribute('cx',cx);$('cRing').setAttribute('cy',cy);$('cRing').setAttribute('r',r);
+  $('cDragHandle').setAttribute('cx',cx);$('cDragHandle').setAttribute('cy',cy);
+  $('cResizeHandle').setAttribute('cx',cx+r);$('cResizeHandle').setAttribute('cy',cy);
+  const origDiam=Math.round(r/cW*cropOrigNW*2);
+  $('cSizeLabel').setAttribute('x',cx);$('cSizeLabel').setAttribute('y',cy+r+16);
+  $('cSizeLabel').textContent=`⌀ ${origDiam} px`;
+  $('cropSizeVal').textContent=origDiam+' px';
+  $('cropSizeSlider').value=Math.min(parseInt($('cropSizeSlider').max),origDiam);
 }
+function clampCs(){const{r}=cs;cs.cx=Math.min(cW-r,Math.max(r,cs.cx));cs.cy=Math.min(cH-r,Math.max(r,cs.cy));}
+function csvgPt(clientX,clientY){const rect=$('cropSvgOverlay').getBoundingClientRect();return{x:(clientX-rect.left)/rect.width*cW,y:(clientY-rect.top)/rect.height*cH};}
+function ePos(e){return e.touches?.length?{x:e.touches[0].clientX,y:e.touches[0].clientY}:{x:e.clientX,y:e.clientY};}
 
-function clampCs() {
-  const {r} = cs;
-  cs.cx = Math.min(cW-r, Math.max(r, cs.cx));
-  cs.cy = Math.min(cH-r, Math.max(r, cs.cy));
-}
+$('cDragHandle').addEventListener('mousedown',e=>{e.preventDefault();isDragMove=true;const p=ePos(e);dStartX=p.x;dStartY=p.y;dStartCx=cs.cx;dStartCy=cs.cy;addDragListeners();});
+$('cDragHandle').addEventListener('touchstart',e=>{e.preventDefault();isDragMove=true;const p=ePos(e);dStartX=p.x;dStartY=p.y;dStartCx=cs.cx;dStartCy=cs.cy;addDragListeners();},{passive:false});
+$('cResizeHandle').addEventListener('mousedown',e=>{e.preventDefault();isDragResize=true;dStartX=ePos(e).x;dStartR=cs.r;addDragListeners();});
+$('cResizeHandle').addEventListener('touchstart',e=>{e.preventDefault();isDragResize=true;dStartX=ePos(e).x;dStartR=cs.r;addDragListeners();},{passive:false});
 
-// 拖動
-function csvgPt(clientX, clientY) {
-  const rect = $('cropSvgOverlay').getBoundingClientRect();
-  return { x:(clientX-rect.left)/rect.width*cW, y:(clientY-rect.top)/rect.height*cH };
+function addDragListeners(){document.addEventListener('mousemove',onCropMove);document.addEventListener('mouseup',endCropDrag);document.addEventListener('touchmove',onCropMove,{passive:false});document.addEventListener('touchend',endCropDrag);}
+function onCropMove(e){
+  e.preventDefault();const p=ePos(e),sp=csvgPt(p.x,p.y);
+  if(isDragMove){const sp0=csvgPt(dStartX,dStartY);cs.cx=dStartCx+(sp.x-sp0.x);cs.cy=dStartCy+(sp.y-sp0.y);}
+  if(isDragResize){const dx=Math.abs(sp.x-cs.cx),maxR=Math.min(cW,cH)/2-1;cs.r=Math.min(maxR,Math.max(50,dx));const origR=cs.r/cW*cropOrigNW;$('cropSizeSlider').value=Math.round(origR*2);$('cropSizeVal').textContent=Math.round(origR*2)+' px';}
+  clampCs();syncCropSvg();
 }
-function ePos(e) {
-  return e.touches?.length ? {x:e.touches[0].clientX,y:e.touches[0].clientY} : {x:e.clientX,y:e.clientY};
-}
+function endCropDrag(){isDragMove=isDragResize=false;document.removeEventListener('mousemove',onCropMove);document.removeEventListener('mouseup',endCropDrag);document.removeEventListener('touchmove',onCropMove);document.removeEventListener('touchend',endCropDrag);}
 
-$('cDragHandle').addEventListener('mousedown', e=>{
-  e.preventDefault(); isDragMove=true;
-  const p=ePos(e); dStartX=p.x; dStartY=p.y; dStartCx=cs.cx; dStartCy=cs.cy;
-  addDragListeners();
+$('cropSizeSlider').addEventListener('input',()=>{
+  const origDiam=parseInt($('cropSizeSlider').value,10);
+  $('cropSizeVal').textContent=origDiam+' px';
+  const newR=(origDiam/2)/cropOrigNW*cW,maxR=Math.min(cW,cH)/2-1;
+  cs.r=Math.min(maxR,Math.max(1,newR));clampCs();syncCropSvg();
 });
-$('cDragHandle').addEventListener('touchstart', e=>{
-  e.preventDefault(); isDragMove=true;
-  const p=ePos(e); dStartX=p.x; dStartY=p.y; dStartCx=cs.cx; dStartCy=cs.cy;
-  addDragListeners();
-}, {passive:false});
+$('cropOptCircle').addEventListener('change',()=>{$('optCardCircle').classList.toggle('active',$('cropOptCircle').checked);$('cropCircleCtrl').style.display=$('cropOptCircle').checked?'':'none';syncCropSvg();});
+$('cropOptWatermark').addEventListener('change',()=>{$('optCardWM').classList.toggle('active',$('cropOptWatermark').checked);$('cropWMNote').style.display=$('cropOptWatermark').checked?'':'none';if(cropImg)drawCropPreview(cropImg);});
+function cropSkip(){$('cropModal').classList.remove('open');}
+function downloadCroppedImage(){if(!lastCroppedDataURL)return;const ext=lastCroppedMime==='image/png'?'png':'jpg';const a=document.createElement('a');a.download='circlecrop_'+Date.now()+'.'+ext;a.href=lastCroppedDataURL;a.click();}
 
-$('cResizeHandle').addEventListener('mousedown', e=>{
-  e.preventDefault(); isDragResize=true;
-  dStartX=ePos(e).x; dStartR=cs.r; addDragListeners();
-});
-$('cResizeHandle').addEventListener('touchstart', e=>{
-  e.preventDefault(); isDragResize=true;
-  dStartX=ePos(e).x; dStartR=cs.r; addDragListeners();
-}, {passive:false});
-
-function addDragListeners() {
-  document.addEventListener('mousemove', onCropMove);
-  document.addEventListener('mouseup',   endCropDrag);
-  document.addEventListener('touchmove', onCropMove, {passive:false});
-  document.addEventListener('touchend',  endCropDrag);
-}
-
-function onCropMove(e) {
-  e.preventDefault();
-  const p = ePos(e), sp = csvgPt(p.x, p.y);
-  if (isDragMove) {
-    const sp0 = csvgPt(dStartX, dStartY);
-    cs.cx = dStartCx + (sp.x - sp0.x);
-    cs.cy = dStartCy + (sp.y - sp0.y);
+function cropConfirm(){
+  if(!cropImg){$('cropModal').classList.remove('open');return;}
+  const doWM=$('cropOptWatermark').checked,doCircle=$('cropOptCircle').checked;
+  if(!doWM&&!doCircle){$('cropModal').classList.remove('open');return;}
+  const c=document.createElement('canvas');c.width=cropImg.naturalWidth;c.height=cropImg.naturalHeight;
+  const ctx=c.getContext('2d');ctx.drawImage(cropImg,0,0);
+  if(doWM)removeWatermarkCanvas(ctx,c.width,c.height);
+  let resultCanvas=c;
+  if(doCircle)resultCanvas=applyCropCircle(c);
+  const mime=doCircle?'image/png':'image/jpeg';
+  const newSrc=resultCanvas.toDataURL(mime,.92);
+  lastCroppedDataURL=newSrc;lastCroppedMime=mime;
+  const dlBtn=$('btnDownloadCrop');if(dlBtn)dlBtn.style.display='inline-flex';
+  const tags=[];if(doWM)tags.push('去浮水印');if(doCircle)tags.push('圓形裁切');
+  const tagText=tags.join(' + ');
+  if(cropTarget==='D'){
+    origD=newSrc;if(objD)URL.revokeObjectURL(objD);objD=newSrc;
+    $('prvD').src=newSrc;$('prvD').style.display='';$('phD').style.display='none';
+    $('processedTagD').style.display='';$('processedTextD').textContent=tagText;$('reCropD').style.display='';
+    aiD=null;$('srcD').options[1].disabled=true;$('srcD').value='original';$('resD').style.display='none';
+    if(!$('bdgD').children.length)addBadge();else refreshBadges();
+  }else{
+    origM=newSrc;if(objM)URL.revokeObjectURL(objM);objM=newSrc;
+    $('prvM').src=newSrc;$('prvM').style.display='';$('phM').style.display='none';
+    $('processedTagM').style.display='';$('processedTextM').textContent=tagText;
+    aiM=null;$('resM').style.display='none';$('aiResM').classList.remove('show');
+    $('bdgM').querySelectorAll('.bface').forEach(f=>{f.style.backgroundImage='url('+newSrc+')';});
   }
-  if (isDragResize) {
-    const dx = Math.abs(sp.x - cs.cx);
-    const minR = 50 / cW * cW; // absolute min
-    const maxR = Math.min(cW,cH)/2-1;
-    cs.r = Math.min(maxR, Math.max(50, dx));
-    // 同步滑桿
-    const origR = cs.r/cW * cropOrigNW;
-    $('cropSizeSlider').value = Math.round(origR*2);
-    $('cropSizeVal').textContent = Math.round(origR*2) + ' px';
-  }
-  clampCs(); syncCropSvg();
 }
-function endCropDrag() {
-  isDragMove=isDragResize=false;
-  document.removeEventListener('mousemove', onCropMove);
-  document.removeEventListener('mouseup',   endCropDrag);
-  document.removeEventListener('touchmove', onCropMove);
-  document.removeEventListener('touchend',  endCropDrag);
+function applyCropCircle(srcCanvas){
+  const scaleX=srcCanvas.width/cW,scaleY=srcCanvas.height/cH;
+  const cx=cs.cx*scaleX,cy=cs.cy*scaleY,r=cs.r*Math.min(scaleX,scaleY),d=Math.round(r*2);
+  const out=document.createElement('canvas');out.width=out.height=d;
+  const ctx=out.getContext('2d');ctx.beginPath();ctx.arc(r,r,r,0,Math.PI*2);ctx.clip();
+  ctx.drawImage(srcCanvas,cx-r,cy-r,d,d,0,0,d,d);return out;
 }
-
-// 滑桿 → 更新 r
-$('cropSizeSlider').addEventListener('input', () => {
-  const origDiam = parseInt($('cropSizeSlider').value, 10);
-  $('cropSizeVal').textContent = origDiam + ' px';
-  // 換算到 canvas px
-  const newR = (origDiam/2) / cropOrigNW * cW;
-  const maxR = Math.min(cW,cH)/2-1;
-  cs.r = Math.min(maxR, Math.max(1, newR));
-  clampCs(); syncCropSvg();
-});
-
-// 勾選框切換
-$('cropOptCircle').addEventListener('change', () => {
-  $('optCardCircle').classList.toggle('active', $('cropOptCircle').checked);
-  $('cropCircleCtrl').style.display = $('cropOptCircle').checked ? '' : 'none';
-  syncCropSvg();
-});
-$('cropOptWatermark').addEventListener('change', () => {
-  $('optCardWM').classList.toggle('active', $('cropOptWatermark').checked);
-  $('cropWMNote').style.display = $('cropOptWatermark').checked ? '' : 'none';
-  if (cropImg) drawCropPreview(cropImg);
-});
-
-// 略過：直接用原圖
-function cropSkip() {
-  $('cropModal').classList.remove('open');
-}
-
-// 裁切結果暫存（供下載用）
-let lastCroppedDataURL = '';
-let lastCroppedMime = 'image/png';
-
-function downloadCroppedImage() {
-  if (!lastCroppedDataURL) return;
-  const ext = lastCroppedMime === 'image/png' ? 'png' : 'jpg';
-  const a = document.createElement('a');
-  a.download = 'circlecrop_' + Date.now() + '.' + ext;
-  a.href = lastCroppedDataURL;
-  a.click();
-}
-
-// 確認並套用
-function cropConfirm() {
-  if (!cropImg) { $('cropModal').classList.remove('open'); return; }
-
-  const doWM     = $('cropOptWatermark').checked;
-  const doCircle = $('cropOptCircle').checked;
-
-  if (!doWM && !doCircle) {
-    $('cropModal').classList.remove('open');
-    return;
-  }
-
-  // 建立原始尺寸 canvas
-  const c = document.createElement('canvas');
-  c.width  = cropImg.naturalWidth;
-  c.height = cropImg.naturalHeight;
-  const ctx = c.getContext('2d');
-  ctx.drawImage(cropImg, 0, 0);
-
-  if (doWM) {
-    removeWatermarkCanvas(ctx, c.width, c.height);
-  }
-
-  let resultCanvas = c;
-  if (doCircle) {
-    resultCanvas = applyCropCircle(c);
-  }
-
-  // 輸出
-  const mime   = doCircle ? 'image/png' : 'image/jpeg';
-  const newSrc = resultCanvas.toDataURL(mime, 0.92);
-
-  // 儲存供下載用，並顯示下載按鈕
-  lastCroppedDataURL = newSrc;
-  lastCroppedMime    = mime;
-  const dlBtn = $('btnDownloadCrop');
-  if (dlBtn) dlBtn.style.display = 'inline-flex';
-
-  // 標籤文字
-  const tags = [];
-  if (doWM)     tags.push('去浮水印');
-  if (doCircle) tags.push('圓形裁切');
-  const tagText = tags.join(' + ');
-
-  if (cropTarget === 'D') {
-    origD = newSrc;
-    if (objD) URL.revokeObjectURL(objD);
-    objD  = newSrc;
-    $('prvD').src = newSrc; $('prvD').style.display=''; $('phD').style.display='none';
-    $('processedTagD').style.display='';
-    $('processedTextD').textContent = tagText;
-    $('reCropD').style.display='';
-    aiD=null; $('srcD').options[1].disabled=true; $('srcD').value='original'; $('resD').style.display='none';
-    if (!$('bdgD').children.length) addBadge(); else refreshBadges();
-  } else {
-    origM = newSrc;
-    if (objM) URL.revokeObjectURL(objM);
-    objM  = newSrc;
-    $('prvM').src = newSrc; $('prvM').style.display=''; $('phM').style.display='none';
-    $('processedTagM').style.display='';
-    $('processedTextM').textContent = tagText;
-    aiM=null; $('resM').style.display='none'; $('aiResM').classList.remove('show');
-    $('bdgM').querySelectorAll('.bface').forEach(f => { f.style.backgroundImage='url('+newSrc+')'; });
-  }
-
-  // 套用後不關閉 modal，讓使用者可下載後再按略過關閉
-}
-
-// 圓形裁切（依 cs 狀態）
-function applyCropCircle(srcCanvas) {
-  const scaleX = srcCanvas.width  / cW;
-  const scaleY = srcCanvas.height / cH;
-  const cx = cs.cx * scaleX;
-  const cy = cs.cy * scaleY;
-  const r  = cs.r  * Math.min(scaleX, scaleY);
-  const d  = Math.round(r * 2);
-
-  const out = document.createElement('canvas');
-  out.width = out.height = d;
-  const ctx = out.getContext('2d');
-  ctx.beginPath(); ctx.arc(r, r, r, 0, Math.PI*2); ctx.clip();
-  ctx.drawImage(srcCanvas, cx-r, cy-r, d, d, 0, 0, d, d);
-  return out;
-}
-
-// 浮水印去除（Canvas inpainting）
-function removeWatermarkCanvas(ctx, W, H) {
-  const pw=Math.round(W*0.14), ph=Math.round(H*0.08);
-  const px=W-pw, py=H-ph;
-  const imageData=ctx.getImageData(0,0,W,H);
-  const data=imageData.data;
-  const sourceY=py-ph;
-  if (sourceY < 0) {
-    fillWithAvgColor(data,W,px,py,pw,ph);
-  } else {
-    for (let y=py;y<py+ph;y++) {
-      for (let x=px;x<px+pw;x++) {
-        const ox=Math.round((Math.random()-.5)*4);
-        const sx=Math.min(W-1,Math.max(0,x+ox));
-        const sy=Math.min(H-1,Math.max(0,sourceY+(y-py)));
-        const si=(sy*W+sx)*4, di=(y*W+x)*4;
-        const t=(y-py)/ph;
-        data[di]  =data[di]  *(1-t*.3)+data[si]  *(t*.3+.7);
-        data[di+1]=data[di+1]*(1-t*.3)+data[si+1]*(t*.3+.7);
-        data[di+2]=data[di+2]*(1-t*.3)+data[si+2]*(t*.3+.7);
-      }
+function removeWatermarkCanvas(ctx,W,H){
+  const pw=Math.round(W*.14),ph=Math.round(H*.08),px=W-pw,py=H-ph;
+  const imageData=ctx.getImageData(0,0,W,H),data=imageData.data,sourceY=py-ph;
+  if(sourceY<0){fillWithAvgColor(data,W,px,py,pw,ph);}
+  else{
+    for(let y=py;y<py+ph;y++)for(let x=px;x<px+pw;x++){
+      const ox=Math.round((Math.random()-.5)*4),sx=Math.min(W-1,Math.max(0,x+ox)),sy=Math.min(H-1,Math.max(0,sourceY+(y-py)));
+      const si=(sy*W+sx)*4,di=(y*W+x)*4,t=(y-py)/ph;
+      data[di]=data[di]*(1-t*.3)+data[si]*(t*.3+.7);data[di+1]=data[di+1]*(1-t*.3)+data[si+1]*(t*.3+.7);data[di+2]=data[di+2]*(1-t*.3)+data[si+2]*(t*.3+.7);
     }
     boxBlurRegion(data,W,H,px-2,py-2,pw+4,ph+4,3);
   }
   ctx.putImageData(imageData,0,0);
 }
-function fillWithAvgColor(data,W,px,py,pw,ph) {
-  let r=0,g=0,b=0,count=0;
-  const sample=(x,y)=>{if(x<0||x>=W||y<0)return;const i=(y*W+x)*4;r+=data[i];g+=data[i+1];b+=data[i+2];count++;};
-  for(let x=px;x<px+pw;x++)sample(x,py-1);
-  for(let y=py;y<py+ph;y++)sample(px-1,y);
-  if(count>0){r/=count;g/=count;b/=count;}
-  for(let y=py;y<py+ph;y++)for(let x=px;x<px+pw;x++){const i=(y*W+x)*4;data[i]=r;data[i+1]=g;data[i+2]=b;}
-}
-function boxBlurRegion(data,W,H,x0,y0,bw,bh,radius) {
-  x0=Math.max(0,x0);y0=Math.max(0,y0);
-  const x1=Math.min(W,x0+bw),y1=Math.min(H,y0+bh);
-  const temp=new Uint8ClampedArray(data.length);temp.set(data);
-  for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){
-    let r=0,g=0,b=0,cnt=0;
-    for(let dy=-radius;dy<=radius;dy++)for(let dx=-radius;dx<=radius;dx++){
-      const nx=Math.min(W-1,Math.max(0,x+dx)),ny=Math.min(H-1,Math.max(0,y+dy));
-      const i=(ny*W+nx)*4;r+=temp[i];g+=temp[i+1];b+=temp[i+2];cnt++;
-    }
-    const di=(y*W+x)*4;data[di]=r/cnt;data[di+1]=g/cnt;data[di+2]=b/cnt;
-  }
-}
+function fillWithAvgColor(data,W,px,py,pw,ph){let r=0,g=0,b=0,count=0;const sample=(x,y)=>{if(x<0||x>=W||y<0)return;const i=(y*W+x)*4;r+=data[i];g+=data[i+1];b+=data[i+2];count++;};for(let x=px;x<px+pw;x++)sample(x,py-1);for(let y=py;y<py+ph;y++)sample(px-1,y);if(count>0){r/=count;g/=count;b/=count;}for(let y=py;y<py+ph;y++)for(let x=px;x<px+pw;x++){const i=(y*W+x)*4;data[i]=r;data[i+1]=g;data[i+2]=b;}}
+function boxBlurRegion(data,W,H,x0,y0,bw,bh,radius){x0=Math.max(0,x0);y0=Math.max(0,y0);const x1=Math.min(W,x0+bw),y1=Math.min(H,y0+bh);const temp=new Uint8ClampedArray(data.length);temp.set(data);for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){let r=0,g=0,b=0,cnt=0;for(let dy=-radius;dy<=radius;dy++)for(let dx=-radius;dx<=radius;dx++){const nx=Math.min(W-1,Math.max(0,x+dx)),ny=Math.min(H-1,Math.max(0,y+dy));const i=(ny*W+nx)*4;r+=temp[i];g+=temp[i+1];b+=temp[i+2];cnt++;}const di=(y*W+x)*4;data[di]=r/cnt;data[di+1]=g/cnt;data[di+2]=b/cnt;}}
 
 // ================================================
-// CONNECTION
+// 圖片前處理（上傳）
 // ================================================
-function gasGet(url) {
-  return fetch(url + (url.includes('?')?'&':'?')+'_nc='+Date.now(), {signal:AbortSignal.timeout(20000)})
-    .then(r=>r.json())
-    .catch(()=>gasGetJsonp(url));
-}
-function gasGetJsonp(url) {
-  return new Promise((res,rej)=>{
-    const cb='_cb_'+Date.now()+'_'+Math.floor(Math.random()*9999);
-    const tid=setTimeout(()=>{delete window[cb];const el=document.getElementById(cb);if(el)el.remove();rej(new Error('連線逾時'));},20000);
-    window[cb]=d=>{clearTimeout(tid);delete window[cb];const el=document.getElementById(cb);if(el)el.remove();res(d);};
-    const sep=url.includes('?')?'&':'?';
-    const s=document.createElement('script');s.id=cb;
-    s.src=url+sep+'callback='+cb;
-    s.onerror=()=>{clearTimeout(tid);rej(new Error('無法連接後端'));};
-    document.head.appendChild(s);
-  });
+function applyBeauty(ctx,w,h){
+  const imgData=ctx.getImageData(0,0,w,h),d=imgData.data,tmp=new Uint8ClampedArray(d);
+  for(let y=1;y<h-1;y++)for(let x=1;x<w-1;x++){const i=(y*w+x)*4,r=d[i],g=d[i+1],b=d[i+2];if(r>90&&r>g*.85&&r>b*1.1&&r<240){let sr=0,sg=0,sb=0,cnt=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const j=((y+dy)*w+(x+dx))*4;sr+=d[j];sg+=d[j+1];sb+=d[j+2];cnt++;}tmp[i]=Math.round(r*.4+(sr/cnt)*.6);tmp[i+1]=Math.round(g*.4+(sg/cnt)*.6);tmp[i+2]=Math.round(b*.4+(sb/cnt)*.6);}}
+  imgData.data.set(tmp);ctx.putImageData(imgData,0,0);ctx.globalAlpha=.06;ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.globalAlpha=1;
 }
 
-// ================================================
-// BACKEND STATUS CHECK
-// ================================================
-async function chkBackend() {
-  const pill=$('sPill');
-  pill.className='pill pill-a'; pill.innerHTML='<span class="dot da"></span>連線中';
-  ['D','M'].forEach(s=>{const b=$('off'+s);if(b)b.classList.remove('show');});
-  try {
-    const d=await gasGet(GAS_URL+'?action=getConfig');
-    pill.className=d.hasGeminiKey?'pill pill-g':'pill pill-a';
-    pill.innerHTML='<span class="dot '+(d.hasGeminiKey?'dg':'da')+'"></span>'+(d.hasGeminiKey?'已連線':'部分設定');
-    const mk=ok=>`<span class="dot ${ok?'dg':'dr'}" style="display:inline-block;width:8px;height:8px;"></span>`;
-    const pD=$('stPnD');
-    if(pD) pD.innerHTML=
-      `<div class="stat-row"><span style="color:var(--text2);">Gemini API</span>${mk(d.hasGeminiKey)}</div>`+
-      `<div class="stat-row"><span style="color:var(--text2);">Google Drive</span>${mk(d.hasFolderId)}</div>`+
-      `<div class="stat-row"><span style="color:var(--text2);">GitHub</span>${mk(d.hasGitHub)}</div>`+
-      (d.hasFolderId?`<div style="font-size:.65rem;color:var(--muted);padding-top:6px;word-break:break-all;"><i class="fas fa-folder-open" style="color:var(--amber);margin-right:3px;"></i><a href="${d.folderUrl}" target="_blank" style="color:var(--accent);text-decoration:none;">${d.folderId}</a></div>`:'')+
-      (d.hasGitHub?`<div style="font-size:.65rem;color:var(--muted);padding-top:3px;"><i class="fab fa-github" style="margin-right:3px;"></i>${d.githubRepo}</div>`:'')+
-      `<button onclick="chkBackend()" class="btn btn-g" style="margin-top:9px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> 重新偵測</button>`;
-  } catch(e) {
-    pill.className='pill pill-r'; pill.innerHTML='<span class="dot dr"></span>未連線';
-    const msg=e.message;
-    ['D','M'].forEach(s=>{const b=$('off'+s);if(b)b.classList.add('show');const m=$('offMsg'+s);if(m)m.textContent=msg;});
-    const pD=$('stPnD');
-    if(pD) pD.innerHTML=`<div style="color:var(--red);font-size:.73rem;padding:6px 0;text-align:center;"><i class="fas fa-triangle-exclamation"></i> 連線失敗</div><button onclick="chkBackend()" class="btn btn-g" style="margin-top:6px;width:100%;font-size:.7rem;"><i class="fas fa-rotate"></i> 重新偵測</button>`;
-  }
-}
-
-// ================================================
-// IMAGE PROCESSING（原圖 512px 正方 + 美肌）
-// ================================================
-function applyBeauty(ctx, w, h) {
-  const imgData=ctx.getImageData(0,0,w,h), d=imgData.data, tmp=new Uint8ClampedArray(d);
-  for(let y=1;y<h-1;y++) for(let x=1;x<w-1;x++){
-    const i=(y*w+x)*4,r=d[i],g=d[i+1],b=d[i+2];
-    if(r>90&&r>g*.85&&r>b*1.1&&r<240){
-      let sr=0,sg=0,sb=0,cnt=0;
-      for(let dy=-1;dy<=1;dy++) for(let dx=-1;dx<=1;dx++){
-        const j=((y+dy)*w+(x+dx))*4; sr+=d[j];sg+=d[j+1];sb+=d[j+2];cnt++;
-      }
-      tmp[i]=Math.round(r*.4+(sr/cnt)*.6); tmp[i+1]=Math.round(g*.4+(sg/cnt)*.6); tmp[i+2]=Math.round(b*.4+(sb/cnt)*.6);
-    }
-  }
-  imgData.data.set(tmp); ctx.putImageData(imgData,0,0);
-  ctx.globalAlpha=.06; ctx.fillStyle='#fff'; ctx.fillRect(0,0,w,h); ctx.globalAlpha=1;
-}
-
-// procFile：處理上傳檔案，同時保存原始 data URL 供裁切用
-function procFile(file, cvsId, onDone, mirror, targetSfx) {
-  const c=$(cvsId), ctx=c.getContext('2d');
+function procFile(file, cvsId, onDone, mirror, targetSfx){
+  const c=$(cvsId),ctx=c.getContext('2d');
   const rd=new FileReader();
   rd.onload=ev=>{
-    // 先儲存原始 data URL 給裁切 modal 用
-    const rawDataUrl = ev.target.result;
-    if (targetSfx==='D') rawOrigD = rawDataUrl;
-    else if (targetSfx==='M') rawOrigM = rawDataUrl;
-
+    const rawDataUrl=ev.target.result;
+    if(targetSfx==='D')rawOrigD=rawDataUrl;else if(targetSfx==='M')rawOrigM=rawDataUrl;
     const img=new Image();
     img.onload=()=>{
-      c.width=c.height=512;
-      const sz=Math.min(img.width,img.height);
-      if(mirror) ctx.setTransform(-1,0,0,1,512,0);
+      c.width=c.height=512;const sz=Math.min(img.width,img.height);
+      if(mirror)ctx.setTransform(-1,0,0,1,512,0);
       ctx.drawImage(img,(img.width-sz)/2,(img.height-sz)/2,sz,sz,0,0,512,512);
-      ctx.setTransform(1,0,0,1,0,0);
-      applyBeauty(ctx,512,512);
+      ctx.setTransform(1,0,0,1,0,0);applyBeauty(ctx,512,512);
       c.toBlob(blob=>onDone(URL.createObjectURL(blob),c.toDataURL('image/jpeg',.85)),'image/jpeg',.85);
     };
     img.src=rawDataUrl;
   };
   rd.readAsDataURL(file);
 }
-function procFileAsync(file, cvsId, mirror, sfx) {
-  return new Promise(res=>procFile(file,cvsId,(url,dat)=>res({url,dat}),mirror,sfx));
-}
+function procFileAsync(file,cvsId,mirror,sfx){return new Promise(res=>procFile(file,cvsId,(url,dat)=>res({url,dat}),mirror,sfx));}
 
 // Webcam
-$('webcamD').addEventListener('click', async()=>{
+$('webcamD').addEventListener('click',async()=>{
   if(strmD){strmD.getTracks().forEach(t=>t.stop());strmD=null;$('vidD').style.display='none';$('webcamD').innerHTML='<i class="fas fa-laptop" style="color:var(--accent);"></i> 開啟網頁相機 (PC)';$('capD').style.display='none';if(!origD)$('phD').style.display='';return;}
   try{strmD=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});$('vidD').srcObject=strmD;$('vidD').style.display='';$('prvD').style.display='none';$('phD').style.display='none';$('webcamD').innerHTML='<i class="fas fa-video-slash"></i> 關閉相機';$('capD').style.display='';}
   catch(e){showMsg('❌ 相機受限','請改用上傳方式','error');}
 });
 $('capD').addEventListener('click',()=>{
   const v=$('vidD'),c=$('cvsD'),ctx=c.getContext('2d');
-  c.width=c.height=512;
-  const vw=v.videoWidth,vh=v.videoHeight,sz=Math.min(vw,vh);
-  ctx.setTransform(-1,0,0,1,512,0);
-  ctx.drawImage(v,(vw-sz)/2,(vh-sz)/2,sz,sz,0,0,512,512);
-  ctx.setTransform(1,0,0,1,0,0);
+  c.width=c.height=512;const vw=v.videoWidth,vh=v.videoHeight,sz=Math.min(vw,vh);
+  ctx.setTransform(-1,0,0,1,512,0);ctx.drawImage(v,(vw-sz)/2,(vh-sz)/2,sz,sz,0,0,512,512);ctx.setTransform(1,0,0,1,0,0);
   c.toBlob(blob=>{
-    // webcam capture: 用當前截圖當作 rawOrig
-    c.toBlob(b2=>{
-      const fr=new FileReader(); fr.onload=e=>{rawOrigD=e.target.result;};fr.readAsDataURL(b2);
-    },'image/jpeg',.92);
-    if(objD)URL.revokeObjectURL(objD);
-    objD=URL.createObjectURL(blob); origD=c.toDataURL('image/jpeg',.72);
+    c.toBlob(b2=>{const fr=new FileReader();fr.onload=e=>{rawOrigD=e.target.result;};fr.readAsDataURL(b2);},'image/jpeg',.92);
+    if(objD)URL.revokeObjectURL(objD);objD=URL.createObjectURL(blob);origD=c.toDataURL('image/jpeg',.72);
     $('prvD').src=objD;$('prvD').style.display='';$('phD').style.display='none';
-    $('processedTagD').style.display='none'; $('reCropD').style.display='';
+    $('processedTagD').style.display='none';$('reCropD').style.display='';
     aiD=null;$('srcD').options[1].disabled=true;$('srcD').value='original';$('resD').style.display='none';
     if(!$('bdgD').children.length)addBadge();else refreshBadges();
-    // 開啟裁切 modal
     openCropModal('D');
   },'image/jpeg',.72);
   strmD.getTracks().forEach(t=>t.stop());strmD=null;$('vidD').style.display='none';$('capD').style.display='none';
   $('webcamD').innerHTML='<i class="fas fa-laptop" style="color:var(--accent);"></i> 開啟網頁相機 (PC)';
 });
 
-function onFileD(e, mirror) {
-  const f=e.target.files[0]; if(!f)return;
+function onFileD(e,mirror){
+  const f=e.target.files[0];if(!f)return;
   if(strmD){strmD.getTracks().forEach(t=>t.stop());strmD=null;}
   procFile(f,'cvsD',(url,dat)=>{
-    if(objD)URL.revokeObjectURL(objD);
-    objD=url; origD=dat;
+    if(objD)URL.revokeObjectURL(objD);objD=url;origD=dat;
     $('prvD').src=url;$('prvD').style.display='';$('phD').style.display='none';
-    $('processedTagD').style.display='none'; $('reCropD').style.display='';
+    $('processedTagD').style.display='none';$('reCropD').style.display='';
     aiD=null;$('srcD').options[1].disabled=true;$('srcD').value='original';$('resD').style.display='none';
     if(!$('bdgD').children.length)addBadge();else refreshBadges();
-    // 自動開啟裁切 modal
     openCropModal('D');
-  }, mirror||false, 'D');
+  },mirror||false,'D');
   e.target.value='';
 }
 $('upD').addEventListener('change',e=>onFileD(e,false));
 $('camD').addEventListener('change',e=>onFileD(e,true));
 
-function onFileM(e, mirror) {
-  const f=e.target.files[0]; if(!f)return;
+function onFileM(e,mirror){
+  const f=e.target.files[0];if(!f)return;
   procFile(f,'cvsM',(url,dat)=>{
-    if(objM)URL.revokeObjectURL(objM);
-    objM=url; origM=dat;
+    if(objM)URL.revokeObjectURL(objM);objM=url;origM=dat;
     $('prvM').src=url;$('prvM').style.display='';$('phM').style.display='none';
     $('processedTagM').style.display='none';
     aiM=null;$('resM').style.display='none';$('aiResM').classList.remove('show');
     $('bdgM').querySelectorAll('.bface').forEach(fc=>{fc.style.backgroundImage='url('+url+')';});
-    // 自動開啟裁切 modal
     openCropModal('M');
-  }, mirror, 'M');
+  },mirror,'M');
   e.target.value='';
 }
 $('upM').addEventListener('change',e=>onFileM(e,false));
 $('camM').addEventListener('change',e=>onFileM(e,true));
 
-// ================================================
-// MULTI-PERSON BATCH UPLOAD（不開裁切 modal）
-// ================================================
+// 多人批次
 const multiPersonImages=[];
 $('multiUp')&&$('multiUp').addEventListener('change',async e=>{
-  const files=Array.from(e.target.files); if(!files.length)return;
+  const files=Array.from(e.target.files);if(!files.length)return;
   const list=$('personList');
   for(const file of files){
     const idx=multiPersonImages.length;
-    const row=document.createElement('div');
-    row.className='person-row'; row.id='prow'+idx;
+    const row=document.createElement('div');row.className='person-row';row.id='prow'+idx;
     row.innerHTML=`<div class="person-num">${idx+1}</div><div class="person-status"><div class="spin" style="width:14px;height:14px;display:inline-block;"></div> 處理中...</div>`;
     list.appendChild(row);
-    const {url,dat}=await procFileAsync(file,'cvsD',false,'D');
+    const{url,dat}=await procFileAsync(file,'cvsD',false,'D');
     multiPersonImages.push({url,dat,name:file.name});
-    objD=url;origD=dat;
-    $('prvD').src=url;$('prvD').style.display='';$('phD').style.display='none';
+    objD=url;origD=dat;$('prvD').src=url;$('prvD').style.display='';$('phD').style.display='none';
     addBadge();
     row.innerHTML=`<div class="person-num">${idx+1}</div><img class="person-thumb" src="${url}" alt=""><div class="person-status" style="font-size:.7rem;">✅ ${file.name.substring(0,18)}<br><span style="color:var(--muted);">已加入列印佇列</span></div><button onclick="removePerson(${idx})" class="btn btn-del" style="padding:3px 6px;"><i class="fas fa-xmark"></i></button>`;
   }
@@ -1250,199 +999,199 @@ $('multiUp')&&$('multiUp').addEventListener('change',async e=>{
 function removePerson(idx){const el=$('prow'+idx);if(el)el.remove();}
 
 // ================================================
-// AI GENERATE
+// OpenAI gpt-image-2 生成
 // ================================================
-const STEPS=[[15,'Gemini Vision 分析圖片中...'],[42,'Gemini 圖像生成中...'],[72,'儲存至 Google Drive...'],[88,'推送至 GitHub...'],[95,'回傳結果中...']];
+const COST_NT = { low:0.3, medium:1.3, high:5.5 };
+const STEPS_GEN = [
+  [15,'連接 OpenAI API...'],
+  [35,'上傳圖片至 GPT-Image-2...'],
+  [65,'AI 生成中（請稍候）...'],
+  [85,'處理結果...'],
+  [95,'完成最後步驟...']
+];
 
-async function doGen(origData, sfx) {
-  const btn=$('gen'+sfx),ldBox=$('ldBox'+sfx),pgFill=$('pg'+sfx),ldTxt=$('ld'+sfx),resBox=$('res'+sfx);
-  if(!origData){showMsg('⚠️ 尚未輸入圖片','請先拍照或上傳圖片','error');return;}
-  btn.disabled=true;ldBox.style.display='';resBox.style.display='none';
+function buildPrompt(sfx) {
+  const styleKey = $('sty'+sfx).value;
+  const extra = $('prm'+sfx).value.trim();
+  const name = $('name'+sfx).value.trim();
+  let base = STYLE_PROMPTS[styleKey] || STYLE_PROMPTS.pixar;
+  if (extra) base += ' Additional: ' + extra;
+  // 姓名提示加入 prompt（讓 AI 知道要在圖片底部加名字，繁體中文）
+  if (name) {
+    base += ` At the very bottom center of the circular image, add the Chinese name "${name}" in curved/arc text that follows the circle edge, written in Traditional Chinese characters (繁體中文), bold white font with dark outline, elegant placement.`;
+  }
+  return base;
+}
+
+async function doGenOAI(sfx) {
+  const ak = getOaiKey();
+  if (!ak) { showMsg('⚠️ 缺少 API Key','請先填入 OpenAI API Key（sk-...）','error'); return; }
+  if (!ak.startsWith('sk-')) { showMsg('⚠️ API Key 格式錯誤','Key 應以 sk- 開頭','error'); return; }
+
+  const srcData = (sfx==='D') ? (origD||objD) : (origM||objM);
+  if (!srcData) { showMsg('⚠️ 尚未輸入圖片','請先拍照或上傳圖片','error'); return; }
+
+  const btn=$('gen'+sfx), ldBox=$('ldBox'+sfx), pgFill=$('pg'+sfx), ldTxt=$('ld'+sfx), resBox=$('res'+sfx);
+  btn.disabled=true; ldBox.style.display=''; resBox.style.display='none';
+
   let si=0;
-  const iv=setInterval(()=>{if(si<STEPS.length){pgFill.style.width=STEPS[si][0]+'%';ldTxt.innerHTML=STEPS[si][1];si++;}},4500);
-  try{
-    const prompt=[$('sty'+sfx).value,$('prm'+sfx).value.trim()].filter(Boolean).join('. Additional: ');
-    const r=await fetch(GAS_URL,{method:'POST',body:JSON.stringify({prompt,image:origData.split(',')[1],sessionId:sid}),headers:{'Content-Type':'text/plain;charset=utf-8'},redirect:'follow'});
-    clearInterval(iv);pgFill.style.width='100%';
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    const d=await r.json();
-    if(!d.success)throw new Error(d.error||'後端處理失敗');
-    const mime=d.aiImageMime||'image/png';
-    const imgData='data:'+mime+';base64,'+d.aiImage;
-    if(sfx==='D'){
-      aiD=imgData;$('prvD').src=imgData;
-      $('srcD').options[1].disabled=false;$('srcD').value='ai';refreshBadges();
-      $('drD').href=d.aiImageUrl||'#';$('flD').href=d.folderUrl||'#';
-      $('flD').textContent='日期資料夾 ('+(d.dateStr||'')+')';$('descD').textContent=d.description||'';
-      if(d.githubUrl){$('ghD').href=d.githubUrl;$('ghRD').style.display='';}else{$('ghRD').style.display='none';}
+  const iv=setInterval(()=>{
+    if(si<STEPS_GEN.length){pgFill.style.width=STEPS_GEN[si][0]+'%';ldTxt.innerHTML=STEPS_GEN[si][1];si++;}
+  },3500);
+
+  try {
+    const quality = $('qual'+sfx).value;
+    const prompt = buildPrompt(sfx);
+    const name = $('name'+sfx).value.trim();
+
+    // 壓縮圖片到 < 4MB，轉成 base64
+    const b64 = await compressImageToB64(srcData, 3.8*1024*1024);
+
+    // 呼叫 images/edits（帶原始圖）
+    const blob = b64toBlob(b64.split(',')[1], 'image/png');
+    const fd = new FormData();
+    fd.append('model', 'gpt-image-2');
+    fd.append('prompt', prompt);
+    fd.append('size', '1024x1024');
+    fd.append('quality', quality);
+    fd.append('n', '1');
+    fd.append('image', blob, 'source.png');
+
+    pgFill.style.width='40%'; ldTxt.innerHTML='正在呼叫 GPT-Image-2...';
+
+    const res = await fetch('https://api.openai.com/v1/images/edits', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${ak}` },
+      body: fd
+    });
+
+    clearInterval(iv); pgFill.style.width='90%';
+
+    if (!res.ok) {
+      const errData = await res.json().catch(()=>({error:{message:'未知錯誤'}}));
+      throw new Error(errData?.error?.message || `HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    const item = data.data?.[0];
+    if (!item) throw new Error('API 未回傳圖片');
+
+    let imgSrc;
+    if (item.b64_json) {
+      imgSrc = 'data:image/png;base64,' + item.b64_json;
+    } else if (item.url) {
+      imgSrc = item.url;
     } else {
-      aiM=imgData;$('aiImgM').src=imgData;$('aiResM').classList.add('show');
-      $('drM').href=d.aiImageUrl||'#';$('flM').href=d.folderUrl||'#';
-      if(d.githubUrl){$('ghM').href=d.githubUrl;$('ghRM').style.display='';}else{$('ghRM').style.display='none';}
-      autoAddMobileBadge(imgData);
+      throw new Error('回傳格式不符');
+    }
+
+    pgFill.style.width='100%'; ldTxt.innerHTML='合成姓名文字...';
+
+    // 如果有姓名，在前端用 Canvas 疊加弧形文字
+    let finalSrc = imgSrc;
+    if (name) {
+      const composed = await compositeWithName(imgSrc, name);
+      if (composed) finalSrc = composed;
+    }
+
+    // 更新 UI
+    if (sfx==='D') {
+      aiD = finalSrc;
+      $('prvD').src = finalSrc;
+      $('srcD').options[1].disabled=false; $('srcD').value='ai'; refreshBadges();
+      $('dlD').href = finalSrc;
+    } else {
+      aiM = finalSrc;
+      $('aiImgM').src = finalSrc; $('aiResM').classList.add('show');
+      $('dlM').href = finalSrc;
+      autoAddMobileBadge(finalSrc);
     }
     resBox.style.display='';
-    setTimeout(()=>loadRec(sfx),1500);
-  } catch(err){
-    clearInterval(iv);pgFill.style.width='0%';
-    showMsg('❌ 處理失敗',err.message,'error');
-  } finally{
+    showMsg('✅ 生成成功','AI 圖片已生成完成！已自動套用到徽章版面。','success');
+
+  } catch(err) {
+    clearInterval(iv); pgFill.style.width='0%';
+    let msg = err.message;
+    if (msg.includes('insufficient_quota')) msg = 'OpenAI 額度不足，請確認帳戶餘額。';
+    else if (msg.includes('invalid_api_key')) msg = 'API Key 無效，請確認後重試。';
+    else if (msg.includes('model_not_found')) msg = '模型 gpt-image-2 不可用，請確認帳號是否有存取權限。';
+    showMsg('❌ 生成失敗', msg, 'error');
+  } finally {
     setTimeout(()=>{ldBox.style.display='none';pgFill.style.width='0%';},600);
     btn.disabled=false;
   }
 }
-$('genD').addEventListener('click',()=>doGen(origD,'D'));
-$('genM').addEventListener('click',()=>doGen(origM,'M'));
+
+async function compressImageToB64(src, maxBytes) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const try_ = s => {
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width*s); c.height = Math.round(img.height*s);
+        c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+        c.toBlob(blob => {
+          if (!blob) { rej(new Error('圖片處理失敗')); return; }
+          if (blob.size <= maxBytes || s <= 0.1) {
+            const fr = new FileReader();
+            fr.onload = e => res(e.target.result);
+            fr.readAsDataURL(blob);
+          } else try_(s*0.8);
+        }, 'image/png');
+      };
+      try_(1.0);
+    };
+    img.onerror = () => rej(new Error('圖片讀取失敗'));
+    img.src = src;
+  });
+}
+
+function b64toBlob(b64, mime='image/png') {
+  const bytes = atob(b64);
+  const arr = new Uint8Array(bytes.length);
+  for(let i=0;i<bytes.length;i++) arr[i]=bytes.charCodeAt(i);
+  return new Blob([arr],{type:mime});
+}
+
+$('genD').addEventListener('click',()=>doGenOAI('D'));
+$('genM').addEventListener('click',()=>doGenOAI('M'));
 
 // ================================================
-// LOAD RECORDS
+// 姓名預覽（即時，可選）
 // ================================================
-async function loadRec(sfx) {
-  const panel=$('rec'+sfx);
-  panel.innerHTML='<div style="display:flex;justify-content:center;padding:16px;"><div class="spin"></div></div>';
-  try{
-    const d=await gasGet(GAS_URL+'?action=getRecords&limit=50');
-    if(!d.success||!d.records.length){
-      panel.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted);font-size:.75rem;"><i class="fas fa-inbox" style="font-size:1.2rem;display:block;margin-bottom:6px;"></i>尚無上傳紀錄</div>';
-      if(sfx==='D')updPrintBarD(); if(sfx==='M')updPrintBarM(); return;
-    }
-    const grp={};
-    d.records.forEach(r=>{const dt=r.dateStr||(r.timestamp?r.timestamp.substring(0,10):'?');if(!grp[dt])grp[dt]=[];grp[dt].push(r);});
-    let html='';
-    Object.keys(grp).sort().reverse().forEach(dt=>{
-      html+=`<div class="date-grp"><i class="fas fa-calendar-day"></i>${dt} (${grp[dt].length})</div>`;
-      grp[dt].forEach(r=>{
-        const ghThumb=r.githubUrl||'',drThumb=r.aiImageUrl?r.aiImageUrl.replace('/view','')+'=s80':'';
-        const th=ghThumb||drThumb;
-        const chkId=`chk${sfx}${r.rowIndex}`;
-        html+=`<div class="rec-item fu" id="ri${sfx}${r.rowIndex}" style="align-items:flex-start;">`;
-        html+=`<input type="checkbox" class="rec-chk rec-chk-${sfx}" id="${chkId}" data-github="${r.githubUrl||''}" data-drive="${r.aiImageUrl||''}" data-rowindex="${r.rowIndex}" onchange="updPrintBar${sfx}()" style="margin-top:14px;width:18px;height:18px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;">`;
-        html+=`<a href="${r.aiImageUrl||'#'}" target="_blank"><img class="rthumb" src="${th}" onerror="this.src='${drThumb}';this.onerror=null;" alt=""></a>`;
-        html+=`<div class="rbody"><div style="font-size:.63rem;color:var(--muted);font-family:'DM Mono',monospace;">${r.timestamp}</div>`;
-        html+=`<div style="font-size:.72rem;margin:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);" title="${r.stylePrompt}">${r.stylePrompt}</div>`;
-        html+=`<div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center;">`;
-        if(r.aiImageUrl)html+=`<a href="${r.aiImageUrl}" target="_blank" class="pill pill-b" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-google-drive"></i></a>`;
-        if(r.githubUrl) html+=`<a href="${r.githubUrl}" target="_blank" class="pill pill-g" style="font-size:.62rem;text-decoration:none;padding:2px 6px;"><i class="fab fa-github"></i></a>`;
-        html+=`<button onclick="delRec(${r.rowIndex},'${sfx}')" class="btn btn-del" style="margin-left:auto;" title="刪除"><i class="fas fa-trash-can"></i></button>`;
-        html+=`</div></div></div>`;
-      });
-    });
-    html+=`<div style="font-size:.65rem;color:var(--muted);text-align:center;padding-top:5px;">共 ${d.total} 筆</div>`;
-    panel.innerHTML=html;
-    if(sfx==='D')updPrintBarD(); if(sfx==='M')updPrintBarM();
-  } catch(e){
-    panel.innerHTML=`<div style="text-align:center;padding:14px;color:var(--red);font-size:.73rem;"><i class="fas fa-circle-xmark"></i> 無法載入紀錄<br><span style="font-size:.65rem;opacity:.7;">${e.message}</span><br><button onclick="loadRec('${sfx}')" class="btn btn-g" style="margin-top:8px;font-size:.7rem;"><i class="fas fa-rotate"></i> 重試</button></div>`;
+function updateNamePreview(sfx) {
+  // 同步兩個面板的姓名欄位
+  const otherSfx = sfx==='D' ? 'M' : 'D';
+  const nameEl = $('name'+sfx);
+  const otherEl = $('name'+otherSfx);
+  if (otherEl && nameEl && otherEl.value !== nameEl.value) {
+    otherEl.value = nameEl.value;
   }
 }
-async function delRec(rowIndex, sfx) {
-  if(!confirm('確定刪除此筆紀錄？\nDrive 檔案不受影響'))return;
-  try{
-    const d=await gasGet(GAS_URL+'?action=deleteRecord&rowIndex='+rowIndex);
-    if(!d.success)throw new Error(d.error);
-    const el=$('ri'+sfx+rowIndex);
-    if(el){el.style.transition='opacity .3s';el.style.opacity='0';setTimeout(()=>{el.remove();if(sfx==='D')updPrintBarD();else updPrintBarM();},300);}
-  }catch(e){showMsg('❌ 刪除失敗',e.message,'error');}
-}
 
 // ================================================
-// 勾選列印
-// ================================================
-function getCheckedItems(sfx) {
-  return Array.from(document.querySelectorAll('.rec-chk-'+(sfx||'D')+':checked'))
-    .map(c=>({github:c.dataset.github||'',drive:c.dataset.drive||''}))
-    .filter(item=>item.github||item.drive);
-}
-function calcCapacity(){
-  const bw=size*2+12,bh=(shape==='rectangle'?size*.75:size)+6;
-  const cols=Math.max(1,Math.floor(180/bw)),rows=Math.max(1,Math.floor(267/bh));
-  return cols*rows;
-}
-function updPrintBarD(){
-  const items=getCheckedItems('D'),cnt=items.length,bar=$('printBar');
-  if(!bar)return;
-  const cap=calcCapacity(),pages=cnt>0?Math.ceil(cnt/cap):0;
-  $('selCount').textContent=cnt;$('a4Capacity').textContent=cap;$('pageCount').textContent=pages;
-  bar.classList.toggle('show',cnt>0);
-}
-function updPrintBarM(){
-  const items=getCheckedItems('M'),cnt=items.length,bar=$('printBarM');
-  if(!bar)return;
-  const cap=calcCapacity(),pages=cnt>0?Math.ceil(cnt/cap):0;
-  $('selCountM').textContent=cnt;$('a4CapacityM').textContent=cap;$('pageCountM').textContent=pages;
-  bar.classList.toggle('show',cnt>0);
-}
-function toggleAllRec(sfx){
-  sfx=sfx||'D';
-  const chks=document.querySelectorAll('.rec-chk-'+sfx);
-  const anyUnchecked=Array.from(chks).some(c=>!c.checked);
-  chks.forEach(c=>c.checked=anyUnchecked);
-  if(sfx==='D')updPrintBarD();else updPrintBarM();
-}
-function buildPrintBadges(items, targetEl) {
-  targetEl.innerHTML='';
-  items.forEach(item=>{
-    const imgUrl=item.github||(item.drive?item.drive.replace('/view','')+'=s1024':'');
-    if(!imgUrl)return;
-    const w=document.createElement('div');w.className='bwrap';
-    const mk=()=>{
-      const face=document.createElement('div');face.className='bface';face.style.position='relative';
-      face.style.backgroundImage=`url(${imgUrl})`;
-      if(shape==='heart')face.classList.add('heart');
-      const img=document.createElement('img');img.className='bface-img';img.src=imgUrl;
-      img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;';
-      face.appendChild(img);return face;
-    };
-    const fold=document.createElement('div');fold.className='fold';
-    const del=document.createElement('button');
-    del.innerHTML='<i class="fas fa-xmark"></i>';del.className='no-print';
-    del.style.cssText='position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;';
-    del.onclick=()=>{w.remove();updCnt();};
-    w.append(del,mk(),fold,mk());targetEl.appendChild(w);
-  });
-}
-function printSelected(){
-  const items=getCheckedItems('D');
-  if(!items.length){showMsg('⚠️ 未選取','請先勾選要列印的紀錄','info');return;}
-  buildPrintBadges(items,$('bdgD'));updCnt();
-  showMsg('✅ 已排版','A4 版面已更新，請等圖片載入完成後點列印按鈕。','success');
-}
-function printSelectedM(){
-  const items=getCheckedItems('M');
-  if(!items.length){showMsg('⚠️ 未選取','請先勾選要列印的紀錄','info');return;}
-  buildPrintBadges(items,$('bdgM'));buildPrintBadges(items,$('bdgD'));
-  const ph=$('bdgMPh');if(ph)ph.style.display='none';
-  showMsg('✅ 已排版','請點右上角 🖨 按鈕列印。','success');
-}
-
-// ================================================
-// BADGE LAYOUT
+// 徽章排版
 // ================================================
 document.querySelectorAll('.stab').forEach(b=>{
-  b.addEventListener('click',()=>{
-    b.closest('.stabs').querySelectorAll('.stab').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on');shape=b.dataset.shape;upCSS();updPrintBarD();updPrintBarM();
-  });
+  b.addEventListener('click',()=>{b.closest('.stabs').querySelectorAll('.stab').forEach(x=>x.classList.remove('on'));b.classList.add('on');shape=b.dataset.shape;upCSS();});
 });
-$('szRD').addEventListener('input',e=>{size=+e.target.value;$('szVD').textContent=size+'mm';upCSS();updPrintBarD();updPrintBarM();});
+$('szRD').addEventListener('input',e=>{size=+e.target.value;$('szVD').textContent=size+'mm';upCSS();});
 $('fitD').addEventListener('change',e=>{fit=e.target.value;$('scWD').style.display=fit==='custom'?'':'none';upCSS();});
 $('scRD').addEventListener('input',e=>{scale=+e.target.value;$('scVD').textContent=scale+'%';if(fit==='custom')upCSS();});
-$('srcD').addEventListener('change',()=>{refreshBadges();});
+$('srcD').addEventListener('change',()=>refreshBadges());
 $('addD').addEventListener('click',addBadge);
 $('clrD').addEventListener('click',()=>{$('bdgD').innerHTML='';updCnt();});
 
 function getSrc(){return($('srcD').value==='ai'&&aiD)?aiD:(objD||origD);}
 function upCSS(){
   const r=document.documentElement;
-  r.style.setProperty('--bs',size+'mm'); r.style.setProperty('--bh',shape==='rectangle'?(size*.75)+'mm':size+'mm');
+  r.style.setProperty('--bs',size+'mm');r.style.setProperty('--bh',shape==='rectangle'?(size*.75)+'mm':size+'mm');
   r.style.setProperty('--br',shape==='circle'?'50%':shape==='rectangle'?'10px':shape==='heart'?'0':'12px');
   r.style.setProperty('--bgs',fit==='custom'?scale+'%':fit);
   ['bdgD','bdgM'].forEach(id=>{const el=$(id);if(!el)return;el.querySelectorAll('.bface').forEach(f=>{shape==='heart'?f.classList.add('heart'):f.classList.remove('heart');});});
 }
-function refreshBadges(){
-  const src=getSrc();if(!src)return;
-  $('bdgD').querySelectorAll('.bface').forEach(f=>{f.style.backgroundImage='url('+src+')';});
-}
+function refreshBadges(){const src=getSrc();if(!src)return;$('bdgD').querySelectorAll('.bface').forEach(f=>{f.style.backgroundImage='url('+src+')';});}
 function updCnt(){const c=$('cntD');if(c)c.textContent=Math.floor($('bdgD').children.length);}
+
 function addBadge(customSrc){
   const src=customSrc||getSrc();
   if(!src){showMsg('⚠️ 尚未輸入','請先拍照或上傳','error');return;}
@@ -1462,7 +1211,6 @@ function addBadge(customSrc){
   w.append(del,mk(),fold,mk());$('bdgD').appendChild(w);updCnt();
 }
 
-// Mobile badge
 function addBadgeM(){
   const src=aiM||objM||origM;
   if(!src){showMsg('⚠️ 尚未輸入影像','請先自拍或上傳圖片','error');return;}
@@ -1494,9 +1242,7 @@ function autoAddMobileBadge(src){
   else{$('bdgM').querySelectorAll('.bface').forEach(f=>{f.style.backgroundImage='url('+src+')';});}
 }
 
-// ================================================
-// A4 RESIZE
-// ================================================
+// A4 縮放
 let rzT;
 function rzA4(){
   clearTimeout(rzT);rzT=setTimeout(()=>{
@@ -1509,23 +1255,23 @@ function rzA4(){
 }
 window.addEventListener('resize',rzA4);
 
-// ================================================
 // UTILS
-// ================================================
 function showMsg(title,body,type){
   const icons={success:'✅',error:'❌',info:'ℹ️'};
   $('mIcon').innerHTML=icons[type||'info']||'💬';$('mTitle').textContent=title;$('mBody').innerHTML=body;$('msgModal').classList.add('open');
 }
 function closeMsg(){$('msgModal').classList.remove('open');}
 
-// ================================================
 // INIT
-// ================================================
 window.addEventListener('DOMContentLoaded',()=>{
   rzA4();
-  chkBackend();
-  loadRec('D');
-  loadRec('M');
+  // 載入暫存 key
+  const saved = localStorage.getItem('oai_badge_key');
+  if (saved) {
+    $('oaiKeyD').value = saved;
+    $('oaiKeyM').value = saved;
+    checkOaiKey($('oaiKeyD'), 'D');
+  }
 });
 </script>
 </body>
