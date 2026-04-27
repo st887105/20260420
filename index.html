@@ -410,7 +410,13 @@ input.crop-slider{
     <!-- Footer -->
     <div class="crop-modal-footer">
       <button class="btn-skip" onclick="cropSkip()">
-        <i class="fas fa-forward"></i>略過，直接使用原圖
+        <i class="fas fa-forward"></i>略過
+      </button>
+      <!-- 下載按鈕：套用後才出現 -->
+      <button id="btnDownloadCrop" onclick="downloadCroppedImage()"
+        style="display:none;background:#064e3b;border:1px solid #059669;color:#6ee7b7;padding:9px 14px;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;display:none;align-items:center;gap:5px;transition:all .15s;"
+        onmouseover="this.style.background='#065f46'" onmouseout="this.style.background='#064e3b'">
+        <i class="fas fa-download"></i>下載圖片
       </button>
       <div style="flex:1;"></div>
       <button class="btn-teal" onclick="cropConfirm()">
@@ -716,6 +722,10 @@ let isDragMove=false, isDragResize=false;
 let dStartX=0, dStartY=0, dStartCx=0, dStartCy=0, dStartR=0;
 
 function openCropModal(target) {
+  // 重置下載按鈕
+  const dlBtn = $('btnDownloadCrop');
+  if (dlBtn) dlBtn.style.display = 'none';
+  lastCroppedDataURL = '';
   const rawSrc = (target==='D') ? rawOrigD : rawOrigM;
   if (!rawSrc) return;
   cropTarget = target;
@@ -906,6 +916,19 @@ function cropSkip() {
   $('cropModal').classList.remove('open');
 }
 
+// 裁切結果暫存（供下載用）
+let lastCroppedDataURL = '';
+let lastCroppedMime = 'image/png';
+
+function downloadCroppedImage() {
+  if (!lastCroppedDataURL) return;
+  const ext = lastCroppedMime === 'image/png' ? 'png' : 'jpg';
+  const a = document.createElement('a');
+  a.download = 'circlecrop_' + Date.now() + '.' + ext;
+  a.href = lastCroppedDataURL;
+  a.click();
+}
+
 // 確認並套用
 function cropConfirm() {
   if (!cropImg) { $('cropModal').classList.remove('open'); return; }
@@ -938,6 +961,12 @@ function cropConfirm() {
   const mime   = doCircle ? 'image/png' : 'image/jpeg';
   const newSrc = resultCanvas.toDataURL(mime, 0.92);
 
+  // 儲存供下載用，並顯示下載按鈕
+  lastCroppedDataURL = newSrc;
+  lastCroppedMime    = mime;
+  const dlBtn = $('btnDownloadCrop');
+  if (dlBtn) dlBtn.style.display = 'inline-flex';
+
   // 標籤文字
   const tags = [];
   if (doWM)     tags.push('去浮水印');
@@ -965,7 +994,7 @@ function cropConfirm() {
     $('bdgM').querySelectorAll('.bface').forEach(f => { f.style.backgroundImage='url('+newSrc+')'; });
   }
 
-  $('cropModal').classList.remove('open');
+  // 套用後不關閉 modal，讓使用者可下載後再按略過關閉
 }
 
 // 圓形裁切（依 cs 狀態）
